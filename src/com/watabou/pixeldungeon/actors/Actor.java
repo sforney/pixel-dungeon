@@ -17,8 +17,10 @@
  */
 package com.watabou.pixeldungeon.actors;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import android.util.SparseArray;
 
@@ -27,22 +29,50 @@ import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
+import com.watabou.pixeldungeon.event.Event;
+import com.watabou.pixeldungeon.event.Observable;
+import com.watabou.pixeldungeon.event.Observer;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
-public abstract class Actor implements Bundlable {
+public abstract class Actor implements Bundlable, Observable {
 	
 	public static final float TICK	= 1f;
 
 	private float time;
 	
 	private int id = 0;
+	private List<Observer> observers = new ArrayList<Observer>();
 	
 	protected abstract boolean act();
 	
+	
 	protected void spend( float time ) {
 		this.time += time;
+	}
+	
+	@Override
+	public void addObserver(Observer obs) {
+		if(!observers.contains(obs)) {
+			observers.add(obs);
+		}
+	}
+	
+	@Override
+	public void removeObserver(Observer obs) {
+		if(observers.contains(obs)) {
+			observers.remove(obs);
+		}
+	}
+
+	@Override
+	public void notifyObservers(Event event) {
+		for(Observer obs : observers) {
+			if(obs != null) {
+				obs.onNotify(event);
+			}
+		}
 	}
 	
 	protected void postpone( float time ) {
@@ -55,11 +85,14 @@ public abstract class Actor implements Bundlable {
 		return time - now;
 	}
 	
-	protected void diactivate() {
+	protected void deactivate() {
 		time = Float.MAX_VALUE;
 	}
 	
-	protected void onAdd() {}
+	protected void onAdd() {
+		
+		
+	}
 	
 	protected void onRemove() {}
 	
