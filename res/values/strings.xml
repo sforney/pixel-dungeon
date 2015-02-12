@@ -2,5 +2,9 @@
 <resources>
 
 	<string name="app_name">Pixel Dungeon</string>
-
+	<string name="txt_rose1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my _dried rose_... It's very important to me... \nSome monster stole it from my body..."</string>
+	<string name="txt_rose2">"Please... Help me... Find the rose..."</string>
+	<string name="txt_rat1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my revenge... Slay the _fetid rat_, that has taken my life..."</string>
+	<string name="txt_rat2">"Please... Help me... Slay the abomination..."</string>
+	
 </resources>

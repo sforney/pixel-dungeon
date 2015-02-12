@@ -112,6 +112,8 @@ public class PixelDungeon extends Game {
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		
+		TextStrings.init(getResources());
+		
 		updateImmersiveMode();
 		
 		DisplayMetrics metrics = new DisplayMetrics();
