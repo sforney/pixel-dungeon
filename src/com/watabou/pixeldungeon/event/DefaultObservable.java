@@ -29,7 +29,7 @@ public class DefaultObservable implements Observable {
 	public void notifyObservers(Event event) {
 		for(Observer obs : observers) {
 			if(obs != null) {
-				obs.onNotify(event);
+				obs.onEvent(event);
 			}
 		}
 	}

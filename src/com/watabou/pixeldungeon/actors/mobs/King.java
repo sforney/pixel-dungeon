@@ -204,9 +204,9 @@ public class King extends Mob {
 	@Override
 	public String description() {
 		return
-			"The last king of dwarves was known for his deep understanding of processes of life and death. " +
-			"He has persuaded members of his court to participate in a ritual, that should have granted them " +
-			"eternal youthfulness. In the end he was the only one, who got it - and an army of undead " +
+			"The last king of dwarves was known for his deep understanding of life and death. " +
+			"He persuaded members of his court to participate in a ritual that should have granted them " +
+			"eternal youth. In the end he was the only one who got it - and an army of undead " +
 			"as a bonus.";
 	}
 	
@@ -239,7 +239,7 @@ public class King extends Mob {
 		public static int count = 0;
 		
 		{
-			name = "undead dwarf";
+			name = "Undead Dwarf";
 			spriteClass = UndeadSprite.class;
 			
 			HP = HT = 28;
