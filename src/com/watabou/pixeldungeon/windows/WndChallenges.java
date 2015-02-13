@@ -20,6 +20,7 @@ package com.watabou.pixeldungeon.windows;
 import java.util.ArrayList;
 
 import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
@@ -34,8 +35,7 @@ public class WndChallenges extends Window {
 	private static final int BTN_HEIGHT	= 18;
 	private static final int GAP		= 1;
 	
-	private static final String TITLE	= PixelDungeon.resources
-			.getString(R.string.challenges);
+	private static final String TITLE   = Game.getVar(R.string.WndChallenges_Title);
 	
 	private boolean editable;
 	private ArrayList<CheckBox> boxes;	

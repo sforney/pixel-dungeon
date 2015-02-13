@@ -20,6 +20,7 @@ package com.watabou.pixeldungeon.windows;
 import java.util.ArrayList;
 
 import com.watabou.noosa.BitmapText;
+import com.watabou.noosa.Game;
 import com.watabou.noosa.ui.Component;
 import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
@@ -45,12 +46,9 @@ public class WndCatalogus extends WndTabbed {
 	
 	private static final int TAB_WIDTH		= 50;
 	
-	private static final String TXT_POTIONS	= PixelDungeon.resources
-			.getString(R.string.potions);
-	private static final String TXT_SCROLLS	= PixelDungeon.resources
-			.getString(R.string.scrolls);
-	private static final String TXT_TITLE	= PixelDungeon.resources
-			.getString(R.string.catalog);
+	private static final String TXT_POTIONS	= Game.getVar(R.string.WndCatalogus_Potions);
+	private static final String TXT_SCROLLS	= Game.getVar(R.string.WndCatalogus_Scrolls);
+	private static final String TXT_TITLE	= Game.getVar(R.string.WndCatalogus_Title);
 	
 	private BitmapText txtTitle;
 	private ScrollPane list;

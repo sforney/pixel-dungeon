@@ -19,21 +19,19 @@ package com.watabou.pixeldungeon.actors.mobs.npcs;
 
 import java.util.HashSet;
 
+import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.blobs.Blob;
-import com.watabou.pixeldungeon.actors.blobs.ParalyticGas;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
-import com.watabou.pixeldungeon.actors.mobs.Mob;
+import com.watabou.pixeldungeon.actors.mobs.FetidRat;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.items.Generator;
@@ -46,7 +44,6 @@ import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.pixeldungeon.levels.SewerLevel;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.FetidRatSprite;
 import com.watabou.pixeldungeon.sprites.GhostSprite;
 import com.watabou.pixeldungeon.windows.WndQuest;
 import com.watabou.pixeldungeon.windows.WndSadGhost;
@@ -56,7 +53,7 @@ import com.watabou.utils.Random;
 public class Ghost extends NPC {
 
 	{
-		name = "sad ghost";
+		name = Game.getVar(R.string.Ghost_Name);
 		spriteClass = GhostSprite.class;
 
 		flying = true;
@@ -64,13 +61,10 @@ public class Ghost extends NPC {
 		state = WANDERING;
 	}
 
-	private final String TXT_ROSE1 = PixelDungeon.resources.getString(R.string.txt_rose1);
-
-	private final String TXT_ROSE2 = PixelDungeon.resources.getString(R.string.txt_rose2);
-
-	private final String TXT_RAT1 = PixelDungeon.resources.getString(R.string.txt_rat1);
-
-	private final String TXT_RAT2 = PixelDungeon.resources.getString(R.string.txt_rat2);
+	private final String TXT_ROSE1 = Game.getVar(R.string.Ghost_Rose1);
+	private final String TXT_ROSE2 = Game.getVar(R.string.Ghost_Rose2);
+	private final String TXT_RAT1 = Game.getVar(R.string.Ghost_Rat1);
+	private final String TXT_RAT2 = Game.getVar(R.string.Ghost_Rat2);
 
 	public Ghost() {
 		super();
@@ -85,7 +79,7 @@ public class Ghost extends NPC {
 
 	@Override
 	public String defenseVerb() {
-		return "evaded";
+		return Game.getVar(R.string.Ghost_Defense);
 	}
 
 	@Override
@@ -123,10 +117,8 @@ public class Ghost extends NPC {
 					.getItem(RatSkull.class) : Dungeon.hero.belongings
 					.getItem(DriedRose.class);
 			if (item != null) {
-				System.out.println(TXT_RAT1 + TXT_ROSE1);
 				GameScene.show(new WndSadGhost(this, item));
 			} else {
-				System.out.println(TXT_RAT2 + TXT_ROSE2);
 				GameScene.show(new WndQuest(this, Quest.alternative ? TXT_RAT2
 						: TXT_ROSE2));
 
@@ -150,7 +142,6 @@ public class Ghost extends NPC {
 			}
 
 		} else {
-			System.out.println(TXT_RAT1 + TXT_ROSE1);
 			GameScene.show(new WndQuest(this, Quest.alternative ? TXT_RAT1
 					: TXT_ROSE1));
 			Quest.given = true;
@@ -161,8 +152,7 @@ public class Ghost extends NPC {
 
 	@Override
 	public String description() {
-		return "The ghost is barely visible. It looks like a shapeless "
-				+ "spot of faint light with a sorrowful face.";
+		return Game.getVar(R.string.Ghost_Desc);
 	}
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
@@ -320,7 +310,6 @@ public class Ghost extends NPC {
 					}
 
 				} else {
-
 					if (Random.Int(left2kill) == 0) {
 						Dungeon.level.drop(new DriedRose(), pos).sprite.drop();
 						processed = true;
@@ -337,67 +326,6 @@ public class Ghost extends NPC {
 			armor = null;
 
 			Journal.remove(Journal.Feature.GHOST);
-		}
-	}
-
-	public static class FetidRat extends Mob {
-
-		{
-			name = "fetid rat";
-			spriteClass = FetidRatSprite.class;
-
-			HP = HT = 15;
-			defenseSkill = 5;
-
-			EXP = 0;
-			maxLvl = 5;
-
-			state = WANDERING;
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(2, 6);
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 12;
-		}
-
-		@Override
-		public int dr() {
-			return 2;
-		}
-
-		@Override
-		public int defenseProc(Char enemy, int damage) {
-
-			GameScene.add(Blob.seed(pos, 20, ParalyticGas.class));
-
-			return super.defenseProc(enemy, damage);
-		}
-
-		@Override
-		public void die(Object cause) {
-			super.die(cause);
-
-			Dungeon.level.drop(new RatSkull(), pos).sprite.drop();
-		}
-
-		@Override
-		public String description() {
-			return "This marsupial rat is much larger, than a regular one. It is surrounded by a foul cloud.";
-		}
-
-		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
-		static {
-			IMMUNITIES.add(Paralysis.class);
-		}
-
-		@Override
-		public HashSet<Class<?>> immunities() {
-			return IMMUNITIES;
 		}
 	}
 }
