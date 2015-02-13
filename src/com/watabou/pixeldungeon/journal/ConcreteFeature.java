@@ -1,14 +1,8 @@
 package com.watabou.pixeldungeon.journal;
 
-import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 
-/**
- * This should probably be replaced with something that allows for
- * localizations
- * @author Shawn
- *
- */
 public enum ConcreteFeature {
 	WELL_OF_HEALTH, WELL_OF_AWARENESS, WELL_OF_TRANSMUTATION, ALCHEMY, GARDEN, STATUE,
 	GHOST, WANDMAKER, TROLL, IMP;
@@ -16,27 +10,27 @@ public enum ConcreteFeature {
 	public String getDescription(ConcreteFeature feature) {
 		switch (feature) {
 		case WELL_OF_HEALTH:
-			return PixelDungeon.resources.getString(R.string.well_health);
+			return Game.getVar(R.string.Journal_WellHealth);
 		case WELL_OF_AWARENESS:
-			return PixelDungeon.resources.getString(R.string.well_awareness);
+			return  Game.getVar(R.string.Journal_WellAwareness);
 		case WELL_OF_TRANSMUTATION:
-			return PixelDungeon.resources.getString(R.string.well_transmute);
+			return  Game.getVar(R.string.Journal_WellTransmute);
 		case ALCHEMY:
-			return PixelDungeon.resources.getString(R.string.alchemy_pot);
+			return  Game.getVar(R.string.Journal_Alchemy);
 		case GARDEN:
-			return PixelDungeon.resources.getString(R.string.garden);
+			return  Game.getVar(R.string.Journal_Garden);
 		case STATUE:
-			return PixelDungeon.resources.getString(R.string.statue);
+			return Game.getVar(R.string.Journal_Statue);
 		case GHOST:
-			return PixelDungeon.resources.getString(R.string.sad_ghost);
+			return  Game.getVar(R.string.Journal_Ghost);
 		case WANDMAKER:
-			return PixelDungeon.resources.getString(R.string.wandmaker);
+			return  Game.getVar(R.string.Journal_Wandmaker);
 		case TROLL:
-			return PixelDungeon.resources.getString(R.string.blacksmith);
+			return  Game.getVar(R.string.Journal_Troll);
 		case IMP:
-			return PixelDungeon.resources.getString(R.string.imp);
+			return  Game.getVar(R.string.Journal_Imp);
 		}
 		// Should never get here
-		return PixelDungeon.resources.getString(R.string.invalid_feature);
+		return null;
 	}
 }

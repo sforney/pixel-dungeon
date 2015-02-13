@@ -19,12 +19,12 @@ package com.watabou.pixeldungeon.actors.mobs.npcs;
 
 import java.util.HashSet;
 
+import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
@@ -56,126 +56,117 @@ import com.watabou.utils.Random;
 public class Ghost extends NPC {
 
 	{
-		name = "sad ghost";
+		name = Game.getVar(R.string.Ghost_Name);
 		spriteClass = GhostSprite.class;
-
+		
 		flying = true;
-
+		
 		state = WANDERING;
 	}
+	
+	private static final String TXT_ROSE1 = Game.getVar(R.string.Ghost_Rose1);
+	private static final String TXT_ROSE2 = Game.getVar(R.string.Ghost_Rose2);
+	private static final String TXT_RAT1  = Game.getVar(R.string.Ghost_Rat1);
+	private static final String TXT_RAT2  = Game.getVar(R.string.Ghost_Rat2);
 
-	private final String TXT_ROSE1 = PixelDungeon.resources.getString(R.string.txt_rose1);
-
-	private final String TXT_ROSE2 = PixelDungeon.resources.getString(R.string.txt_rose2);
-
-	private final String TXT_RAT1 = PixelDungeon.resources.getString(R.string.txt_rat1);
-
-	private final String TXT_RAT2 = PixelDungeon.resources.getString(R.string.txt_rat2);
-
+	
 	public Ghost() {
 		super();
 
-		Sample.INSTANCE.load(Assets.SND_GHOST);
+		Sample.INSTANCE.load( Assets.SND_GHOST );
 	}
-
+	
 	@Override
-	public int defenseSkill(Char enemy) {
+	public int defenseSkill( Char enemy ) {
 		return 1000;
 	}
-
+	
 	@Override
 	public String defenseVerb() {
-		return "evaded";
+		return Game.getVar(R.string.Ghost_Defense);
 	}
-
+	
 	@Override
 	public float speed() {
 		return 0.5f;
 	}
-
+	
 	@Override
 	protected Char chooseEnemy() {
 		return null;
 	}
-
+	
 	@Override
-	public void damage(int dmg, Object src) {
+	public void damage( int dmg, Object src ) {
 	}
-
+	
 	@Override
-	public void add(Buff buff) {
+	public void add( Buff buff ) {
 	}
-
+	
 	@Override
 	public boolean reset() {
 		return true;
 	}
-
+	
 	@Override
 	public void interact() {
-		sprite.turnTo(pos, Dungeon.hero.pos);
-
-		Sample.INSTANCE.play(Assets.SND_GHOST);
-
+		sprite.turnTo( pos, Dungeon.hero.pos );
+		
+		Sample.INSTANCE.play( Assets.SND_GHOST );
+		
 		if (Quest.given) {
-
-			Item item = Quest.alternative ? Dungeon.hero.belongings
-					.getItem(RatSkull.class) : Dungeon.hero.belongings
-					.getItem(DriedRose.class);
+			
+			Item item = Quest.alternative ?
+				Dungeon.hero.belongings.getItem( RatSkull.class ) :
+				Dungeon.hero.belongings.getItem( DriedRose.class );	
 			if (item != null) {
-				System.out.println(TXT_RAT1 + TXT_ROSE1);
-				GameScene.show(new WndSadGhost(this, item));
+				GameScene.show( new WndSadGhost( this, item ) );
 			} else {
-				System.out.println(TXT_RAT2 + TXT_ROSE2);
-				GameScene.show(new WndQuest(this, Quest.alternative ? TXT_RAT2
-						: TXT_ROSE2));
+				GameScene.show( new WndQuest( this, Quest.alternative ? TXT_RAT2 : TXT_ROSE2 ) );
 
 				int newPos = -1;
-				for (int i = 0; i < 10; i++) {
+				for (int i=0; i < 10; i++) {
 					newPos = Dungeon.level.randomRespawnCell();
 					if (newPos != -1) {
 						break;
 					}
 				}
 				if (newPos != -1) {
-
-					Actor.freeCell(pos);
-
-					CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT),
-							0.2f, 3);
+					
+					Actor.freeCell( pos );
+					
+					CellEmitter.get( pos ).start( Speck.factory( Speck.LIGHT ), 0.2f, 3 );
 					pos = newPos;
-					sprite.place(pos);
+					sprite.place( pos );
 					sprite.visible = Dungeon.visible[pos];
 				}
 			}
-
+			
 		} else {
-			System.out.println(TXT_RAT1 + TXT_ROSE1);
-			GameScene.show(new WndQuest(this, Quest.alternative ? TXT_RAT1
-					: TXT_ROSE1));
+			GameScene.show( new WndQuest( this, Quest.alternative ? TXT_RAT1 : TXT_ROSE1 ) );
 			Quest.given = true;
-
-			Journal.add(Journal.Feature.GHOST);
+			
+			Journal.add( Journal.Feature.GHOST );
 		}
 	}
-
+	
 	@Override
 	public String description() {
-		return "The ghost is barely visible. It looks like a shapeless "
-				+ "spot of faint light with a sorrowful face.";
+		return Game.getVar(R.string.Ghost_Desc);
 	}
-
+	
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 	static {
-		IMMUNITIES.add(Paralysis.class);
-		IMMUNITIES.add(Roots.class);
+		IMMUNITIES.add( Paralysis.class );
+		IMMUNITIES.add( Roots.class );
 	}
-
+	
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
 	}
-
+	
 	public static class Quest {
 
 		private static boolean spawned;
@@ -187,214 +178,211 @@ public class Ghost extends NPC {
 		private static boolean processed;
 
 		private static int depth;
-
+		
 		private static int left2kill;
-
+		
 		public static Weapon weapon;
 		public static Armor armor;
-
+		
 		public static void reset() {
-			spawned = false;
-
+			spawned = false; 
+			
 			weapon = null;
 			armor = null;
 		}
-
-		private static final String NODE = "sadGhost";
-
-		private static final String SPAWNED = "spawned";
-		private static final String ALTERNATIVE = "alternative";
-		private static final String LEFT2KILL = "left2kill";
-		private static final String GIVEN = "given";
-		private static final String PROCESSED = "processed";
-		private static final String DEPTH = "depth";
-		private static final String WEAPON = "weapon";
-		private static final String ARMOR = "armor";
-
-		public static void storeInBundle(Bundle bundle) {
-
+		
+		private static final String NODE		= "sadGhost";
+		
+		private static final String SPAWNED		= "spawned";
+		private static final String ALTERNATIVE	= "alternative";
+		private static final String LEFT2KILL	= "left2kill";
+		private static final String GIVEN		= "given";
+		private static final String PROCESSED	= "processed";
+		private static final String DEPTH		= "depth";
+		private static final String WEAPON		= "weapon";
+		private static final String ARMOR		= "armor";
+		
+		public static void storeInBundle( Bundle bundle ) {
+			
 			Bundle node = new Bundle();
-
-			node.put(SPAWNED, spawned);
-
+			
+			node.put( SPAWNED, spawned );
+			
 			if (spawned) {
-
-				node.put(ALTERNATIVE, alternative);
+				
+				node.put( ALTERNATIVE, alternative );
 				if (!alternative) {
-					node.put(LEFT2KILL, left2kill);
+					node.put( LEFT2KILL, left2kill );
 				}
-
-				node.put(GIVEN, given);
-				node.put(DEPTH, depth);
-				node.put(PROCESSED, processed);
-
-				node.put(WEAPON, weapon);
-				node.put(ARMOR, armor);
+				
+				node.put( GIVEN, given );
+				node.put( DEPTH, depth );
+				node.put( PROCESSED, processed );
+				
+				node.put( WEAPON, weapon );
+				node.put( ARMOR, armor );
 			}
-
-			bundle.put(NODE, node);
+			
+			bundle.put( NODE, node );
 		}
-
-		public static void restoreFromBundle(Bundle bundle) {
-
-			Bundle node = bundle.getBundle(NODE);
-
-			if (!node.isNull() && (spawned = node.getBoolean(SPAWNED))) {
-
-				alternative = node.getBoolean(ALTERNATIVE);
+		
+		public static void restoreFromBundle( Bundle bundle ) {
+			
+			Bundle node = bundle.getBundle( NODE );
+			
+			if (!node.isNull() && (spawned = node.getBoolean( SPAWNED ))) {
+				
+				alternative	=  node.getBoolean( ALTERNATIVE );
 				if (!alternative) {
-					left2kill = node.getInt(LEFT2KILL);
+					left2kill = node.getInt( LEFT2KILL );
 				}
-
-				given = node.getBoolean(GIVEN);
-				depth = node.getInt(DEPTH);
-				processed = node.getBoolean(PROCESSED);
-
-				weapon = (Weapon) node.get(WEAPON);
-				armor = (Armor) node.get(ARMOR);
+				
+				given	= node.getBoolean( GIVEN );
+				depth	= node.getInt( DEPTH );
+				processed	= node.getBoolean( PROCESSED );
+				
+				weapon	= (Weapon)node.get( WEAPON );
+				armor	= (Armor)node.get( ARMOR );
 			} else {
 				reset();
 			}
 		}
-
-		public static void spawn(SewerLevel level) {
-			if (!spawned && Dungeon.depth > 1
-					&& Random.Int(5 - Dungeon.depth) == 0) {
-
+		
+		public static void spawn( SewerLevel level ) {
+			if (!spawned && Dungeon.depth > 1 && Random.Int( 5 - Dungeon.depth ) == 0) {
+				
 				Ghost ghost = new Ghost();
 				do {
 					ghost.pos = level.randomRespawnCell();
 				} while (ghost.pos == -1);
-				level.mobs.add(ghost);
-				Actor.occupyCell(ghost);
-
+				level.mobs.add( ghost );
+				Actor.occupyCell( ghost );
+				
 				spawned = true;
-				alternative = Random.Int(2) == 0;
+				alternative = Random.Int( 2 ) == 0;
 				if (!alternative) {
 					left2kill = 8;
 				}
-
+				
 				given = false;
 				processed = false;
 				depth = Dungeon.depth;
-
-				for (int i = 0; i < 4; i++) {
+				
+				for (int i=0; i < 4; i++) {
 					Item another;
 					do {
-						another = (Weapon) Generator
-								.random(Generator.Category.WEAPON);
+						another = (Weapon)Generator.random( Generator.Category.WEAPON );
 					} while (another instanceof MissileWeapon);
-
+					
 					if (weapon == null || another.level > weapon.level) {
-						weapon = (Weapon) another;
+						weapon = (Weapon)another;
 					}
 				}
-
-				if (Dungeon.isChallenged(Challenges.NO_ARMOR)) {
-					armor = (Armor) new ClothArmor().degrade();
+				
+				if (Dungeon.isChallenged( Challenges.NO_ARMOR )) {
+					armor = (Armor)new ClothArmor().degrade();
 				} else {
-					armor = (Armor) Generator.random(Generator.Category.ARMOR);
-					for (int i = 0; i < 3; i++) {
-						Item another = Generator
-								.random(Generator.Category.ARMOR);
+					armor = (Armor)Generator.random( Generator.Category.ARMOR );
+					for (int i=0; i < 3; i++) {
+						Item another = Generator.random( Generator.Category.ARMOR );
 						if (another.level > armor.level) {
-							armor = (Armor) another;
+							armor = (Armor)another;
 						}
 					}
 				}
-
+				
 				weapon.identify();
 				armor.identify();
 			}
 		}
 
-		public static void process(int pos) {
+		public static void process( int pos ) {
 			if (spawned && given && !processed && (depth == Dungeon.depth)) {
 				if (alternative) {
-
+					
 					FetidRat rat = new FetidRat();
 					rat.pos = Dungeon.level.randomRespawnCell();
 					if (rat.pos != -1) {
-						GameScene.add(rat);
+						GameScene.add( rat );
 						processed = true;
 					}
-
+					
 				} else {
-
-					if (Random.Int(left2kill) == 0) {
-						Dungeon.level.drop(new DriedRose(), pos).sprite.drop();
+					
+					if (Random.Int( left2kill ) == 0) {
+						Dungeon.level.drop( new DriedRose(), pos ).sprite.drop();
 						processed = true;
 					} else {
 						left2kill--;
 					}
-
+					
 				}
 			}
 		}
-
+		
 		public static void complete() {
 			weapon = null;
 			armor = null;
-
-			Journal.remove(Journal.Feature.GHOST);
+			
+			Journal.remove( Journal.Feature.GHOST );
 		}
 	}
-
+	
 	public static class FetidRat extends Mob {
 
 		{
-			name = "fetid rat";
+			name = Game.getVar(R.string.Ghost_FetidRatName);
 			spriteClass = FetidRatSprite.class;
-
+			
 			HP = HT = 15;
 			defenseSkill = 5;
-
+			
 			EXP = 0;
-			maxLvl = 5;
-
+			maxLvl = 5;	
+			
 			state = WANDERING;
 		}
-
+		
 		@Override
 		public int damageRoll() {
-			return Random.NormalIntRange(2, 6);
+			return Random.NormalIntRange( 2, 6 );
 		}
-
+		
 		@Override
-		public int attackSkill(Char target) {
+		public int attackSkill( Char target ) {
 			return 12;
 		}
-
+		
 		@Override
 		public int dr() {
 			return 2;
 		}
-
+		
 		@Override
-		public int defenseProc(Char enemy, int damage) {
-
-			GameScene.add(Blob.seed(pos, 20, ParalyticGas.class));
-
+		public int defenseProc( Char enemy, int damage ) {
+			
+			GameScene.add( Blob.seed( pos, 20, ParalyticGas.class ) );
+			
 			return super.defenseProc(enemy, damage);
 		}
-
+		
 		@Override
-		public void die(Object cause) {
-			super.die(cause);
-
-			Dungeon.level.drop(new RatSkull(), pos).sprite.drop();
+		public void die( Object cause ) {
+			super.die( cause );
+			
+			Dungeon.level.drop( new RatSkull(), pos ).sprite.drop();
 		}
-
+		
 		@Override
 		public String description() {
-			return "This marsupial rat is much larger, than a regular one. It is surrounded by a foul cloud.";
+			return Game.getVar(R.string.Ghost_FetidRatDesc);
 		}
-
+		
 		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 		static {
-			IMMUNITIES.add(Paralysis.class);
+			IMMUNITIES.add( Paralysis.class );
 		}
-
+		
 		@Override
 		public HashSet<Class<?>> immunities() {
 			return IMMUNITIES;

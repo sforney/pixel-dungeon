@@ -17,14 +17,13 @@
  */
 package com.watabou.pixeldungeon.windows;
 
-import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.ui.Icons;
 
 public class WndError extends WndTitledMessage {
 
-	private static final String TXT_TITLE =  PixelDungeon.resources
-			.getString(R.string.error);
+	private static final String TXT_TITLE = Game.getVar(R.string.WndError_Title);
 	
 	public WndError( String message ) {
 		super( Icons.WARNING.get(), TXT_TITLE, message );

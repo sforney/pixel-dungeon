@@ -18,8 +18,8 @@
 package com.watabou.pixeldungeon.windows;
 
 import com.watabou.noosa.BitmapTextMultiline;
+import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
@@ -34,60 +34,56 @@ import com.watabou.pixeldungeon.utils.Utils;
 
 public class WndImp extends Window {
 
-	private static final String TXT_MESSAGE = PixelDungeon.resources
-			.getString(R.string.imp_complete);
-	private static final String TXT_REWARD = PixelDungeon.resources
-			.getString(R.string.imp_reward);
+	private static final String TXT_MESSAGE	= Game.getVar(R.string.WndImp_Message);
+	private static final String TXT_REWARD  = Game.getVar(R.string.WndImp_Reward);
 
-	private static final int WIDTH = 120;
-	private static final int BTN_HEIGHT = 20;
-	private static final int GAP = 2;
+	private static final int WIDTH		= 120;
+	private static final int BTN_HEIGHT	= 20;
+	private static final int GAP		= 2;
 
-	public WndImp(final Imp imp, final DwarfToken tokens) {
-
+	public WndImp( final Imp imp, final DwarfToken tokens ) {
+		
 		super();
-
+		
 		IconTitle titlebar = new IconTitle();
-		titlebar.icon(new ItemSprite(tokens.image(), null));
-		titlebar.label(Utils.capitalize(tokens.name()));
-		titlebar.setRect(0, 0, WIDTH, 0);
-		add(titlebar);
-
-		BitmapTextMultiline message = PixelScene
-				.createMultiline(TXT_MESSAGE, 6);
+		titlebar.icon( new ItemSprite( tokens.image(), null ) );
+		titlebar.label( Utils.capitalize( tokens.name() ) );
+		titlebar.setRect( 0, 0, WIDTH, 0 );
+		add( titlebar );
+		
+		BitmapTextMultiline message = PixelScene.createMultiline( TXT_MESSAGE, 6 );
 		message.maxWidth = WIDTH;
 		message.measure();
 		message.y = titlebar.bottom() + GAP;
-		add(message);
-
-		RedButton btnReward = new RedButton(TXT_REWARD) {
+		add( message );
+		
+		RedButton btnReward = new RedButton( TXT_REWARD ) {
 			@Override
 			protected void onClick() {
-				takeReward(imp, tokens, Imp.Quest.reward);
+				takeReward( imp, tokens, Imp.Quest.reward );
 			}
 		};
-		btnReward.setRect(0, message.y + message.height() + GAP, WIDTH,
-				BTN_HEIGHT);
-		add(btnReward);
-
-		resize(WIDTH, (int) btnReward.bottom());
+		btnReward.setRect( 0, message.y + message.height() + GAP, WIDTH, BTN_HEIGHT );
+		add( btnReward );
+		
+		resize( WIDTH, (int)btnReward.bottom() );
 	}
-
-	private void takeReward(Imp imp, DwarfToken tokens, Item reward) {
-
+	
+	private void takeReward( Imp imp, DwarfToken tokens, Item reward ) {
+		
 		hide();
-
-		tokens.detachAll(Dungeon.hero.belongings.backpack);
+		
+		tokens.detachAll( Dungeon.hero.belongings.backpack );
 
 		reward.identify();
-		if (reward.doPickUp(Dungeon.hero)) {
-			GLog.i(Hero.TXT_YOU_NOW_HAVE, reward.name());
+		if (reward.doPickUp( Dungeon.hero )) {
+			GLog.i( Hero.TXT_YOU_NOW_HAVE, reward.name() );
 		} else {
-			Dungeon.level.drop(reward, imp.pos).sprite.drop();
+			Dungeon.level.drop( reward, imp.pos ).sprite.drop();
 		}
-
+		
 		imp.flee();
-
+		
 		Imp.Quest.complete();
 	}
 }

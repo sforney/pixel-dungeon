@@ -18,7 +18,7 @@
 package com.watabou.pixeldungeon.windows;
 
 import com.watabou.noosa.BitmapTextMultiline;
-import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Heap.Type;
@@ -31,53 +31,42 @@ import com.watabou.pixeldungeon.utils.Utils;
 
 public class WndInfoItem extends Window {
 
-	private static final String TXT_CHEST = PixelDungeon.resources
-			.getString(R.string.chest);
-	private static final String TXT_LOCKED_CHEST = PixelDungeon.resources
-			.getString(R.string.locked_chest);
-	private static final String TXT_CRYSTAL_CHEST = PixelDungeon.resources
-			.getString(R.string.crystal_chest);
-	private static final String TXT_TOMB = PixelDungeon.resources
-			.getString(R.string.tomb);
-	private static final String TXT_SKELETON = PixelDungeon.resources
-			.getString(R.string.skel_remains);
-	private static final String TXT_WONT_KNOW = PixelDungeon.resources
-			.getString(R.string.chest_inside);
-	private static final String TXT_NEED_KEY = TXT_WONT_KNOW + " "
-			+ PixelDungeon.resources.getString(R.string.need_key);
-	private static final String TXT_INSIDE = PixelDungeon.resources
-			.getString(R.string.crystal_chest_desc);
-	private static final String TXT_OWNER = PixelDungeon.resources
-			.getString(R.string.tomb_desc);
-	private static final String TXT_REMAINS = PixelDungeon.resources
-			.getString(R.string.remains);
+	private static final String TXT_CHEST			= Game.getVar(R.string.WndInfoItem_Chest);
+	private static final String TXT_LOCKED_CHEST	= Game.getVar(R.string.WndInfoItem_LockedChest);
+	private static final String TXT_CRYSTAL_CHEST	= Game.getVar(R.string.WndInfoItem_CrystalChest);
+	private static final String TXT_TOMB			= Game.getVar(R.string.WndInfoItem_Tomb);
+	private static final String TXT_SKELETON		= Game.getVar(R.string.WndInfoItem_Skeleton);
+	private static final String TXT_WONT_KNOW		= Game.getVar(R.string.WndInfoItem_WontKnow);
+	private static final String TXT_NEED_KEY		= TXT_WONT_KNOW + Game.getVar(R.string.WndInfoItem_NeedKey);;
+	private static final String TXT_INSIDE			= Game.getVar(R.string.WndInfoItem_Inside);;
+	private static final String TXT_OWNER           = Game.getVar(R.string.WndInfoItem_Owner);
+	private static final String TXT_REMAINS	        = Game.getVar(R.string.WndInfoItem_Remains);
 
-	private static final float GAP = 2;
-
+	private static final float GAP	= 2;
+	
 	private static final int WIDTH = 120;
-
-	public WndInfoItem(Heap heap) {
-
+	
+	public WndInfoItem( Heap heap ) {
+		
 		super();
-
+		
 		if (heap.type == Heap.Type.HEAP || heap.type == Heap.Type.FOR_SALE) {
-
+			
 			Item item = heap.peek();
-
+			
 			int color = TITLE_COLOR;
 			if (item.levelKnown && item.level > 0) {
-				color = ItemSlot.UPGRADED;
+				color = ItemSlot.UPGRADED;				
 			} else if (item.levelKnown && item.level < 0) {
-				color = ItemSlot.DEGRADED;
+				color = ItemSlot.DEGRADED;				
 			}
-			fillFields(item.image(), item.glowing(), color, item.toString(),
-					item.info());
-
+			fillFields( item.image(), item.glowing(), color, item.toString(), item.info() );
+			
 		} else {
-
+			
 			String title;
 			String info;
-
+			
 			if (heap.type == Type.CHEST || heap.type == Type.MIMIC) {
 				title = TXT_CHEST;
 				info = TXT_WONT_KNOW;
@@ -89,49 +78,45 @@ public class WndInfoItem extends Window {
 				info = TXT_REMAINS;
 			} else if (heap.type == Type.CRYSTAL_CHEST) {
 				title = TXT_CRYSTAL_CHEST;
-				info = Utils.format(TXT_INSIDE,
-						Utils.indefinite(heap.peek().name()));
+				info = Utils.format( TXT_INSIDE, Utils.indefinite( heap.peek().name() ) );
 			} else {
 				title = TXT_LOCKED_CHEST;
 				info = TXT_NEED_KEY;
 			}
-
-			fillFields(heap.image(), heap.glowing(), TITLE_COLOR, title, info);
-
+			
+			fillFields( heap.image(), heap.glowing(), TITLE_COLOR, title, info );
+			
 		}
 	}
-
-	public WndInfoItem(Item item) {
-
+	
+	public WndInfoItem( Item item ) {
+		
 		super();
-
+		
 		int color = TITLE_COLOR;
 		if (item.levelKnown && item.level > 0) {
-			color = ItemSlot.UPGRADED;
+			color = ItemSlot.UPGRADED;				
 		} else if (item.levelKnown && item.level < 0) {
-			color = ItemSlot.DEGRADED;
+			color = ItemSlot.DEGRADED;				
 		}
-
-		fillFields(item.image(), item.glowing(), color, item.toString(),
-				item.info());
+		
+		fillFields( item.image(), item.glowing(), color, item.toString(), item.info() );
 	}
-
-	private void fillFields(int image, ItemSprite.Glowing glowing,
-			int titleColor, String title, String info) {
-
+	
+	private void fillFields( int image, ItemSprite.Glowing glowing, int titleColor, String title, String info ) {
 		IconTitle titlebar = new IconTitle();
-		titlebar.icon(new ItemSprite(image, glowing));
-		titlebar.label(Utils.capitalize(title), titleColor);
-		titlebar.setRect(0, 0, WIDTH, 0);
-		add(titlebar);
+		titlebar.icon( new ItemSprite( image, glowing ) );
+		titlebar.label( Utils.capitalize( title ), titleColor );
+		titlebar.setRect( 0, 0, WIDTH, 0 );
+		add( titlebar );
 
-		BitmapTextMultiline txtInfo = PixelScene.createMultiline(info, 6);
+		BitmapTextMultiline txtInfo = PixelScene.createMultiline( info, 6 );
 		txtInfo.maxWidth = WIDTH;
 		txtInfo.measure();
 		txtInfo.x = titlebar.left();
 		txtInfo.y = titlebar.bottom() + GAP;
-		add(txtInfo);
+		add( txtInfo );
 
-		resize(WIDTH, (int) (txtInfo.y + txtInfo.height()));
+		resize( WIDTH, (int)(txtInfo.y + txtInfo.height()) );
 	}
 }
