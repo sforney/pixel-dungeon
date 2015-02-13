@@ -2,9 +2,25 @@
 <resources>
 
 	<string name="app_name">Pixel Dungeon</string>
+	
+	<!-- Game strings -->
+	<string name="new_game">"Start New Game"</string>
+	<string name="rankings">"Rankings"</string>
+	<string name="challenges">"Challenges"</string>
+	<string name="settings">"Settings"</string>
+	<string name="main_menu">"Main Menu"</string>
+	<string name="exit_game">"Exit Game"</string>
+	<string name="return_game">"Return to Game"</string>
+	
+	
+	<!-- Ghost quest strings -->
 	<string name="txt_rose1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my _dried rose_... It's very important to me... \nSome monster stole it from my body..."</string>
 	<string name="txt_rose2">"Please... Help me... Find the rose..."</string>
 	<string name="txt_rat1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my revenge... Slay the _fetid rat_, that has taken my life..."</string>
 	<string name="txt_rat2">"Please... Help me... Slay the abomination..."</string>
-	
+	<string name="rose_return">"Yes! Yes!!! This is it! Please give it to me! And you can take one of these items, maybe they will be useful to you in your journey...";</string>
+	<string name="fRat_dead">"Yes! The ugly creature is slain and I can finally rest... Please take one of these items, maybe they will be useful to you in your journey...";</string>
+	<string name="ghost_weapon">"Ghost's weapon"</string>
+	<string name="ghost_armor">"Ghost's armor"</string>
+	<string name="ghost_bye">"Farewell, adventurer!"</string>
 </resources>
