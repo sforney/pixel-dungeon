@@ -25,49 +25,27 @@ import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
-import com.watabou.pixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 
 public class Firebloom extends Plant {
-
-	private static final String TXT_NAME = Game.getVar(R.string.Firebloom_Name);
-	private static final String TXT_DESC = Game.getVar(R.string.Firebloom_Desc);
-	{
+	public Firebloom() {
 		image = 0;
-		plantName = TXT_NAME;
+		plantName = Game.getVar(R.string.Firebloom_Name);
 	}
-	
+
 	@Override
-	public void activate( Char ch ) {
-		super.activate( ch );
-		
-		GameScene.add( Blob.seed( pos, 2, Fire.class ) );
-		
+	public void activate(Char ch) {
+		super.activate(ch);
+
+		GameScene.add(Blob.seed(pos, 2, Fire.class));
+
 		if (Dungeon.visible[pos]) {
-			CellEmitter.get( pos ).burst( FlameParticle.FACTORY, 5 );
+			CellEmitter.get(pos).burst(FlameParticle.FACTORY, 5);
 		}
 	}
-	
+
 	@Override
 	public String desc() {
-		return TXT_DESC;
-	}
-	
-	public static class Seed extends Plant.Seed {
-		{
-			plantName = TXT_NAME;
-			
-			name = String.format(TXT_SEED, plantName);
-			image = ItemSpriteSheet.SEED_FIREBLOOM;
-			
-			plantClass = Firebloom.class;
-			alchemyClass = PotionOfLiquidFlame.class;
-		}
-		
-		@Override
-		public String desc() {
-			return TXT_DESC;
-		}
+		return Game.getVar(R.string.Firebloom_Desc);
 	}
 }

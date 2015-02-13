@@ -49,6 +49,7 @@ import com.watabou.pixeldungeon.effects.SpellSprite;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.Potion;
+import com.watabou.pixeldungeon.items.seeds.Seed;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.RegularLevel;
@@ -308,8 +309,8 @@ public class GameScene extends PixelScene {
 				int pos = Dungeon.level.randomRespawnCell();
 				if (item instanceof Potion) {
 					((Potion)item).shatter( pos );
-				} else if (item instanceof Plant.Seed) {
-					Dungeon.level.plant( (Plant.Seed)item, pos );
+				} else if (item instanceof Seed) {
+					Dungeon.level.plant( (Seed)item, pos );
 				} else {
 					Dungeon.level.drop( item, pos );
 				}

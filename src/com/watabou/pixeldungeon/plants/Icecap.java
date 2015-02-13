@@ -23,56 +23,34 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.actors.blobs.Freezing;
-import com.watabou.pixeldungeon.items.potions.PotionOfFrost;
 import com.watabou.pixeldungeon.levels.Level;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.utils.PathFinder;
 
 public class Icecap extends Plant {
-
-	private static final String TXT_NAME = Game.getVar(R.string.Icecap_Name);
-	private static final String TXT_DESC = Game.getVar(R.string.Icecap_Desc);
-	
-	{
+	public Icecap() {
 		image = 1;
-		plantName = TXT_NAME;
+		plantName = Game.getVar(R.string.Icecap_Name);
 	}
-	
+
 	@Override
-	public void activate( Char ch ) {
-		super.activate( ch );
-		
-		PathFinder.buildDistanceMap( pos, BArray.not( Level.losBlocking, null ), 1 );
-		
-		Fire fire = (Fire)Dungeon.level.blobs.get( Fire.class );
-		
-		for (int i=0; i < Level.LENGTH; i++) {
+	public void activate(Char ch) {
+		super.activate(ch);
+
+		PathFinder
+				.buildDistanceMap(pos, BArray.not(Level.losBlocking, null), 1);
+
+		Fire fire = (Fire) Dungeon.level.blobs.get(Fire.class);
+
+		for (int i = 0; i < Level.LENGTH; i++) {
 			if (PathFinder.distance[i] < Integer.MAX_VALUE) {
-				Freezing.affect( i, fire );
+				Freezing.affect(i, fire);
 			}
 		}
 	}
-	
+
 	@Override
 	public String desc() {
-		return TXT_DESC;
-	}
-	
-	public static class Seed extends Plant.Seed {
-		{
-			plantName = TXT_NAME;
-			
-			name = String.format(TXT_SEED, plantName);
-			image = ItemSpriteSheet.SEED_ICECAP;
-			
-			plantClass = Icecap.class;
-			alchemyClass = PotionOfFrost.class;
-		}
-		
-		@Override
-		public String desc() {
-			return TXT_DESC;
-		}
+		return Game.getVar(R.string.Icecap_Desc);
 	}
 }

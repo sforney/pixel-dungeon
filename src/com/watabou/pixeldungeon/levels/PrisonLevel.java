@@ -24,7 +24,6 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.watabou.pixeldungeon.effects.Halo;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
 import com.watabou.pixeldungeon.levels.Room.Type;
@@ -71,7 +70,7 @@ public class PrisonLevel extends RegularLevel {
 	protected void createMobs() {
 		super.createMobs();
 		
-		Wandmaker.Quest.spawn( this, roomEntrance );
+		Dungeon.wandmakerQuest.spawn( this, roomEntrance );
 	}
 	
 	@Override

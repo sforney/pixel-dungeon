@@ -19,10 +19,10 @@ package com.watabou.pixeldungeon.levels.painters;
 
 import com.watabou.pixeldungeon.actors.blobs.Foliage;
 import com.watabou.pixeldungeon.items.Honeypot;
+import com.watabou.pixeldungeon.items.seeds.SungrassSeed;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.Terrain;
-import com.watabou.pixeldungeon.plants.Sungrass;
 import com.watabou.utils.Random;
 
 public class GardenPainter extends Painter {
@@ -42,7 +42,7 @@ public class GardenPainter extends Painter {
 			for (int i=0; i < bushes; i++) {
 				int pos = room.random();
 				set( level, pos, Terrain.GRASS );
-				level.plant( new Sungrass.Seed(), pos );
+				level.plant( new SungrassSeed(), pos );
 			}
 		}
 		

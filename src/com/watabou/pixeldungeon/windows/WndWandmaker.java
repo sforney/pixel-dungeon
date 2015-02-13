@@ -63,7 +63,7 @@ public class WndWandmaker extends Window {
 		RedButton btnBattle = new RedButton( TXT_BATTLE ) {
 			@Override
 			protected void onClick() {
-				selectReward( wandmaker, item, Wandmaker.Quest.wand1 );
+				selectReward( wandmaker, item, Dungeon.wandmakerQuest.wand1 );
 			}
 		};
 		btnBattle.setRect( 0, message.y + message.height() + GAP, WIDTH, BTN_HEIGHT );
@@ -72,7 +72,7 @@ public class WndWandmaker extends Window {
 		RedButton btnNonBattle = new RedButton( TXT_NON_BATTLE ) {
 			@Override
 			protected void onClick() {
-				selectReward( wandmaker, item, Wandmaker.Quest.wand2 );
+				selectReward( wandmaker, item, Dungeon.wandmakerQuest.wand2 );
 			}
 		};
 		btnNonBattle.setRect( 0, btnBattle.bottom() + GAP, WIDTH, BTN_HEIGHT );
@@ -99,6 +99,6 @@ public class WndWandmaker extends Window {
 		
 		wandmaker.sprite.die();
 		
-		Wandmaker.Quest.complete();
+		Dungeon.wandmakerQuest.complete();
 	}
 }

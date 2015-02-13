@@ -25,7 +25,6 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.items.DewVial;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.utils.ColorMath;
@@ -107,7 +106,7 @@ public class SewerLevel extends RegularLevel {
 	protected void createMobs() {
 		super.createMobs();
 
-		Ghost.Quest.spawn( this );
+		Dungeon.ghostQuest.spawn( this );
 	}
 	
 	@Override

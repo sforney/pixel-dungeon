@@ -25,31 +25,25 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
-import com.watabou.pixeldungeon.items.potions.PotionOfMindVision;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfTeleportation;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 
 public class Fadeleaf extends Plant {
-
-	private static final String TXT_NAME = Game.getVar(R.string.Fadeleaf_Name);
-	private static final String TXT_DESC = Game.getVar(R.string.Fadeleaf_Desc);
-	
-	{
+	public Fadeleaf() {
 		image = 6;
-		plantName = TXT_NAME;
+		plantName = Game.getVar(R.string.Fadeleaf_Name);
 	}
-	
+
 	@Override
-	public void activate( Char ch ) {
-		super.activate( ch );
-		
+	public void activate(Char ch) {
+		super.activate(ch);
+
 		if (ch instanceof Hero) {
-			
-			ScrollOfTeleportation.teleportHero( (Hero)ch );
-			((Hero)ch).curAction = null;
-			
+
+			ScrollOfTeleportation.teleportHero((Hero) ch);
+			((Hero) ch).curAction = null;
+
 		} else if (ch instanceof Mob) {
-			
+
 			int count = 10;
 			int newPos;
 			do {
@@ -58,41 +52,24 @@ public class Fadeleaf extends Plant {
 					break;
 				}
 			} while (newPos == -1);
-			
+
 			if (newPos != -1) {
-			
+
 				ch.pos = newPos;
-				ch.sprite.place( ch.pos );
+				ch.sprite.place(ch.pos);
 				ch.sprite.visible = Dungeon.visible[pos];
-				
+
 			}
-						
+
 		}
-		
+
 		if (Dungeon.visible[pos]) {
-			CellEmitter.get( pos ).start( Speck.factory( Speck.LIGHT ), 0.2f, 3 );
+			CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT), 0.2f, 3);
 		}
 	}
-	
+
 	@Override
 	public String desc() {
-		return TXT_DESC;
-	}
-	
-	public static class Seed extends Plant.Seed {
-		{
-			plantName = TXT_NAME;
-			
-			name = String.format(TXT_SEED, plantName);
-			image = ItemSpriteSheet.SEED_FADELEAF;
-			
-			plantClass = Fadeleaf.class;
-			alchemyClass = PotionOfMindVision.class;
-		}
-		
-		@Override
-		public String desc() {
-			return TXT_DESC;
-		}
+		return Game.getVar(R.string.Fadeleaf_Desc);
 	}
 }

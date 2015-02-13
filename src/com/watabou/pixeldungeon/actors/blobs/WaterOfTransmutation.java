@@ -24,18 +24,28 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.items.Generator;
-import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.Generator.Category;
+import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.Potion;
 import com.watabou.pixeldungeon.items.potions.PotionOfMight;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
-import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
+import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.watabou.pixeldungeon.items.seeds.Seed;
 import com.watabou.pixeldungeon.items.wands.Wand;
-import com.watabou.pixeldungeon.items.weapon.melee.*;
-import com.watabou.pixeldungeon.plants.Plant;
+import com.watabou.pixeldungeon.items.weapon.melee.BattleAxe;
+import com.watabou.pixeldungeon.items.weapon.melee.Dagger;
+import com.watabou.pixeldungeon.items.weapon.melee.Glaive;
+import com.watabou.pixeldungeon.items.weapon.melee.Knuckles;
+import com.watabou.pixeldungeon.items.weapon.melee.Longsword;
+import com.watabou.pixeldungeon.items.weapon.melee.Mace;
+import com.watabou.pixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.watabou.pixeldungeon.items.weapon.melee.Quarterstaff;
+import com.watabou.pixeldungeon.items.weapon.melee.Spear;
+import com.watabou.pixeldungeon.items.weapon.melee.Sword;
+import com.watabou.pixeldungeon.items.weapon.melee.WarHammer;
 
 public class WaterOfTransmutation extends WellWater {
 	
@@ -52,8 +62,8 @@ public class WaterOfTransmutation extends WellWater {
 			item = changeRing( (Ring)item );
 		} else if (item instanceof Wand) {	
 			item = changeWand( (Wand)item );
-		} else if (item instanceof Plant.Seed) {
-			item = changeSeed( (Plant.Seed)item );
+		} else if (item instanceof Seed) {
+			item = changeSeed( (Seed)item );
 		} else {
 			item = null;
 		}
@@ -169,12 +179,12 @@ public class WaterOfTransmutation extends WellWater {
 		return n;
 	}
 	
-	private Plant.Seed changeSeed( Plant.Seed s ) {
+	private Seed changeSeed( Seed s ) {
 		
-		Plant.Seed n;
+		Seed n;
 		
 		do {
-			n = (Plant.Seed)Generator.random( Category.SEED );
+			n = (Seed)Generator.random( Category.SEED );
 		} while (n.getClass() == s.getClass());
 		
 		return n;

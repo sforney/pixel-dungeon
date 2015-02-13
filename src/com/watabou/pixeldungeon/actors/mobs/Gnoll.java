@@ -18,50 +18,50 @@
 package com.watabou.pixeldungeon.actors.mobs;
 
 import com.watabou.noosa.Game;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.items.Gold;
 import com.watabou.pixeldungeon.sprites.GnollSprite;
 import com.watabou.utils.Random;
 
 public class Gnoll extends Mob {
-	
+
 	{
 		name = Game.getVar(R.string.Gnoll_Name);
 		spriteClass = GnollSprite.class;
-		
+
 		HP = HT = 12;
 		defenseSkill = 4;
-		
+
 		EXP = 2;
 		maxLvl = 8;
-		
+
 		loot = Gold.class;
 		lootChance = 0.5f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 5 );
+		return Random.NormalIntRange(2, 5);
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 11;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 2;
 	}
-	
+
 	@Override
-	public void die( Object cause ) {
-		Ghost.Quest.process( pos );
-		super.die( cause );
+	public void die(Object cause) {
+		Dungeon.ghostQuest.process(pos);
+		super.die(cause);
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Gnoll_Desc);

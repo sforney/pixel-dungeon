@@ -25,8 +25,6 @@ import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
-import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 
 public class Sorrowmoss extends Plant {
 
@@ -54,22 +52,5 @@ public class Sorrowmoss extends Plant {
 	@Override
 	public String desc() {
 		return TXT_DESC;
-	}
-	
-	public static class Seed extends Plant.Seed {
-		{
-			plantName = TXT_NAME;
-			
-			name = String.format(TXT_SEED, plantName);
-			image = ItemSpriteSheet.SEED_SORROWMOSS;
-			
-			plantClass = Sorrowmoss.class;
-			alchemyClass = PotionOfToxicGas.class;
-		}
-		
-		@Override
-		public String desc() {
-			return TXT_DESC;
-		}
 	}
 }

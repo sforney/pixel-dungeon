@@ -62,7 +62,7 @@ public class WndSadGhost extends Window {
 		RedButton btnWeapon = new RedButton( TXT_WEAPON ) {
 			@Override
 			protected void onClick() {
-				selectReward( ghost, item, Ghost.Quest.weapon );
+				selectReward( ghost, item, Dungeon.ghostQuest.weapon );
 			}
 		};
 		btnWeapon.setRect( 0, message.y + message.height() + GAP, WIDTH, BTN_HEIGHT );
@@ -71,7 +71,7 @@ public class WndSadGhost extends Window {
 		RedButton btnArmor = new RedButton( TXT_ARMOR ) {
 			@Override
 			protected void onClick() {
-				selectReward( ghost, item, Ghost.Quest.armor );
+				selectReward( ghost, item, Dungeon.ghostQuest.armor );
 			}
 		};
 		btnArmor.setRect( 0, btnWeapon.bottom() + GAP, WIDTH, BTN_HEIGHT );
@@ -95,6 +95,6 @@ public class WndSadGhost extends Window {
 		ghost.yell( "Farewell, adventurer!" );
 		ghost.die( null );
 		
-		Ghost.Quest.complete();
+		Dungeon.ghostQuest.complete();
 	}
 }

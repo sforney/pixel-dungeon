@@ -33,9 +33,7 @@ import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.watabou.pixeldungeon.items.Ankh;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.Potion;
@@ -57,6 +55,8 @@ import com.watabou.pixeldungeon.levels.PrisonLevel;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.SewerBossLevel;
 import com.watabou.pixeldungeon.levels.SewerLevel;
+import com.watabou.pixeldungeon.quest.GhostQuest;
+import com.watabou.pixeldungeon.quest.WandmakerQuest;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.StartScene;
 import com.watabou.pixeldungeon.ui.QuickSlot;
@@ -88,6 +88,8 @@ public class Dungeon {
 	public static String resultDescription;
 	
 	public static HashSet<Integer> chapters;
+	public static GhostQuest ghostQuest;
+	public static WandmakerQuest wandmakerQuest;
 	
 	// Hero's field of view
 	public static boolean[] visible = new boolean[Level.LENGTH];
@@ -125,8 +127,8 @@ public class Dungeon {
 		
 		chapters = new HashSet<Integer>();
 		
-		Ghost.Quest.reset();
-		Wandmaker.Quest.reset();
+		ghostQuest = new GhostQuest();
+		wandmakerQuest = new WandmakerQuest();
 		Blacksmith.Quest.reset();
 		Imp.Quest.reset();
 		
@@ -391,8 +393,8 @@ public class Dungeon {
 			bundle.put( CHAPTERS, ids );
 			
 			Bundle quests = new Bundle();
-			Ghost		.Quest.storeInBundle( quests );
-			Wandmaker	.Quest.storeInBundle( quests );
+			ghostQuest.storeInBundle( quests );
+			wandmakerQuest.storeInBundle( quests );
 			Blacksmith	.Quest.storeInBundle( quests );
 			Imp			.Quest.storeInBundle( quests );
 			bundle.put( QUESTS, quests );
@@ -492,13 +494,13 @@ public class Dungeon {
 			
 			Bundle quests = bundle.getBundle( QUESTS );
 			if (!quests.isNull()) {
-				Ghost.Quest.restoreFromBundle( quests );
-				Wandmaker.Quest.restoreFromBundle( quests );
+				ghostQuest.restoreFromBundle( quests );
+				wandmakerQuest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
 				Imp.Quest.restoreFromBundle( quests );
 			} else {
-				Ghost.Quest.reset();
-				Wandmaker.Quest.reset();
+				ghostQuest = new GhostQuest();
+				wandmakerQuest = new WandmakerQuest();
 				Blacksmith.Quest.reset();
 				Imp.Quest.reset();
 			}

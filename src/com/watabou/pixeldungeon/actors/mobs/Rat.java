@@ -18,9 +18,9 @@
 package com.watabou.pixeldungeon.actors.mobs;
 
 import com.watabou.noosa.Game;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.sprites.RatSprite;
 import com.watabou.utils.Random;
 
@@ -53,7 +53,7 @@ public class Rat extends Mob {
 	
 	@Override
 	public void die( Object cause ) {
-		Ghost.Quest.process( pos );
+		Dungeon.ghostQuest.process( pos );
 		
 		super.die( cause );
 	}

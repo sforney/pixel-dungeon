@@ -41,8 +41,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Imp extends NPC {
-
-	{
+	public Imp() {
 		name = Game.getVar(R.string.Imp_Name);
 		spriteClass = ImpSprite.class;
 	}

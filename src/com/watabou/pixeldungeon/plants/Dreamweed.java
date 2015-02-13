@@ -17,54 +17,30 @@
  */
 package com.watabou.pixeldungeon.plants;
 
-
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ConfusionGas;
-import com.watabou.pixeldungeon.items.potions.PotionOfInvisibility;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 
 public class Dreamweed extends Plant {
-
-	private static final String TXT_NAME = Game.getVar(R.string.Dreamweed_Name);
-	private static final String TXT_DESC = Game.getVar(R.string.Dreamweed_Desc);
-	
-	{
+	public Dreamweed() {
 		image = 3;
-		plantName = TXT_NAME;
+		plantName = Game.getVar(R.string.Dreamweed_Name);
 	}
-	
+
 	@Override
-	public void activate( Char ch ) {
-		super.activate( ch );
-		
+	public void activate(Char ch) {
+		super.activate(ch);
+
 		if (ch != null) {
-			GameScene.add( Blob.seed( pos, 400, ConfusionGas.class ) );
+			GameScene.add(Blob.seed(pos, 400, ConfusionGas.class));
 		}
 	}
-	
+
 	@Override
 	public String desc() {
-		return TXT_DESC;
-	}
-	
-	public static class Seed extends Plant.Seed {
-		{
-			plantName = TXT_NAME;
-			
-			name = String.format(TXT_SEED, plantName);
-			image = ItemSpriteSheet.SEED_DREAMWEED;
-			
-			plantClass = Dreamweed.class;
-			alchemyClass = PotionOfInvisibility.class;
-		}
-		
-		@Override
-		public String desc() {
-			return TXT_DESC;
-		}
+		return Game.getVar(R.string.Dreamweed_Desc);
 	}
 }
