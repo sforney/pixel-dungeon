@@ -22,6 +22,7 @@ import java.io.IOException;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.InterlevelScene;
 import com.watabou.pixeldungeon.scenes.RankingsScene;
@@ -32,13 +33,13 @@ import com.watabou.pixeldungeon.ui.Window;
 
 public class WndGame extends Window {
 	
-	private static final String TXT_SETTINGS	= "Settings";
-	private static final String TXT_CHALLEGES	= "Challenges";
-	private static final String TXT_RANKINGS	= "Rankings";
-	private static final String TXT_START		= "Start New Game";
-	private static final String TXT_MENU		= "Main Menu";
-	private static final String TXT_EXIT		= "Exit Game";
-	private static final String TXT_RETURN		= "Return to Game";
+	private static final String TXT_SETTINGS	= PixelDungeon.resources.getString(R.string.settings);
+	private static final String TXT_CHALLEGES	= PixelDungeon.resources.getString(R.string.challenges);
+	private static final String TXT_RANKINGS	= PixelDungeon.resources.getString(R.string.rankings);
+	private static final String TXT_START		= PixelDungeon.resources.getString(R.string.new_game);
+	private static final String TXT_MENU		= PixelDungeon.resources.getString(R.string.main_menu);
+	private static final String TXT_EXIT		= PixelDungeon.resources.getString(R.string.exit_game);
+	private static final String TXT_RETURN		= PixelDungeon.resources.getString(R.string.return_game);
 	
 	private static final int WIDTH		= 120;
 	private static final int BTN_HEIGHT	= 20;

@@ -24,7 +24,8 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.TextStrings;
+import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
@@ -63,13 +64,13 @@ public class Ghost extends NPC {
 		state = WANDERING;
 	}
 
-	private final String TXT_ROSE1 = TextStrings.TXT_ROSE1;
+	private final String TXT_ROSE1 = PixelDungeon.resources.getString(R.string.txt_rose1);
 
-	private final String TXT_ROSE2 = TextStrings.TXT_ROSE2;
+	private final String TXT_ROSE2 = PixelDungeon.resources.getString(R.string.txt_rose2);
 
-	private final String TXT_RAT1 = TextStrings.TXT_RAT1;
+	private final String TXT_RAT1 = PixelDungeon.resources.getString(R.string.txt_rat1);
 
-	private final String TXT_RAT2 = TextStrings.TXT_RAT2;
+	private final String TXT_RAT2 = PixelDungeon.resources.getString(R.string.txt_rat2);
 
 	public Ghost() {
 		super();

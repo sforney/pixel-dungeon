@@ -21,6 +21,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,6 +35,7 @@ import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.scenes.TitleScene;
 
 public class PixelDungeon extends Game {
+	public static Resources resources;
 	
 	public PixelDungeon() {
 		super( TitleScene.class );
@@ -112,7 +114,7 @@ public class PixelDungeon extends Game {
 	protected void onCreate( Bundle savedInstanceState ) {
 		super.onCreate( savedInstanceState );
 		
-		TextStrings.init(getResources());
+		resources = this.getResources();
 		
 		updateImmersiveMode();
 		

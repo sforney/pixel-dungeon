@@ -2,9 +2,103 @@
 <resources>
 
 	<string name="app_name">Pixel Dungeon</string>
-	<string name="txt_rose1">""Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my _dried rose_... It's very important to me... \nSome monster stole it from my body..."</string>
+	
+	<!-- Game strings -->
+	<string name="new_game">"Start New Game"</string>
+	<string name="rankings">"Rankings"</string>
+	<string name="challenges">"Challenges"</string>
+	<string name="settings">"Settings"</string>
+	<string name="main_menu">"Main Menu"</string>
+	<string name="exit_game">"Exit Game"</string>
+	<string name="return_game">"Return to Game"</string>
+	
+	<!--  Error strings -->
+	<string name="error">"Error"</string>
+	
+	<!-- Window settings strings -->
+	<string name="zoom_in">"+"</string>
+	<string name="zoom_out">"-"</string>
+	<string name="default_zoom">"Default Zoom"</string>
+	<string name="scale_up">"Scale up UI"</string>
+	<string name="immersive">"Immersive Mode"</string>
+	<string name="music">"Music"</string>
+	<string name="sound">"Sound FX"</string>
+	<string name="brightness">"Brightness"</string>
+	<string name="quickslot">"Second quickslot"</string>
+	<string name="portrait">"Switch to Portrait"</string>
+	<string name="landscape">"Switch to Landscape"</string>
+	
+	<!-- Class strings -->
+	<string name="mastery">Mastery</string>
+	<string name="subclass_choose">"Which way will you follow?"</string>
+	<string name="subclass_cancel">"I'll decide later"</string>
+	
+	<!-- Catalog strings -->
+	<string name="potions">Potions</string>
+	<string name="scrolls">Scrolls</string>
+	<string name="catalog">Catalogus</string>
+	
+	<!-- Story strings -->
+	<string name="sewers">"The Dungeon lies right beneath the City, its upper levels actually constitute the City's sewer system. Being nominally a part of the City, these levels are not that dangerous. No one will call it a safe place, but at least you won't need to deal with evil magic here."</string>
+	
+	<!-- Ghost quest strings -->
+	<string name="txt_rose1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my _dried rose_... It's very important to me... \nSome monster stole it from my body..."</string>
 	<string name="txt_rose2">"Please... Help me... Find the rose..."</string>
 	<string name="txt_rat1">"Hello adventurer... Once I was like you - strong and confident...\n And now I'm dead... But I can't leave this place... \nNot until I have my revenge... Slay the _fetid rat_, that has taken my life..."</string>
 	<string name="txt_rat2">"Please... Help me... Slay the abomination..."</string>
+	<string name="rose_return">"Yes! Yes!!! This is it! Please give it to me! And you can take one of these items, maybe they will be useful to you in your journey...";</string>
+	<string name="fRat_dead">"Yes! The ugly creature is slain and I can finally rest... Please take one of these items, maybe they will be useful to you in your journey...";</string>
+	<string name="ghost_weapon">"Ghost's weapon"</string>
+	<string name="ghost_armor">"Ghost's armor"</string>
+	<string name="ghost_bye">"Farewell, adventurer!"</string>
 	
+	<!-- Wandmaker strings -->
+	<string name="wm_complete">"Oh, I see you have succeeded! I do hope it hasn't troubled you too much. As I promised, you can choose one of my high quality wands."</string>
+	<string name="battle_wand">Battle Wand</string>
+	<string name="non_battle_wand">Non-battle Wand</string>
+	<string name="wm_bye">"Good luck in your quest, %s!"</string>
+	
+	<!-- Blacksmith strings -->
+	<string name="bs_complete">"Ok, a deal is a deal, dat's what I can do for you: I can reforge 2 items and turn them into one of a better quality."</string>
+	<string name="bs_reforge_select">"Select an item to reforge"</string>
+	<string name="bs_reforge">"Reforge"</string>
+	
+	<!-- Imp strings -->
+	<string name="imp_complete">"Oh yes! You are my hero!\nRegarding your reward, I don't have cash with me right now, but I have something better for you. This is my family heirloom ring: my granddad took it off a dead paladin's finger."</string>
+	<string name="imp_reward">"Take the ring"</string>
+	
+	
+	<!--  Resurrection strings -->
+	<string name="ankh">"You died, but you were given another chance to win this dungeon. Will you take it?"</string>
+	<string name="ankh_yes">"Yes, I will fight!"</string>
+	<string name="ankh_no">"No, I give up"</string>
+	
+	<!--  Journal strings -->
+	<string name="journal_title">Journal</string>
+	
+	<!--  Cell info strings -->
+	<string name="chest">Chest</string>
+	<string name="locked_chest">Locked chest</string>
+	<string name="crystal_chest">Crystal chest</string>
+	<string name="tomb">"Tomb"</string>
+	<string name="skel_remains">"Skeletal remains"</string>
+	<string name="chest_inside">"You won't know what's inside until you open it!"</string>
+	<string name="need_key">"But to open it you need a golden key."</string>
+	<string name="crystal_chest_desc">"You can see %s inside, but to open the chest you need a golden key."</string>
+	<string name="tomb_desc">"This ancient tomb may contain something useful, but its owner will most certainly object to checking."</string>
+	<string name="remains">"This is all that's left from one of your predecessors. Maybe it's worth checking for any valuables."</string>
+	<string name="nothing">"There is nothing here."</string>
+	
+	<!-- Dungeon feature strings -->
+	<string name="well_health">"Well of Health"</string>
+	<string name="well_awareness">"Well of Awareness"</string>
+	<string name="well_transmute">"Well of Transmutation"</string>
+	<string name="alchemy_pot">"Alchemy Pot"</string>
+	<string name="statue">"Animated Statue"</string>
+	<string name="garden">"Garden"</string>
+	<string name="sad_ghost">"Sad Ghost"</string>
+	<string name="wandmaker">"Old Wandmaker"</string>
+	<string name="blacksmith">"Troll Blacksmith"</string>
+	<string name="imp">"Ambitious Imp"</string>
+	<string name="invalid_feature">"Invalid Feature"</string>
 </resources>
