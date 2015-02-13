@@ -1,5 +1,8 @@
 package com.watabou.pixeldungeon.journal;
 
+import com.watabou.pixeldungeon.PixelDungeon;
+import com.watabou.pixeldungeon.R;
+
 /**
  * This should probably be replaced with something that allows for
  * localizations
@@ -13,27 +16,27 @@ public enum ConcreteFeature {
 	public String getDescription(ConcreteFeature feature) {
 		switch (feature) {
 		case WELL_OF_HEALTH:
-			return "Well of Health";
+			return PixelDungeon.resources.getString(R.string.well_health);
 		case WELL_OF_AWARENESS:
-			return "Well of Awareness";
+			return PixelDungeon.resources.getString(R.string.well_awareness);
 		case WELL_OF_TRANSMUTATION:
-			return "Well of Transmutation";
+			return PixelDungeon.resources.getString(R.string.well_transmute);
 		case ALCHEMY:
-			return "Alchemy Pot";
+			return PixelDungeon.resources.getString(R.string.alchemy_pot);
 		case GARDEN:
-			return "Garden";
+			return PixelDungeon.resources.getString(R.string.garden);
 		case STATUE:
-			return "Animated Statue";
+			return PixelDungeon.resources.getString(R.string.statue);
 		case GHOST:
-			return "Sad Ghost";
+			return PixelDungeon.resources.getString(R.string.sad_ghost);
 		case WANDMAKER:
-			return "Old Wandmaker";
+			return PixelDungeon.resources.getString(R.string.wandmaker);
 		case TROLL:
-			return "Troll Blacksmith";
+			return PixelDungeon.resources.getString(R.string.blacksmith);
 		case IMP:
-			return "Ambitious Imp";
+			return PixelDungeon.resources.getString(R.string.imp);
 		}
 		// Should never get here
-		return "Invalid Feature";
+		return PixelDungeon.resources.getString(R.string.invalid_feature);
 	}
 }

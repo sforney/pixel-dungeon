@@ -88,4 +88,17 @@
 	<string name="tomb_desc">"This ancient tomb may contain something useful, but its owner will most certainly object to checking."</string>
 	<string name="remains">"This is all that's left from one of your predecessors. Maybe it's worth checking for any valuables."</string>
 	<string name="nothing">"There is nothing here."</string>
+	
+	<!-- Dungeon feature strings -->
+	<string name="well_health">"Well of Health"</string>
+	<string name="well_awareness">"Well of Awareness"</string>
+	<string name="well_transmute">"Well of Transmutation"</string>
+	<string name="alchemy_pot">"Alchemy Pot"</string>
+	<string name="statue">"Animated Statue"</string>
+	<string name="garden">"Garden"</string>
+	<string name="sad_ghost">"Sad Ghost"</string>
+	<string name="wandmaker">"Old Wandmaker"</string>
+	<string name="blacksmith">"Troll Blacksmith"</string>
+	<string name="imp">"Ambitious Imp"</string>
+	<string name="invalid_feature">"Invalid Feature"</string>
 </resources>
