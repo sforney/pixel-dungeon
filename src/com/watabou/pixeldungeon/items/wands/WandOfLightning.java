@@ -24,7 +24,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.CellEmitter;
@@ -41,74 +40,77 @@ public class WandOfLightning extends Wand {
 	{
 		name = Game.getVar(R.string.WandOfLightning_Name);
 	}
-	
+
 	private ArrayList<Char> affected = new ArrayList<Char>();
-	
+
 	private int[] points = new int[20];
 	private int nPoints;
-	
+
 	@Override
-	protected void onZap( int cell ) {
+	protected void onZap(int cell) {
 		// Everything is processed in fx() method
 		if (!curUser.isAlive()) {
-			Dungeon.fail( Utils.format( ResultDescriptions.WAND, name, Dungeon.depth ) );
+			Dungeon.fail(Utils.format(
+					Game.getVar(R.string.ResultDescriptions_Wand), name,
+					Dungeon.depth));
 			GLog.n(Game.getVar(R.string.WandOfLightning_Info1));
 		}
 	}
-	
-	private void hit( Char ch, int damage ) {
-		
+
+	private void hit(Char ch, int damage) {
+
 		if (damage < 1) {
 			return;
 		}
-		
+
 		if (ch == Dungeon.hero) {
-			Camera.main.shake( 2, 0.3f );
+			Camera.main.shake(2, 0.3f);
 		}
-		
-		affected.add( ch );
-		ch.damage( Level.water[ch.pos] && !ch.flying ? (int)(damage * 2) : damage, LightningTrap.LIGHTNING  );
-		
-		ch.sprite.centerEmitter().burst( SparkParticle.FACTORY, 3 );
+
+		affected.add(ch);
+		ch.damage(Level.water[ch.pos] && !ch.flying ? (int) (damage * 2)
+				: damage, LightningTrap.LIGHTNING);
+
+		ch.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 		ch.sprite.flash();
-		
+
 		points[nPoints++] = ch.pos;
-		
+
 		HashSet<Char> ns = new HashSet<Char>();
-		for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar( ch.pos + Level.NEIGHBOURS8[i] );
-			if (n != null && !affected.contains( n )) {
-				ns.add( n );
+		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
+			Char n = Actor.findChar(ch.pos + Level.NEIGHBOURS8[i]);
+			if (n != null && !affected.contains(n)) {
+				ns.add(n);
 			}
 		}
-		
+
 		if (ns.size() > 0) {
-			hit( Random.element( ns ), Random.Int( damage / 2, damage ) );
+			hit(Random.element(ns), Random.Int(damage / 2, damage));
 		}
 	}
-	
+
 	@Override
-	protected void fx( int cell, Callback callback ) {
-		
+	protected void fx(int cell, Callback callback) {
+
 		nPoints = 0;
 		points[nPoints++] = Dungeon.hero.pos;
-		
-		Char ch = Actor.findChar( cell );
+
+		Char ch = Actor.findChar(cell);
 		if (ch != null) {
-			
+
 			affected.clear();
 			int lvl = level();
-			hit( ch, Random.Int( 5 + lvl / 2, 10 + lvl ) );
+			hit(ch, Random.Int(5 + lvl / 2, 10 + lvl));
 
 		} else {
-			
+
 			points[nPoints++] = cell;
-			CellEmitter.center( cell ).burst( SparkParticle.FACTORY, 3 );
-			
+			CellEmitter.center(cell).burst(SparkParticle.FACTORY, 3);
+
 		}
-		curUser.sprite.parent.add( new Lightning( points, nPoints, callback ) );
+		curUser.sprite.parent.add(new Lightning(points, nPoints, callback));
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WandOfLightning_Info);

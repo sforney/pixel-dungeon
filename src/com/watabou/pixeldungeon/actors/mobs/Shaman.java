@@ -23,7 +23,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.particles.SparkParticle;
 import com.watabou.pixeldungeon.items.Generator;
@@ -39,103 +38,107 @@ import com.watabou.utils.Random;
 
 public class Shaman extends Mob implements Callback {
 
-	private static final float TIME_TO_ZAP	= 2f;
-	
-	private static final String TXT_LIGHTNING_KILLED = Game.getVar(R.string.Shaman_Killed);
-	
+	private static final float TIME_TO_ZAP = 2f;
+
+	private static final String TXT_LIGHTNING_KILLED = Game
+			.getVar(R.string.Shaman_Killed);
+
 	{
 		name = Game.getVar(R.string.Shaman_Name);
 		spriteClass = ShamanSprite.class;
-		
+
 		HP = HT = 18;
 		defenseSkill = 8;
-		
+
 		EXP = 6;
 		maxLvl = 14;
-		
+
 		loot = Generator.Category.SCROLL;
 		lootChance = 0.33f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 2, 6 );
+		return Random.NormalIntRange(2, 6);
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 11;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 4;
 	}
-	
-	@Override
-	protected boolean canAttack( Char enemy ) {
-		return Ballistica.cast( pos, enemy.pos, false, true ) == enemy.pos;
-	}
-	
-	@Override
-	protected boolean doAttack( Char enemy ) {
 
-		if (Level.distance( pos, enemy.pos ) <= 1) {
-			
-			return super.doAttack( enemy );
-			
+	@Override
+	protected boolean canAttack(Char enemy) {
+		return Ballistica.cast(pos, enemy.pos, false, true) == enemy.pos;
+	}
+
+	@Override
+	protected boolean doAttack(Char enemy) {
+
+		if (Level.distance(pos, enemy.pos) <= 1) {
+
+			return super.doAttack(enemy);
+
 		} else {
-			
-			boolean visible = Level.fieldOfView[pos] || Level.fieldOfView[enemy.pos]; 
+
+			boolean visible = Level.fieldOfView[pos]
+					|| Level.fieldOfView[enemy.pos];
 			if (visible) {
-				((ShamanSprite)sprite).zap( enemy.pos );
+				((ShamanSprite) sprite).zap(enemy.pos);
 			}
-			
-			spend( TIME_TO_ZAP );
-			
-			if (hit( this, enemy, true )) {
-				int dmg = Random.Int( 2, 12 );
+
+			spend(TIME_TO_ZAP);
+
+			if (hit(this, enemy, true)) {
+				int dmg = Random.Int(2, 12);
 				if (Level.water[enemy.pos] && !enemy.flying) {
 					dmg *= 1.5f;
 				}
-				enemy.damage( dmg, LightningTrap.LIGHTNING );
-				
-				enemy.sprite.centerEmitter().burst( SparkParticle.FACTORY, 3 );
+				enemy.damage(dmg, LightningTrap.LIGHTNING);
+
+				enemy.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 				enemy.sprite.flash();
-				
+
 				if (enemy == Dungeon.hero) {
-					
-					Camera.main.shake( 2, 0.3f );
-					
+
+					Camera.main.shake(2, 0.3f);
+
 					if (!enemy.isAlive()) {
-						Dungeon.fail( Utils.format( ResultDescriptions.MOB, 
-							Utils.indefinite( name ), Dungeon.depth ) );
-						GLog.n( TXT_LIGHTNING_KILLED, name );
+						Dungeon.fail(Utils.format(
+								Game.getVar(R.string.ResultDescriptions_Mob),
+								Utils.indefinite(name), Dungeon.depth));
+						GLog.n(TXT_LIGHTNING_KILLED, name);
 					}
 				}
 			} else {
-				enemy.sprite.showStatus( CharSprite.NEUTRAL,  enemy.defenseVerb() );
+				enemy.sprite
+						.showStatus(CharSprite.NEUTRAL, enemy.defenseVerb());
 			}
-			
+
 			return !visible;
 		}
 	}
-	
+
 	@Override
 	public void call() {
 		next();
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Shaman_Desc);
 	}
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	static {
-		RESISTANCES.add( LightningTrap.Electricity.class );
+		RESISTANCES.add(LightningTrap.Electricity.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;

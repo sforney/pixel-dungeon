@@ -20,37 +20,38 @@ package com.watabou.pixeldungeon.actors.buffs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
 
 public class Ooze extends Buff {
-	
+
 	private static final String TXT_DEATH = Game.getVar(R.string.Ooze_Death);
-	
-	public int damage	= 1;
-	
+
+	public int damage = 1;
+
 	@Override
 	public int icon() {
 		return BuffIndicator.OOZE;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Ooze_Info);
 	}
-	
+
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			target.damage( damage, this );
+			target.damage(damage, this);
 			if (!target.isAlive() && target == Dungeon.hero) {
-				Dungeon.fail( Utils.format( ResultDescriptions.OOZE, Dungeon.depth ) );
-				GLog.n( TXT_DEATH, toString() );
+				Dungeon.fail(Utils.format(
+						Game.getVar(R.string.ResultDescriptions_Ooze),
+						Dungeon.depth));
+				GLog.n(TXT_DEATH, toString());
 			}
-			spend( TICK );
+			spend(TICK);
 		}
 		if (Level.water[target.pos]) {
 			detach();

@@ -21,7 +21,6 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -90,7 +89,7 @@ public class ToxicGas extends Blob implements Hero.Doom {
 		
 		Badges.validateDeathFromGas();
 		
-		Dungeon.fail( Utils.format( ResultDescriptions.GAS, Dungeon.depth ) );
+		Dungeon.fail( Utils.format( Game.getVar(R.string.ResultDescriptions_Gas), Dungeon.depth ) );
 		GLog.n(Game.getVar(R.string.ToxicGas_Info1));
 	}
 }

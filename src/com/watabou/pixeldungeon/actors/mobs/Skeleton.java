@@ -24,7 +24,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.Item;
@@ -37,90 +36,94 @@ import com.watabou.utils.Random;
 
 public class Skeleton extends Mob {
 
-	private static final String TXT_HERO_KILLED = Game.getVar(R.string.Skeleton_Killed);
-	
+	private static final String TXT_HERO_KILLED = Game
+			.getVar(R.string.Skeleton_Killed);
+
 	{
 		name = Game.getVar(R.string.Skeleton_Name);
 		spriteClass = SkeletonSprite.class;
-		
+
 		HP = HT = 25;
 		defenseSkill = 9;
-		
+
 		EXP = 5;
 		maxLvl = 10;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 3, 8 );
+		return Random.NormalIntRange(3, 8);
 	}
-	
+
 	@Override
-	public void die( Object cause ) {
-		
-		super.die( cause );
-		
+	public void die(Object cause) {
+
+		super.die(cause);
+
 		boolean heroKilled = false;
-		for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
-			Char ch = findChar( pos + Level.NEIGHBOURS8[i] );
+		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
+			Char ch = findChar(pos + Level.NEIGHBOURS8[i]);
 			if (ch != null && ch.isAlive()) {
-				int damage = Math.max( 0,  damageRoll() - Random.IntRange( 0, ch.dr() / 2 ) );
-				ch.damage( damage, this );
+				int damage = Math.max(0,
+						damageRoll() - Random.IntRange(0, ch.dr() / 2));
+				ch.damage(damage, this);
 				if (ch == Dungeon.hero && !ch.isAlive()) {
 					heroKilled = true;
 				}
 			}
 		}
-		
+
 		if (Dungeon.visible[pos]) {
-			Sample.INSTANCE.play( Assets.SND_BONES );
+			Sample.INSTANCE.play(Assets.SND_BONES);
 		}
-		
+
 		if (heroKilled) {
-			Dungeon.fail( Utils.format( ResultDescriptions.MOB, Utils.indefinite( name ), Dungeon.depth ) );
-			GLog.n( TXT_HERO_KILLED );
+			Dungeon.fail(Utils.format(
+					Game.getVar(R.string.ResultDescriptions_Mob),
+					Utils.indefinite(name), Dungeon.depth));
+			GLog.n(TXT_HERO_KILLED);
 		}
 	}
-	
+
 	@Override
 	protected void dropLoot() {
-		if (Random.Int( 5 ) == 0) {
-			Item loot = Generator.random( Generator.Category.WEAPON );
-			for (int i=0; i < 2; i++) {
-				Item l = Generator.random( Generator.Category.WEAPON );
+		if (Random.Int(5) == 0) {
+			Item loot = Generator.random(Generator.Category.WEAPON);
+			for (int i = 0; i < 2; i++) {
+				Item l = Generator.random(Generator.Category.WEAPON);
 				if (l.level < loot.level) {
 					loot = l;
 				}
 			}
-			Dungeon.level.drop( loot, pos ).sprite.drop();
+			Dungeon.level.drop(loot, pos).sprite.drop();
 		}
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 12;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 5;
 	}
-	
+
 	@Override
 	public String defenseVerb() {
 		return Game.getVar(R.string.Skeleton_Defense);
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Skeleton_Desc);
 	}
-	
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 	static {
-		IMMUNITIES.add( Death.class );
+		IMMUNITIES.add(Death.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;

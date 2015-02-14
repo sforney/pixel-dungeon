@@ -25,7 +25,6 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -40,111 +39,117 @@ import com.watabou.utils.Random;
 
 public class WandOfMagicMissile extends Wand {
 
-	public static final String AC_DISENCHANT    = Game.getVar(R.string.WandOfMagicMissile_ACDisenchant);
-	
-	private static final String TXT_SELECT_WAND	= Game.getVar(R.string.WandOfMagicMissile_SelectWand);
-	
-	private static final String TXT_DISENCHANTED = Game.getVar(R.string.WandOfMagicMissile_Desinchanted);
-	
-	private static final float TIME_TO_DISENCHANT	= 2f;
-	
+	public static final String AC_DISENCHANT = Game
+			.getVar(R.string.WandOfMagicMissile_ACDisenchant);
+
+	private static final String TXT_SELECT_WAND = Game
+			.getVar(R.string.WandOfMagicMissile_SelectWand);
+
+	private static final String TXT_DISENCHANTED = Game
+			.getVar(R.string.WandOfMagicMissile_Desinchanted);
+
+	private static final float TIME_TO_DISENCHANT = 2f;
+
 	private boolean disenchantEquipped;
-	
+
 	{
 		name = Game.getVar(R.string.WandOfMagicMissile_Name);
 		image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
 	}
-	
+
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
 		if (level > 0) {
-			actions.add( AC_DISENCHANT );
+			actions.add(AC_DISENCHANT);
 		}
 		return actions;
 	}
-	
+
 	@Override
-	protected void onZap( int cell ) {
-				
-		Char ch = Actor.findChar( cell );
-		if (ch != null) {	
-			
+	protected void onZap(int cell) {
+
+		Char ch = Actor.findChar(cell);
+		if (ch != null) {
+
 			int level = level();
-			
-			ch.damage( Random.Int( 1, 6 + level * 2 ), this );
-			ch.sprite.burst( 0xFF99CCFF, level / 2 + 2 );
-			
+
+			ch.damage(Random.Int(1, 6 + level * 2), this);
+			ch.sprite.burst(0xFF99CCFF, level / 2 + 2);
+
 			if (ch == curUser && !ch.isAlive()) {
-				Dungeon.fail( Utils.format( ResultDescriptions.WAND, name, Dungeon.depth ) );
+				Dungeon.fail(Utils.format(
+						Game.getVar(R.string.ResultDescriptions_Wand), name,
+						Dungeon.depth));
 				GLog.n(Game.getVar(R.string.WandOfMagicMissile_Info1));
 			}
 		}
 	}
-	
+
 	@Override
-	public void execute( Hero hero, String action ) {
-		if (action.equals( AC_DISENCHANT )) {
-			
+	public void execute(Hero hero, String action) {
+		if (action.equals(AC_DISENCHANT)) {
+
 			if (hero.belongings.weapon == this) {
 				disenchantEquipped = true;
 				hero.belongings.weapon = null;
 				updateQuickslot();
 			} else {
 				disenchantEquipped = false;
-				detach( hero.belongings.backpack );
+				detach(hero.belongings.backpack);
 			}
-			
+
 			curUser = hero;
-			GameScene.selectItem( itemSelector, WndBag.Mode.WAND, TXT_SELECT_WAND );
-			
+			GameScene.selectItem(itemSelector, WndBag.Mode.WAND,
+					TXT_SELECT_WAND);
+
 		} else {
-		
-			super.execute( hero, action );
-			
+
+			super.execute(hero, action);
+
 		}
 	}
-	
+
 	@Override
 	protected boolean isKnown() {
 		return true;
 	}
-	
+
 	@Override
 	public void setKnown() {
 	}
-	
+
 	protected int initialCharges() {
 		return 3;
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WandOfMagicMissile_Info);
 	}
-	
+
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
-		public void onSelect( Item item ) {
+		public void onSelect(Item item) {
 			if (item != null) {
-				
-				Sample.INSTANCE.play( Assets.SND_EVOKE );
-				ScrollOfUpgrade.upgrade( curUser );
-				evoke( curUser );
-				
-				GLog.w( TXT_DISENCHANTED, item.name() );
-				
+
+				Sample.INSTANCE.play(Assets.SND_EVOKE);
+				ScrollOfUpgrade.upgrade(curUser);
+				evoke(curUser);
+
+				GLog.w(TXT_DISENCHANTED, item.name());
+
 				item.upgrade();
-				curUser.spendAndNext( TIME_TO_DISENCHANT );
-				
-				Badges.validateItemLevelAquired( item );
-				
+				curUser.spendAndNext(TIME_TO_DISENCHANT);
+
+				Badges.validateItemLevelAquired(item);
+
 			} else {
 				if (disenchantEquipped) {
 					curUser.belongings.weapon = WandOfMagicMissile.this;
 					WandOfMagicMissile.this.updateQuickslot();
 				} else {
-					collect( curUser.belongings.backpack );
+					collect(curUser.belongings.backpack);
 				}
 			}
 		}

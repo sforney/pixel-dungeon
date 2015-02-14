@@ -289,6 +289,7 @@ public class Item implements Bundlable {
 	}
 	
 	public void use() {
+		/*
 		if (level > 0) {
 			int threshold = (int)(maxDurability() * DURABILITY_WARNING_LEVEL);
 			if (durability-- >= threshold && threshold > durability) {
@@ -314,7 +315,7 @@ public class Item implements Bundlable {
 					Sample.INSTANCE.play( Assets.SND_DEGRADE );
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void fix() {

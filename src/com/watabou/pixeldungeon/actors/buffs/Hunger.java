@@ -21,7 +21,6 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.items.rings.RingOfSatiety;
@@ -33,102 +32,106 @@ import com.watabou.utils.Random;
 
 public class Hunger extends Buff implements Hero.Doom {
 
-	private static final float STEP	= 10f;
-	
-	public static final float HUNGRY	= 260f;
-	public static final float STARVING	= 360f;
-	
-	private static final String TXT_HUNGRY		= Game.getVar(R.string.Hunger_Hungry);
-	private static final String TXT_STARVING	= Game.getVar(R.string.Hunger_Starving);
-	private static final String TXT_DEATH		= Game.getVar(R.string.Hunger_Death);
-	
+	private static final float STEP = 10f;
+
+	public static final float HUNGRY = 260f;
+	public static final float STARVING = 360f;
+
+	private static final String TXT_HUNGRY = Game
+			.getVar(R.string.Hunger_Hungry);
+	private static final String TXT_STARVING = Game
+			.getVar(R.string.Hunger_Starving);
+	private static final String TXT_DEATH = Game.getVar(R.string.Hunger_Death);
+
 	private float level;
 
-	private static final String LEVEL	= "level";
-	
+	private static final String LEVEL = "level";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEVEL, level );
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(LEVEL, level);
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		level = bundle.getFloat( LEVEL );
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		level = bundle.getFloat(LEVEL);
 	}
-	
+
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			
-			Hero hero = (Hero)target;
-			
+
+			Hero hero = (Hero) target;
+
 			if (isStarving()) {
-				if (Random.Float() < 0.3f && (target.HP > 1 || !target.paralysed)) {
-					
-					GLog.n( TXT_STARVING );
-					hero.damage( 1, this );
-					
+				if (Random.Float() < 0.3f
+						&& (target.HP > 1 || !target.paralysed)) {
+
+					GLog.n(TXT_STARVING);
+					hero.damage(1, this);
+
 					hero.interrupt();
 				}
-			} else {	
-				
+			} else {
+
 				int bonus = 0;
-				for (Buff buff : target.buffs( RingOfSatiety.Satiety.class )) {
-					bonus += ((RingOfSatiety.Satiety)buff).level;
+				for (Buff buff : target.buffs(RingOfSatiety.Satiety.class)) {
+					bonus += ((RingOfSatiety.Satiety) buff).level;
 				}
-				
+
 				float newLevel = level + STEP - bonus;
 				boolean statusUpdated = false;
 				if (newLevel >= STARVING) {
-					
-					GLog.n( TXT_STARVING );
+
+					GLog.n(TXT_STARVING);
 					statusUpdated = true;
-					
+
 					hero.interrupt();
-					
+
 				} else if (newLevel >= HUNGRY && level < HUNGRY) {
-					
-					GLog.w( TXT_HUNGRY );
+
+					GLog.w(TXT_HUNGRY);
 					statusUpdated = true;
-					
+
 				}
 				level = newLevel;
-				
+
 				if (statusUpdated) {
 					BuffIndicator.refreshHero();
 				}
-				
+
 			}
-			
-			float step = ((Hero)target).heroClass == HeroClass.ROGUE ? STEP * 1.2f : STEP;
-			spend( target.buff( Shadows.class ) == null ? step : step * 1.5f );
-			
+
+			float step = ((Hero) target).heroClass == HeroClass.ROGUE ? STEP * 1.2f
+					: STEP;
+			spend(target.buff(Shadows.class) == null ? step : step * 1.5f);
+
 		} else {
-			
+
 			diactivate();
-			
+
 		}
 
 		return true;
 	}
-	
-	public void satisfy( float energy ) {
+
+	public void satisfy(float energy) {
 		level -= energy;
 		if (level < 0) {
 			level = 0;
 		} else if (level > STARVING) {
 			level = STARVING;
 		}
-		
+
 		BuffIndicator.refreshHero();
 	}
-	
+
 	public boolean isStarving() {
 		return level >= STARVING;
 	}
-	
+
 	@Override
 	public int icon() {
 		if (level < HUNGRY) {
@@ -139,7 +142,7 @@ public class Hunger extends Buff implements Hero.Doom {
 			return BuffIndicator.STARVATION;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		if (level < STARVING) {
@@ -151,10 +154,11 @@ public class Hunger extends Buff implements Hero.Doom {
 
 	@Override
 	public void onDeath() {
-		
+
 		Badges.validateDeathFromHunger();
-		
-		Dungeon.fail( Utils.format( ResultDescriptions.HUNGER, Dungeon.depth ) );
-		GLog.n( TXT_DEATH );
+
+		Dungeon.fail(Utils.format(
+				Game.getVar(R.string.ResultDescriptions_Hunger), Dungeon.depth));
+		GLog.n(TXT_DEATH);
 	}
 }

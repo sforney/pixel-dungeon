@@ -22,7 +22,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
@@ -43,41 +42,43 @@ public class WandOfFirebolt extends Wand {
 	{
 		name = Game.getVar(R.string.WandOfFirebolt_Name);
 	}
-	
+
 	@Override
-	protected void onZap( int cell ) {
+	protected void onZap(int cell) {
 
 		int level = level();
-		
-		for (int i=1; i < Ballistica.distance - 1; i++) {
+
+		for (int i = 1; i < Ballistica.distance - 1; i++) {
 			int c = Ballistica.trace[i];
 			if (Level.flamable[c]) {
-				GameScene.add( Blob.seed( c, 1, Fire.class ) );
+				GameScene.add(Blob.seed(c, 1, Fire.class));
 			}
 		}
-		
-		GameScene.add( Blob.seed( cell, 1, Fire.class ) );
-					
-		Char ch = Actor.findChar( cell );
-		if (ch != null) {	
-			
-			ch.damage( Random.Int( 1, 8 + level * level ), this );
-			Buff.affect( ch, Burning.class ).reignite( ch );
 
-			ch.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
-			
+		GameScene.add(Blob.seed(cell, 1, Fire.class));
+
+		Char ch = Actor.findChar(cell);
+		if (ch != null) {
+
+			ch.damage(Random.Int(1, 8 + level * level), this);
+			Buff.affect(ch, Burning.class).reignite(ch);
+
+			ch.sprite.emitter().burst(FlameParticle.FACTORY, 5);
+
 			if (ch == curUser && !ch.isAlive()) {
-				Dungeon.fail( Utils.format( ResultDescriptions.WAND, name, Dungeon.depth ) );
+				Dungeon.fail(Utils.format(
+						Game.getVar(R.string.ResultDescriptions_Wand), name,
+						Dungeon.depth));
 				GLog.n(Game.getVar(R.string.WandOfFirebolt_Info1));
 			}
 		}
 	}
-	
-	protected void fx( int cell, Callback callback ) {
-		MagicMissile.fire( curUser.sprite.parent, curUser.pos, cell, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+
+	protected void fx(int cell, Callback callback) {
+		MagicMissile.fire(curUser.sprite.parent, curUser.pos, cell, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WandOfFirebolt_Info);

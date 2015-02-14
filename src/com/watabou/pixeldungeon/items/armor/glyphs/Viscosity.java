@@ -21,7 +21,6 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.ResultDescriptions;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.items.armor.Armor;
@@ -37,111 +36,117 @@ import com.watabou.utils.Random;
 
 public class Viscosity extends Glyph {
 
-	private static final String TXT_VISCOSITY = Game.getVar(R.string.Viscosity_Txt);
-	
-	private static ItemSprite.Glowing PURPLE = new ItemSprite.Glowing( 0x8844CC );
-	
+	private static final String TXT_VISCOSITY = Game
+			.getVar(R.string.Viscosity_Txt);
+
+	private static ItemSprite.Glowing PURPLE = new ItemSprite.Glowing(0x8844CC);
+
 	@Override
-	public int proc( Armor armor, Char attacker, Char defender, int damage ) {
+	public int proc(Armor armor, Char attacker, Char defender, int damage) {
 
 		if (damage == 0) {
 			return 0;
 		}
-		
-		int level = Math.max( 0, armor.level );
-		
-		if (Random.Int( level + 7 ) >= 6) {
-			
-			DeferedDamage debuff = defender.buff( DeferedDamage.class );
+
+		int level = Math.max(0, armor.level);
+
+		if (Random.Int(level + 7) >= 6) {
+
+			DeferedDamage debuff = defender.buff(DeferedDamage.class);
 			if (debuff == null) {
 				debuff = new DeferedDamage();
-				debuff.attachTo( defender );
+				debuff.attachTo(defender);
 			}
-			debuff.prolong( damage );
-			
-			defender.sprite.showStatus( CharSprite.WARNING, Game.getVar(R.string.Viscosity_Status), damage );
-			
+			debuff.prolong(damage);
+
+			defender.sprite.showStatus(CharSprite.WARNING,
+					Game.getVar(R.string.Viscosity_Status), damage);
+
 			return 0;
-			
+
 		} else {
 			return damage;
 		}
 	}
-	
+
 	@Override
-	public String name( String weaponName) {
-		return String.format( TXT_VISCOSITY, weaponName );
+	public String name(String weaponName) {
+		return String.format(TXT_VISCOSITY, weaponName);
 	}
 
 	@Override
 	public Glowing glowing() {
 		return PURPLE;
 	}
-	
+
 	public static class DeferedDamage extends Buff {
-		
+
 		protected int damage = 0;
-		
-		private static final String DAMAGE	= "damage";
-		
+
+		private static final String DAMAGE = "damage";
+
 		@Override
-		public void storeInBundle( Bundle bundle ) {
-			super.storeInBundle( bundle );
-			bundle.put( DAMAGE, damage );
+		public void storeInBundle(Bundle bundle) {
+			super.storeInBundle(bundle);
+			bundle.put(DAMAGE, damage);
 		}
-		
+
 		@Override
-		public void restoreFromBundle( Bundle bundle ) {
-			super.restoreFromBundle( bundle );
-			damage = bundle.getInt( DAMAGE );
+		public void restoreFromBundle(Bundle bundle) {
+			super.restoreFromBundle(bundle);
+			damage = bundle.getInt(DAMAGE);
 		}
-		
+
 		@Override
-		public boolean attachTo( Char target ) {
-			if (super.attachTo( target )) {
-				postpone( TICK );
+		public boolean attachTo(Char target) {
+			if (super.attachTo(target)) {
+				postpone(TICK);
 				return true;
 			} else {
 				return false;
 			}
 		}
-		
-		public void prolong( int damage ) {
+
+		public void prolong(int damage) {
 			this.damage += damage;
 		};
-		
+
 		@Override
 		public int icon() {
 			return BuffIndicator.DEFERRED;
 		}
-		
+
 		@Override
 		public String toString() {
-			return Utils.format(Game.getVar(R.string.Viscosity_BufInfo1), damage );
+			return Utils.format(Game.getVar(R.string.Viscosity_BufInfo1),
+					damage);
 		}
-		
+
 		@Override
 		public boolean act() {
 			if (target.isAlive()) {
-				
-				target.damage( 1, this );
+
+				target.damage(1, this);
 				if (target == Dungeon.hero && !target.isAlive()) {
 					// FIXME
-					Dungeon.fail( Utils.format( ResultDescriptions.GLYPH, Game.getVar(R.string.Viscosity_BufName), Dungeon.depth ) );
+					Dungeon.fail(Utils.format(
+							Game.getVar(R.string.ResultDescriptions_Glyph),
+							Game.getVar(R.string.Viscosity_BufName),
+							Dungeon.depth));
 					GLog.n(Game.getVar(R.string.Viscosity_BufInfo2));
-					
+
 					Badges.validateDeathFromGlyph();
 				}
-				spend( TICK );
-				
+				spend(TICK);
+
 				if (--damage <= 0) {
 					detach();
 				}
-				
+
 			} else {
-				
+
 				detach();
-				
+
 			}
 			return true;
 		}

@@ -14,9 +14,11 @@
    <!--  STRINGS OF AboutScene CLASS  -->
    <string name="AboutScene_Txt">Code &amp; graphics: Watabou\nMusic: Cube_Code\n\nThis game is inspired by Brian Walker\'s Brogue. Try it on Windows, Mac OS or Linux - it\'s awesome! ;)\n\nPlease visit official website for additional info:</string>
    <string name="AboutScene_Lnk">pixeldungeon.watabou.ru</string>
-   <string name="AboutScene_Translate">Languages Create: rodriformiga</string><!-- Write here the translation credits. -->
+   <string name="AboutScene_Translate">Internationalization: rodriformiga</string><!-- Write here the translation credits. -->
    <string name="AboutScene_TranslateLnk">rodriformiga@gmail.com</string><!-- Write here the e-mail to contat for translator -->
-   <string name="AboutScene_TranslateSnd">Send E-Mail</string><!-- Write here the "Send E-mail" title of the window -->
+   <string name="AboutScene_Refactor">Refactoring: sforney</string>
+   <string name="AboutScene_RefactorLnk">sforney@gmail.com</string>
+   <string name="AboutScene_TranslateSnd">Send E-Mail</string>
 
 
    <!--  STRINGS OF RankingsScene CLASS  -->
@@ -35,7 +37,7 @@
    <string name="StartScene_New">New Game</string>
    <string name="StartScene_Erase">Erase current game</string>
    <string name="StartScene_Depth">Depth: %1$d, level: %2$d</string>
-   <string name="StartScene_Really">Do you really want to start new game?</string>
+   <string name="StartScene_Really">Do you really want to start a new game?</string>
    <string name="StartScene_Warning">Your current game progress will be erased.</string>
    <string name="StartScene_Yes">Yes, start new game</string>
    <string name="StartScene_No">No, return to main menu</string>
@@ -112,7 +114,7 @@
    <string name="Hero_StaBurning">You catch fire!</string>
    <string name="Hero_StaParalysis">You are paralysed!</string>
    <string name="Hero_StaPoison">You are poisoned!</string>
-   <string name="Hero_StaOoze">Caustic ooze eats your flesh. Wash away it!</string>
+   <string name="Hero_StaOoze">Caustic ooze eats your flesh. Wash it away!</string>
    <string name="Hero_StaRoots">You can\'t move!</string>
    <string name="Hero_StaWeakness">You feel weakened!</string>
    <string name="Hero_StaBlindness">You are blinded!</string>
@@ -335,7 +337,7 @@
 
 
    <!--  STRINGS OF WndChooseWay CLASS  -->
-   <string name="WndChooseWay_Message">Which way will you follow?</string>
+   <string name="WndChooseWay_Message">Which path will you follow?</string>
    <string name="WndChooseWay_Cancel">I\'ll decide later</string>
 
 
@@ -388,7 +390,7 @@
    <string name="WndInfoItem_WontKnow">You won\'t know what\'s inside until you open it!</string>
    <string name="WndInfoItem_NeedKey"> But to open it you need a golden key.</string>
    <string name="WndInfoItem_Inside">You can see %s inside, but to open the chest you need a golden key.</string>
-   <string name="WndInfoItem_Owner">This ancient tomb may contain something useful, but its owner will most certainly object to checking.</string>
+   <string name="WndInfoItem_Owner">This ancient tomb may contain something useful, but its owner will object to being disturbed.</string>
    <string name="WndInfoItem_Remains">This is all that\'s left from one of your predecessors. Maybe it\'s worth checking for any valuables.</string>
 
 
@@ -551,7 +553,7 @@
    <string name="LloidsBeacon_Name">lloyd\'s beacon</string>
    <string name="LloidsBeacon_ACSet">SET</string>
    <string name="LloidsBeacon_ACReturn">RETURN</string>
-   <string name="LloidsBeacon_Info">Lloyd\'s beacon is an intricate magic device, that allows you to return to a place you have already been.</string>
+   <string name="LloidsBeacon_Info">Lloyd\'s beacon is an intricate magic device that allows you to return to a place you have already been.</string>
    <string name="LloidsBeacon_Preventing">Strong magic aura of this place prevents you from using the lloyd\'s beacon!</string>
    <string name="LloidsBeacon_Creatures">Psychic aura of neighbouring creatures doesn\'t allow you to use the lloyd\'s beacon at this moment.</string>
    <string name="LloidsBeacon_Return">The lloyd\'s beacon is successfully set at your current location, now you can return here anytime.</string>
@@ -659,7 +661,7 @@
 
    <!--  STRINGS OF HuntressArmor CLASS  -->
    <string name="HuntressArmor_Name">huntress cloak</string>
-   <string name="HuntressArmor_Desc">A huntress in such cloak can create a fan of spectral blades. Each of these blades will target a single enemy in the huntress\'s field of view, inflicting damage depending on her currently equipped melee weapon.</string>
+   <string name="HuntressArmor_Desc">A huntress wearing this cloak can create a fan of spectral blades. Each of these blades will target a single enemy in the huntress\'s field of view, inflicting damage depending on her currently equipped melee weapon.</string>
    <string name="HuntressArmor_ACSpecial">SPECTRAL BLADES</string>
    <string name="HuntressArmor_NoEnemies">No enemies in sight</string>
    <string name="HuntressArmor_NotHuntress">Only huntresses can use this armor!</string>
@@ -1434,14 +1436,14 @@
    <!--  STRINGS OF ToxicGas CLASS  -->
    <string name="ToxicGas_Info">A greenish cloud of toxic gas is swirling here.</string>
    <string name="ToxicGas_Info1">You died from a toxic gas..</string>
-   <!--  STRINGS OF WellOfAwareness CLASS  -->
-   <string name="WellOfAwareness_Info">As you take a sip, you feel the knowledge pours into your mind. Now you know everything about your equipped items. Also you sense all items on the level and know all its secrets.</string>
-   <string name="WellOfAwareness_Procced">Power of knowledge radiates from the water of this well. Take a sip from it to reveal all secrets of equipped items.</string>
+   <!--  STRINGS OF WellOfAwareness CLASS  -->  
+   <string name="WellOfAwareness_Info">"The power of knowledge radiates from the water of this well. Take a sip from it to reveal all secrets of equipped items."</string>
+   <string name="WellOfAwareness_Procced">As you take a sip, you feel the knowledge pours into your mind. Now you know everything about your equipped items. Also you sense all items on the level and know all its secrets.</string>
    <!--  STRINGS OF WaterOfHealth CLASS  -->
-   <string name="WellOfHealth_Info">Power of health radiates from the water of this well. Take a sip from it to heal your wounds and satisfy hunger.</string>
+   <string name="WellOfHealth_Info">The power of health radiates from the water of this well. Take a sip from it to heal your wounds and satisfy hunger.</string>
    <string name="WellOfHealth_Procced">As you take a sip, you feel your wounds heal completely.</string>
    <!--  STRINGS OF WaterOfTransmutation CLASS  -->
-   <string name="WellOfTransmutation_Info">Power of change radiates from the water of this well. Throw an item into the well to turn it into something else.</string>
+   <string name="WellOfTransmutation_Info">The power of change radiates from the water of this well. Throw an item into the well to turn it into something else.</string>
    <!--  STRINGS OF Web CLASS  -->
    <string name="Web_Info">Everything is covered with a thick web here.</string>
 
@@ -1576,7 +1578,7 @@
    <!--  STRINGS OF King CLASS  -->
    <string name="King_Name1">King of Dwarves</string>
    <string name="King_Name2">undead King of Dwarves</string>
-   <string name="King_Desc">The last king of dwarves was known for his deep understanding of processes of life and death. He has persuaded members of his court to participate in a ritual, that should have granted them eternal youthfulness. In the end he was the only one, who got it - and an army of undead as a bonus.</string>
+   <string name="King_Desc">The last king of dwarves was known for his deep understanding of life and death. He persuaded members of his court to participate in a ritual that should have granted them eternal youthfulness. In the end he was the only one who got it - and an army of undead as a bonus.</string>
    <string name="King_Defense">parried</string>
    <string name="King_Info1">You cannot kill me, %s... I am... immortal...</string>
    <string name="King_Info2">Arise, slaves!</string>
@@ -1641,11 +1643,11 @@
    <string name="Thief_Carries">\n\n%1$s is carrying a _%2$s_. Stolen obviously.</string>
    <!--  STRINGS OF Warlock CLASS  -->
    <string name="Warlock_Name">dwarf warlock</string>
-   <string name="Warlock_Desc">When dwarves\' interests have shifted from engineering to arcane arts, warlocks have come to power in the city. They started with elemental magic, but soon switched to demonology and necromancy.</string>
+   <string name="Warlock_Desc">When dwarves\' interests have shifted from engineering to the arcane arts, warlocks came to power in the city. They started with elemental magic, but soon switched to demonology and necromancy.</string>
    <string name="Warlock_Killed">%s\'s shadow bolt killed you...</string>
    <!--  STRINGS OF Wraith CLASS  -->
    <string name="Wraith_Name">wraith</string>
-   <string name="Wraith_Desc">A wraith is a vengeful spirit of a sinner, whose grave or tomb was disturbed. Being an ethereal entity, it is very hard to hit with a regular weapon.</string>
+   <string name="Wraith_Desc">A wraith is a vengeful spirit of a sinner whose grave or tomb was disturbed. Being an ethereal entity, it is very hard to hit with a regular weapon.</string>
    <string name="Wraith_Defense">evaded</string>
    <!--  STRINGS OF Yog CLASS  -->
    <string name="Yog_Name1">Yog-Dzewa</string>
@@ -1671,14 +1673,14 @@
    <string name="Blacksmith_Txt2">Are you kiddin\' me? Where is my pickaxe?!</string>
    <string name="Blacksmith_Txt3">Dark gold ore. 15 pieces. Seriously, is it dat hard?</string>
    <string name="Blacksmith_Txt4">I said I need bat blood on the pickaxe. Chop chop!</string>
-   <string name="Blacksmith_Completed">Oh, you have returned... Better late dan never.</string>
+   <string name="Blacksmith_Completed">Oh, you have returned... Betta late dan never.</string>
    <string name="Blacksmith_GetLost">I\'m busy. Get lost!</string>
    <string name="Blacksmith_LooksBetter">your %s certainly looks better now</string>
    <string name="Blacksmith_Verify1">Select 2 different items, not the same item twice!</string>
    <string name="Blacksmith_Verify2">Select 2 items of the same type!</string>
    <string name="Blacksmith_Verify3">I need to know what I\'m working with, identify them first!</string>
    <string name="Blacksmith_Verify4">I don\'t work with cursed items!</string>
-   <string name="Blacksmith_Verify5">It\'s a junk, the quality is too poor!</string>
+   <string name="Blacksmith_Verify5">It\'s junk, the quality is too poor!</string>
    <string name="Blacksmith_Verify6">I can\'t reforge these items!</string>
    <!--  STRINGS OF Ghost CLASS  -->
    <string name="Ghost_Name">sad ghost</string>
@@ -1721,7 +1723,7 @@
    <string name="WandMaker_Desc">This old but hale gentleman wears a slightly confused expression. He is protected by a magic shield.</string>
    <string name="WandMaker_Defense">absorbed</string>
    <string name="WandMaker_Berry1">Oh, what a pleasant surprise to meet a decent person in such place! I came here for a rare ingredient - a _Rotberry seed_. Being a magic user, I\'m quite able to defend myself against local monsters, but I\'m getting lost in no time, it\'s very embarrassing. Probably you could help me? I would be happy to pay for your service with one of my best wands.</string>
-   <string name="WandMaker_Berry2">Any luck with a Rotberry seed, %s? No? Don\'t worry, I\'m not in a hurry.</string>
+   <string name="WandMaker_Berry2">Any luck with the Rotberry seed, %s? No? Don\'t worry, I\'m not in a hurry.</string>
    <string name="WandMaker_Dust1">Oh, what a pleasant surprise to meet a decent person in such place! I came here for a rare ingredient - _corpse dust_. It can be gathered from skeletal remains and there is an ample number of them in the dungeon. Being a magic user, I\'m quite able to defend myself against local monsters, but I\'m getting lost in no time, it\'s very embarrassing. Probably you could help me? I would be happy to pay for your service with one of my best wands.</string>
    <string name="WandMaker_Dust2">Any luck with corpse dust, %s? Bone piles are the most obvious places to look.</string>
    <string name="WandMaker_RotberryName">Rotberry</string>
@@ -1842,16 +1844,16 @@
    <string name="Sign_DeadEnd">What are you doing here?!</string>
    <string name="Sign_Burn">As you try to read the sign it bursts into greenish flames.</string>
    <string-array name="Sign_Tips">
-       <item >Don\'t overestimate your strength, use weapons and armor you can handle.</item>
+       <item >Don\'t overestimate your strength - use weapons and armor you can handle.</item>
        <item >Not all doors in the dungeon are visible at first sight. If you are stuck, search for hidden doors.</item>
-       <item >Remember, that raising your strength is not the only way to access better equipment. You can go the other way, lowering its strength requirement with Scrolls of Upgrade.</item>
+       <item >Remember that raising your strength is not the only way to access better equipment. You can go the other way, lowering its strength requirement with Scrolls of Upgrade.</item>
        <item >You can spend your gold in shops on deeper levels of the dungeon. The first one is on the 6th level.</item>
        <item >Beware of Goo!</item>
        <item >Pixel-Mart - all you need for a successful adventure!</item>
-       <item >Identify your potions and scrolls as soon as possible. Don\'t put it off to the moment when you actually need them.</item>
+       <item >Identify your potions and scrolls as soon as possible. Don\'t put it off to when you actually need them.</item>
        <item >Being hungry doesn\'t hurt, but starving does hurt.</item>
        <item >Surprise attack has a better chance to hit. For example, you can ambush your enemy behind a closed door when you know it is approaching.</item>
-       <item >Don\'t let The Tengu out!</item>
+       <item >Don\'t let the Tengu out!</item>
        <item >Pixel-Mart. Spend money. Live longer.</item>
        <item >When you\'re attacked by several monsters at the same time, try to retreat behind a door.</item>
        <item >If you are burning, you can\'t put out the fire in the water while levitating.</item>
@@ -1859,8 +1861,8 @@
        <item >DANGER! Heavy machinery can cause injury, loss of limbs or death!</item>
        <item >Pixel-Mart. A safer life in the dungeon.</item>
        <item >When you upgrade an enchanted weapon, there is a chance to destroy that enchantment.</item>
-       <item >With a Well of Transmutation you can get an item, that cannot be obtained otherwise.</item>
-       <item >The only way to enchant a weapon is by upgrading it with a Scroll of Enchantment</item>
+       <item >With a Well of Transmutation you can get items that cannot be obtained otherwise.</item>
+       <item >The only way to enchant a weapon is by upgrading it with a Scroll of Enchantment.</item>
        <item >No weapons allowed in the presence of His Majesty!</item>
        <item >Pixel-Mart. Special prices for demon hunters!</item>
    </string-array>
@@ -1871,7 +1873,7 @@
    <string name="AlarmTrap_Desc">The trap emits a piercing sound that echoes throughout the dungeon!</string>
    <!--  STRINGS OF LightningTrap CLASS  -->
    <string name="LightningTrap_Name">lightning trap</string>
-   <string name="LightningTrap_Desc">You were killed by a discharge of a lightning trap...</string>   
+   <string name="LightningTrap_Desc">You were killed by a lightning trap...</string>   
 
 
 <!--  PACKAGE /ui  -->
