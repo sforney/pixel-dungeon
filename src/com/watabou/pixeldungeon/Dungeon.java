@@ -497,14 +497,14 @@ public class Dungeon {
 			}
 					
 			Bundle quests = bundle.getBundle( QUESTS );
+			ghostQuest = new GhostQuest();
+			wandmakerQuest = new WandmakerQuest();
 			if (!quests.isNull()) {
 				ghostQuest.restoreFromBundle( quests );
 				wandmakerQuest.restoreFromBundle( quests );
 				Blacksmith.Quest.restoreFromBundle( quests );
 				Imp.Quest.restoreFromBundle( quests );
 			} else {
-				ghostQuest = new GhostQuest();
-				wandmakerQuest = new WandmakerQuest();
 				Blacksmith.Quest.reset();
 				Imp.Quest.reset();
 			}
@@ -533,6 +533,7 @@ public class Dungeon {
 		depth = bundle.getInt( DEPTH );
 		
 		Statistics.restoreFromBundle( bundle );
+		journal = new Journal();
 		journal.restoreFromBundle( bundle );
 		
 		droppedItems = new SparseArray<ArrayList<Item>>();
