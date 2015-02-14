@@ -2,7 +2,6 @@ package com.watabou.pixeldungeon.quest;
 
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.FetidRat;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
@@ -13,6 +12,8 @@ import com.watabou.pixeldungeon.items.armor.ClothArmor;
 import com.watabou.pixeldungeon.items.quest.DriedRose;
 import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.items.weapon.missiles.MissileWeapon;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.levels.SewerLevel;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.utils.Bundle;
@@ -166,6 +167,7 @@ public class GhostQuest {
 		weapon = null;
 		armor = null;
 
-		Journal.remove(Journal.Feature.GHOST);
+		Dungeon.journal.remove(new Record(Feature.GHOST,
+				Dungeon.depth));
 	}
 }

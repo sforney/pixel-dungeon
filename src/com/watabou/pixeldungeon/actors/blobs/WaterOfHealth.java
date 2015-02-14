@@ -21,8 +21,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.Journal.Feature;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -33,6 +31,8 @@ import com.watabou.pixeldungeon.effects.particles.ShaftParticle;
 import com.watabou.pixeldungeon.items.DewVial;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.utils.GLog;
 
 public class WaterOfHealth extends WellWater {
@@ -54,7 +54,7 @@ public class WaterOfHealth extends WellWater {
 	
 		GLog.p( TXT_PROCCED );
 		
-		Journal.remove( Feature.WELL_OF_HEALTH );
+		Dungeon.journal.remove(new Record(Feature.WELL_OF_HEALTH, Dungeon.depth));
 		
 		return true;
 	}

@@ -6,18 +6,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import com.watabou.pixeldungeon.journal.ConcreteFeature;
-import com.watabou.pixeldungeon.journal.ConcreteJournal;
-import com.watabou.pixeldungeon.journal.ConcreteRecord;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Journal;
+import com.watabou.pixeldungeon.journal.Record;
 
 @RunWith(JUnit4.class)
 public class JournalTest {
-	private ConcreteRecord alchemy = new ConcreteRecord(ConcreteFeature.ALCHEMY, 1);
-	private ConcreteRecord garden = new ConcreteRecord(ConcreteFeature.GARDEN, 2);
+	private Record alchemy = new Record(Feature.ALCHEMY, 1);
+	private Record garden = new Record(Feature.GARDEN, 2);
 	
 	@Test
 	public void testAddRecords() throws Exception {
-		ConcreteJournal journal = new ConcreteJournal();
+		Journal journal = new Journal();
 		addTestRecords(journal);
 
 		assertTrue(journal.records.get(0) == alchemy);
@@ -26,7 +26,7 @@ public class JournalTest {
 	
 	@Test
 	public void removeRecords() throws Exception {
-		ConcreteJournal journal = new ConcreteJournal();
+		Journal journal = new Journal();
 		addTestRecords(journal);
 		
 		journal.remove(alchemy);
@@ -34,7 +34,7 @@ public class JournalTest {
 		assertFalse(journal.records.contains(alchemy));
 	}
 	
-	private void addTestRecords(ConcreteJournal journal) {
+	private void addTestRecords(Journal journal) {
 		journal.add(alchemy);
 		journal.add(garden);		
 	}

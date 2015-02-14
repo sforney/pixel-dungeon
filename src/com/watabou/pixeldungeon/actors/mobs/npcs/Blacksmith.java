@@ -24,7 +24,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
@@ -34,6 +33,8 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.quest.DarkGold;
 import com.watabou.pixeldungeon.items.quest.Pickaxe;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.Room.Type;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -92,8 +93,7 @@ public class Blacksmith extends NPC {
 				};
 			} );
 			
-			Journal.add( Journal.Feature.TROLL );
-			
+			Dungeon.journal.add(new Record(Feature.TROLL, Dungeon.depth));	
 		} else if (!Quest.completed) {
 			if (Quest.alternative) {
 				
@@ -208,7 +208,8 @@ public class Blacksmith extends NPC {
 
 		Quest.reforged = true;
 		
-		Journal.remove( Journal.Feature.TROLL );
+		Dungeon.journal.remove(new Record(Feature.TROLL,
+				Dungeon.depth));
 	}
 	
 	@Override

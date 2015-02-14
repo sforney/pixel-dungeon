@@ -19,13 +19,14 @@ package com.watabou.pixeldungeon.actors.mobs.npcs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.quest.CorpseDust;
 import com.watabou.pixeldungeon.items.seeds.RotberrySeed;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.quest.WandmakerQuest;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.WandmakerSprite;
@@ -97,7 +98,8 @@ public class Wandmaker extends NPC {
 			
 			quest.placeItem();
 			
-			Journal.add( Journal.Feature.WANDMAKER );
+			Dungeon.journal.add(new Record(Feature.WANDMAKER,
+					Dungeon.depth));
 		}
 	}
 	

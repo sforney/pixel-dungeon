@@ -24,9 +24,10 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
 import com.watabou.noosa.ui.Component;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.Icons;
 import com.watabou.pixeldungeon.ui.ScrollPane;
@@ -58,10 +59,10 @@ public class WndJournal extends Window {
 		
 		Component content = new Component();
 		
-		Collections.sort( Journal.records );
+		Collections.sort( Dungeon.journal.records );
 		
 		float pos = 0;
-		for (Journal.Record rec : Journal.records) {
+		for (Record rec : Dungeon.journal.records) {
 			ListItem item = new ListItem( rec.feature, rec.depth );
 			item.setRect( 0, pos, WIDTH, ITEM_HEIGHT );
 			content.add( item );
@@ -84,10 +85,10 @@ public class WndJournal extends Window {
 		
 		private Image icon;
 		
-		public ListItem( Journal.Feature f, int d ) {
+		public ListItem( Feature f, int d ) {
 			super();
 			
-			feature.text( f.desc );
+			feature.text( f.getDescription(f) );
 			feature.measure();
 			
 			depth.text( Integer.toString( d ) );

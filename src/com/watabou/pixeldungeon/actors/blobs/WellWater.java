@@ -18,11 +18,11 @@
 package com.watabou.pixeldungeon.actors.blobs;
 
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.Journal.Feature;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -51,11 +51,14 @@ public class WellWater extends Blob {
 		
 		if (Dungeon.visible[pos]) {
 			if (this instanceof WaterOfAwareness) {
-				Journal.add( Feature.WELL_OF_AWARENESS );
+				Dungeon.journal.add(new Record(Feature.WELL_OF_AWARENESS,
+						Dungeon.depth));
 			} else if (this instanceof WaterOfHealth) {
-				Journal.add( Feature.WELL_OF_HEALTH );
+				Dungeon.journal.add(new Record(Feature.WELL_OF_HEALTH,
+						Dungeon.depth));
 			} else if (this instanceof WaterOfTransmutation) {
-				Journal.add( Feature.WELL_OF_TRANSMUTATION );
+				Dungeon.journal.add(new Record(Feature.WELL_OF_TRANSMUTATION,
+						Dungeon.depth));
 			}
 		}
 	}

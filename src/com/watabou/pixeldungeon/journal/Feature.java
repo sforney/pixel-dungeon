@@ -3,11 +3,11 @@ package com.watabou.pixeldungeon.journal;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 
-public enum ConcreteFeature {
+public enum Feature {
 	WELL_OF_HEALTH, WELL_OF_AWARENESS, WELL_OF_TRANSMUTATION, ALCHEMY, GARDEN, STATUE,
 	GHOST, WANDMAKER, TROLL, IMP;
 
-	public String getDescription(ConcreteFeature feature) {
+	public String getDescription(Feature feature) {
 		switch (feature) {
 		case WELL_OF_HEALTH:
 			return Game.getVar(R.string.Journal_WellHealth);

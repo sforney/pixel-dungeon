@@ -40,6 +40,7 @@ import com.watabou.pixeldungeon.items.potions.Potion;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
 import com.watabou.pixeldungeon.items.wands.Wand;
+import com.watabou.pixeldungeon.journal.Journal;
 import com.watabou.pixeldungeon.levels.CavesBossLevel;
 import com.watabou.pixeldungeon.levels.CavesLevel;
 import com.watabou.pixeldungeon.levels.CityBossLevel;
@@ -90,6 +91,7 @@ public class Dungeon {
 	public static HashSet<Integer> chapters;
 	public static GhostQuest ghostQuest;
 	public static WandmakerQuest wandmakerQuest;
+	public static Journal journal;
 	
 	// Hero's field of view
 	public static boolean[] visible = new boolean[Level.LENGTH];
@@ -112,7 +114,7 @@ public class Dungeon {
 		Ring.initGems();
 		
 		Statistics.reset();
-		Journal.reset();
+		journal = new Journal();
 		
 		depth = 0;
 		gold = 0;
@@ -138,7 +140,6 @@ public class Dungeon {
 		QuickSlot.secondaryValue = null;
 		
 		hero = new Hero();
-		hero.live();
 		
 		Badges.reset();
 		
@@ -402,7 +403,10 @@ public class Dungeon {
 			Room.storeRoomsInBundle( bundle );
 			
 			Statistics.storeInBundle( bundle );
-			Journal.storeInBundle( bundle );
+			journal.storeInBundle( bundle );
+			for(Actor actor : Actor.all()) {
+				actor.storeInBundle(bundle);
+			}
 			
 			QuickSlot.save( bundle );
 			
@@ -491,7 +495,7 @@ public class Dungeon {
 					chapters.add( id );
 				}
 			}
-			
+					
 			Bundle quests = bundle.getBundle( QUESTS );
 			if (!quests.isNull()) {
 				ghostQuest.restoreFromBundle( quests );
@@ -529,7 +533,7 @@ public class Dungeon {
 		depth = bundle.getInt( DEPTH );
 		
 		Statistics.restoreFromBundle( bundle );
-		Journal.restoreFromBundle( bundle );
+		journal.restoreFromBundle( bundle );
 		
 		droppedItems = new SparseArray<ArrayList<Item>>();
 		for (int i=2; i <= Statistics.deepestFloor + 1; i++) {

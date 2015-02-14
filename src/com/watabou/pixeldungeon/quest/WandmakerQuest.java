@@ -3,7 +3,6 @@ package com.watabou.pixeldungeon.quest;
 import java.util.ArrayList;
 
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.watabou.pixeldungeon.items.Heap;
@@ -20,6 +19,8 @@ import com.watabou.pixeldungeon.items.wands.WandOfPoison;
 import com.watabou.pixeldungeon.items.wands.WandOfRegrowth;
 import com.watabou.pixeldungeon.items.wands.WandOfSlowness;
 import com.watabou.pixeldungeon.items.wands.WandOfTelekinesis;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.levels.PrisonLevel;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.Terrain;
@@ -168,6 +169,7 @@ public class WandmakerQuest {
 		wand1 = null;
 		wand2 = null;
 
-		Journal.remove(Journal.Feature.WANDMAKER);
+		Dungeon.journal.remove(new Record(Feature.WANDMAKER,
+				Dungeon.depth));
 	}
 }

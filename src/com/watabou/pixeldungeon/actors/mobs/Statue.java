@@ -21,7 +21,6 @@ import java.util.HashSet;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
@@ -32,6 +31,8 @@ import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
 import com.watabou.pixeldungeon.items.weapon.melee.MeleeWeapon;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.sprites.StatueSprite;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
@@ -79,7 +80,8 @@ public class Statue extends Mob {
 	@Override
 	protected boolean act() {
 		if (Dungeon.visible[pos]) {
-			Journal.add( Journal.Feature.STATUE );
+			Dungeon.journal.add(new Record(Feature.STATUE,
+					Dungeon.depth));
 		}
 		return super.act();
 	}
@@ -133,7 +135,8 @@ public class Statue extends Mob {
 	
 	@Override
 	public void destroy() {
-		Journal.remove( Journal.Feature.STATUE );
+		Dungeon.journal.remove(new Record(Feature.STATUE,
+				Dungeon.depth));
 		super.destroy();
 	}
 	

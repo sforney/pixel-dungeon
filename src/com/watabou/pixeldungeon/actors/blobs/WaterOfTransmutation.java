@@ -18,8 +18,7 @@
 package com.watabou.pixeldungeon.actors.blobs;
 
 import com.watabou.noosa.Game;
-import com.watabou.pixeldungeon.Journal;
-import com.watabou.pixeldungeon.Journal.Feature;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -46,188 +45,192 @@ import com.watabou.pixeldungeon.items.weapon.melee.Quarterstaff;
 import com.watabou.pixeldungeon.items.weapon.melee.Spear;
 import com.watabou.pixeldungeon.items.weapon.melee.Sword;
 import com.watabou.pixeldungeon.items.weapon.melee.WarHammer;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 
 public class WaterOfTransmutation extends WellWater {
-	
+
 	@Override
-	protected Item affectItem( Item item ) {
-		
-		if (item instanceof MeleeWeapon) {			
-			item = changeWeapon( (MeleeWeapon)item );		
-		} else if (item instanceof Scroll) {	
-			item = changeScroll( (Scroll)item );	
+	protected Item affectItem(Item item) {
+
+		if (item instanceof MeleeWeapon) {
+			item = changeWeapon((MeleeWeapon) item);
+		} else if (item instanceof Scroll) {
+			item = changeScroll((Scroll) item);
 		} else if (item instanceof Potion) {
-			item = changePotion( (Potion)item );
+			item = changePotion((Potion) item);
 		} else if (item instanceof Ring) {
-			item = changeRing( (Ring)item );
-		} else if (item instanceof Wand) {	
-			item = changeWand( (Wand)item );
+			item = changeRing((Ring) item);
+		} else if (item instanceof Wand) {
+			item = changeWand((Wand) item);
 		} else if (item instanceof Seed) {
-			item = changeSeed( (Seed)item );
+			item = changeSeed((Seed) item);
 		} else {
 			item = null;
 		}
-		
+
 		if (item != null) {
-			Journal.remove( Feature.WELL_OF_TRANSMUTATION );
+			Dungeon.journal.remove(new Record(
+					Feature.WELL_OF_TRANSMUTATION, Dungeon.depth));
 		}
-		
+
 		return item;
 	}
-	
+
 	@Override
-	public void use( BlobEmitter emitter ) {
-		super.use( emitter );	
-		emitter.start( Speck.factory( Speck.CHANGE ), 0.2f, 0 );
+	public void use(BlobEmitter emitter) {
+		super.use(emitter);
+		emitter.start(Speck.factory(Speck.CHANGE), 0.2f, 0);
 	}
-	
-	private MeleeWeapon changeWeapon( MeleeWeapon w ) {
-		
+
+	private MeleeWeapon changeWeapon(MeleeWeapon w) {
+
 		MeleeWeapon n = null;
-		
+
 		if (w instanceof Knuckles) {
 			n = new Dagger();
 		} else if (w instanceof Dagger) {
 			n = new Knuckles();
 		}
-		
+
 		else if (w instanceof Spear) {
 			n = new Quarterstaff();
 		} else if (w instanceof Quarterstaff) {
 			n = new Spear();
 		}
-		
+
 		else if (w instanceof Sword) {
 			n = new Mace();
 		} else if (w instanceof Mace) {
 			n = new Sword();
 		}
-		
+
 		else if (w instanceof Longsword) {
 			n = new BattleAxe();
 		} else if (w instanceof BattleAxe) {
 			n = new Longsword();
 		}
-		
+
 		else if (w instanceof Glaive) {
 			n = new WarHammer();
 		} else if (w instanceof WarHammer) {
 			n = new Glaive();
 		}
-		
+
 		if (n != null) {
-			
+
 			int level = w.level;
 			if (level > 0) {
-				n.upgrade( level );
+				n.upgrade(level);
 			} else if (level < 0) {
-				n.degrade( -level );
+				n.degrade(-level);
 			}
-			
+
 			if (w.isEnchanted()) {
 				n.enchant();
 			}
-			
+
 			n.levelKnown = w.levelKnown;
 			n.cursedKnown = w.cursedKnown;
 			n.cursed = w.cursed;
-			
-			Journal.remove( Feature.WELL_OF_TRANSMUTATION );
-			
+
+			Dungeon.journal.remove(new Record(
+					Feature.WELL_OF_TRANSMUTATION, Dungeon.depth));
+
 			return n;
 		} else {
 			return null;
 		}
 	}
-	
-	private Ring changeRing( Ring r ) {
+
+	private Ring changeRing(Ring r) {
 		Ring n;
 		do {
-			n = (Ring)Generator.random( Category.RING );
+			n = (Ring) Generator.random(Category.RING);
 		} while (n.getClass() == r.getClass());
-		
+
 		n.level = 0;
-		
+
 		int level = r.level;
 		if (level > 0) {
-			n.upgrade( level );
+			n.upgrade(level);
 		} else if (level < 0) {
-			n.degrade( -level );
+			n.degrade(-level);
 		}
-		
+
 		n.levelKnown = r.levelKnown;
 		n.cursedKnown = r.cursedKnown;
 		n.cursed = r.cursed;
-		
+
 		return n;
 	}
-	
-	private Wand changeWand( Wand w ) {
-		
+
+	private Wand changeWand(Wand w) {
+
 		Wand n;
 		do {
-			n = (Wand)Generator.random( Category.WAND );
+			n = (Wand) Generator.random(Category.WAND);
 		} while (n.getClass() == w.getClass());
-		
+
 		n.level = 0;
-		n.upgrade( w.level );
-		
+		n.upgrade(w.level);
+
 		n.levelKnown = w.levelKnown;
 		n.cursedKnown = w.cursedKnown;
 		n.cursed = w.cursed;
-		
+
 		return n;
 	}
-	
-	private Seed changeSeed( Seed s ) {
-		
+
+	private Seed changeSeed(Seed s) {
+
 		Seed n;
-		
+
 		do {
-			n = (Seed)Generator.random( Category.SEED );
+			n = (Seed) Generator.random(Category.SEED);
 		} while (n.getClass() == s.getClass());
-		
+
 		return n;
 	}
-	
-	private Scroll changeScroll( Scroll s ) {
+
+	private Scroll changeScroll(Scroll s) {
 		if (s instanceof ScrollOfUpgrade) {
-			
+
 			return new ScrollOfEnchantment();
-			
+
 		} else if (s instanceof ScrollOfEnchantment) {
-			
+
 			return new ScrollOfUpgrade();
-			
+
 		} else {
-			
+
 			Scroll n;
 			do {
-				n = (Scroll)Generator.random( Category.SCROLL );
+				n = (Scroll) Generator.random(Category.SCROLL);
 			} while (n.getClass() == s.getClass());
 			return n;
 		}
 	}
-	
-	private Potion changePotion( Potion p ) {
+
+	private Potion changePotion(Potion p) {
 		if (p instanceof PotionOfStrength) {
-			
+
 			return new PotionOfMight();
-			
+
 		} else if (p instanceof PotionOfMight) {
-			
+
 			return new PotionOfStrength();
-			
+
 		} else {
-			
+
 			Potion n;
 			do {
-				n = (Potion)Generator.random( Category.POTION );
+				n = (Potion) Generator.random(Category.POTION);
 			} while (n.getClass() == p.getClass());
 			return n;
 		}
 	}
-	
+
 	@Override
 	public String tileDesc() {
 		return Game.getVar(R.string.WellOfTransmutation_Info);

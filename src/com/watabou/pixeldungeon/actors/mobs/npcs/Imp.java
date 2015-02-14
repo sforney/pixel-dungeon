@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.mobs.npcs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Journal;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
@@ -30,6 +29,8 @@ import com.watabou.pixeldungeon.actors.mobs.Monk;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.quest.DwarfToken;
 import com.watabou.pixeldungeon.items.rings.Ring;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.levels.CityLevel;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -113,7 +114,8 @@ public class Imp extends NPC {
 			Quest.given = true;
 			Quest.completed = false;
 			
-			Journal.add( Journal.Feature.IMP );
+			Dungeon.journal.add(new Record(Feature.IMP,
+					Dungeon.depth));
 		}
 	}
 	
@@ -226,7 +228,8 @@ public class Imp extends NPC {
 			reward = null;
 			completed = true;
 			
-			Journal.remove( Journal.Feature.IMP );
+			Dungeon.journal.remove(new Record(Feature.IMP,
+					Dungeon.depth));
 		}
 		
 		public static boolean isCompleted() {

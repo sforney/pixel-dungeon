@@ -182,6 +182,8 @@ public class Hero extends Char {
 		belongings = new Belongings(this);
 
 		visibleEnemies = new ArrayList<Mob>();
+		Buff.affect(this, Regeneration.class);
+		Buff.affect(this, Hunger.class);
 	}
 
 	public int STR() {
