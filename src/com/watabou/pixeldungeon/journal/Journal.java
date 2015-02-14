@@ -1,18 +1,18 @@
 package com.watabou.pixeldungeon.journal;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 public class Journal implements Bundlable {
-	public List<Record> records;
+	public SortedSet<Record> records;
 
 	private static final String JOURNAL = "journal";
 
 	public Journal() {
-		records = new ArrayList<Record>(25);
+		records = new TreeSet<Record>();
 	}
 	
 	public void storeInBundle(Bundle bundle) {
@@ -20,27 +20,17 @@ public class Journal implements Bundlable {
 	}
 
 	public void restoreFromBundle(Bundle bundle) {
-		records = new ArrayList<Record>();
+		records = new TreeSet<Record>();
 		for (Bundlable rec : bundle.getCollection(JOURNAL)) {
 			records.add((Record) rec);
 		}
 	}
 
 	public void add(Record newRecord) {
-		for(Record record : records) {
-			if (record.equals(newRecord)) {
-				return;
-			}
-		}
 		records.add(newRecord);
 	}
 
-	public void remove(Record recordToRemove) {
-		for(Record record : records) {
-			if (record == recordToRemove) {
-				records.remove(record);
-				break;
-			}
-		}
+	public void remove(Record record) {
+		records.remove(record);
 	}
 }

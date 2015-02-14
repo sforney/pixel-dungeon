@@ -17,8 +17,6 @@
  */
 package com.watabou.pixeldungeon.windows;
 
-import java.util.Collections;
-
 import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Image;
@@ -58,9 +56,7 @@ public class WndJournal extends Window {
 		add( txtTitle );
 		
 		Component content = new Component();
-		
-		Collections.sort( Dungeon.journal.records );
-		
+				
 		float pos = 0;
 		for (Record rec : Dungeon.journal.records) {
 			ListItem item = new ListItem( rec.feature, rec.depth );
