@@ -23,16 +23,23 @@ import com.watabou.noosa.NinePatch;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.ui.Component;
 import com.watabou.pixeldungeon.Assets;
+import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Chrome;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
+import com.watabou.pixeldungeon.items.EquipableItem;
 import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
+import com.watabou.pixeldungeon.journal.Feature;
+import com.watabou.pixeldungeon.journal.Record;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.ItemSlot;
 import com.watabou.pixeldungeon.ui.RedButton;
 import com.watabou.pixeldungeon.ui.Window;
+import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
 
 public class WndBlacksmith extends Window {
@@ -91,7 +98,7 @@ public class WndBlacksmith extends Window {
 		btnReforge = new RedButton( TXT_REFORGE ) {
 			@Override
 			protected void onClick() {
-				Blacksmith.upgrade( btnItem1.item, btnItem2.item );
+				upgrade( btnItem1.item, btnItem2.item );
 				hide();
 			}
 		};
@@ -103,6 +110,39 @@ public class WndBlacksmith extends Window {
 		resize( WIDTH, (int)btnReforge.bottom() );
 	}
 	
+	public void upgrade( Item item1, Item item2 ) {		
+		Item first, second;
+		if (item2.level > item1.level) {
+			first = item2;
+			second = item1;
+		} else {
+			first = item1;
+			second = item2;
+		}
+
+		Sample.INSTANCE.play( Assets.SND_EVOKE );
+		ScrollOfUpgrade.upgrade( Dungeon.hero );
+		Item.evoke( Dungeon.hero );
+
+		if (first.isEquipped( Dungeon.hero )) {
+			((EquipableItem)first).doUnequip( Dungeon.hero, true );
+		}
+		first.upgrade();
+		GLog.p(Game.getVar(R.string.Blacksmith_LooksBetter), first.name() );
+		Dungeon.hero.spendAndNext( 2f );
+		Badges.validateItemLevelAquired( first );
+
+		if (second.isEquipped( Dungeon.hero )) {
+			((EquipableItem)second).doUnequip( Dungeon.hero, false );
+		}
+		second.detachAll( Dungeon.hero.belongings.backpack );
+
+		Dungeon.blacksmithQuest.setReforged(true);
+		
+		Dungeon.journal.remove(new Record(Feature.TROLL,
+				Dungeon.depth));
+	}
+	
 	protected WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
 		public void onSelect( Item item ) {
@@ -110,7 +150,7 @@ public class WndBlacksmith extends Window {
 				btnPressed.item( item );
 				
 				if (btnItem1.item != null && btnItem2.item != null) {
-					String result = Blacksmith.verify( btnItem1.item, btnItem2.item );
+					String result = verify( btnItem1.item, btnItem2.item );
 					if (result != null) {
 						GameScene.show( new WndMessage( result ) );
 						btnReforge.enable( false );
@@ -119,6 +159,28 @@ public class WndBlacksmith extends Window {
 					}
 				}
 			}
+		}
+		
+		public String verify( Item item1, Item item2 ) {	
+			if (item1 == item2) {
+				return Game.getVar(R.string.Blacksmith_Verify1);
+			}		
+			if (item1.getClass() != item2.getClass()) {
+				return Game.getVar(R.string.Blacksmith_Verify2);
+			}		
+			if (!item1.isIdentified() || !item2.isIdentified()) {
+				return Game.getVar(R.string.Blacksmith_Verify3);
+			}		
+			if (item1.cursed || item2.cursed) {
+				return Game.getVar(R.string.Blacksmith_Verify4);
+			}		
+			if (item1.level < 0 || item2.level < 0) {
+				return Game.getVar(R.string.Blacksmith_Verify5);
+			}		
+			if (!item1.isUpgradable() || !item2.isUpgradable()) {
+				return Game.getVar(R.string.Blacksmith_Verify6);
+			}		
+			return null;
 		}
 	};
 	

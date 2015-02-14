@@ -20,12 +20,12 @@ package com.watabou.pixeldungeon.actors.mobs;
 import java.util.HashSet;
 
 import com.watabou.noosa.Game;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Sleep;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.sprites.GolemSprite;
 import com.watabou.utils.Random;
@@ -70,7 +70,7 @@ public class Golem extends Mob {
 	
 	@Override
 	public void die( Object cause ) {
-		Imp.Quest.process( this );
+		Dungeon.impQuest.process( this );
 		
 		super.die( cause );
 	}

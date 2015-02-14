@@ -41,8 +41,7 @@ public class WndImp extends Window {
 	private static final int BTN_HEIGHT	= 20;
 	private static final int GAP		= 2;
 
-	public WndImp( final Imp imp, final DwarfToken tokens ) {
-		
+	public WndImp( final Imp imp, final DwarfToken tokens ) {	
 		super();
 		
 		IconTitle titlebar = new IconTitle();
@@ -60,7 +59,7 @@ public class WndImp extends Window {
 		RedButton btnReward = new RedButton( TXT_REWARD ) {
 			@Override
 			protected void onClick() {
-				takeReward( imp, tokens, Imp.Quest.reward );
+				takeReward( imp, tokens, Dungeon.impQuest.reward );
 			}
 		};
 		btnReward.setRect( 0, message.y + message.height() + GAP, WIDTH, BTN_HEIGHT );
@@ -70,7 +69,6 @@ public class WndImp extends Window {
 	}
 	
 	private void takeReward( Imp imp, DwarfToken tokens, Item reward ) {
-		
 		hide();
 		
 		tokens.detachAll( Dungeon.hero.belongings.backpack );
@@ -84,6 +82,6 @@ public class WndImp extends Window {
 		
 		imp.flee();
 		
-		Imp.Quest.complete();
+		Dungeon.impQuest.complete();
 	}
 }

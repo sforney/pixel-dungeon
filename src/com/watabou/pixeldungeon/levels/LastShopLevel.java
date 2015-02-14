@@ -23,9 +23,9 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.Scene;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Bones;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.levels.Room.Type;
@@ -115,7 +115,7 @@ public class LastShopLevel extends RegularLevel {
 		if (roomShop == null || shopSquare < 30) {
 			return false;
 		} else {
-			roomShop.type = Imp.Quest.isCompleted() ? Room.Type.SHOP : Room.Type.STANDARD;
+			roomShop.type = Dungeon.impQuest.isCompleted() ? Room.Type.SHOP : Room.Type.STANDARD;
 		}
 		
 		paint();
@@ -145,7 +145,7 @@ public class LastShopLevel extends RegularLevel {
 			}
 		}
 		
-		if (Imp.Quest.isCompleted()) {
+		if (Dungeon.impQuest.isCompleted()) {
 			while (true) {
 				int pos = roomEntrance.random();
 				if (pos != entrance) {

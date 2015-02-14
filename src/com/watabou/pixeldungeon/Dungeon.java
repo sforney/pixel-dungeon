@@ -32,8 +32,6 @@ import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
 import com.watabou.pixeldungeon.items.Ankh;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.Potion;
@@ -56,7 +54,9 @@ import com.watabou.pixeldungeon.levels.PrisonLevel;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.SewerBossLevel;
 import com.watabou.pixeldungeon.levels.SewerLevel;
+import com.watabou.pixeldungeon.quest.BlacksmithQuest;
 import com.watabou.pixeldungeon.quest.GhostQuest;
+import com.watabou.pixeldungeon.quest.ImpQuest;
 import com.watabou.pixeldungeon.quest.WandmakerQuest;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.StartScene;
@@ -91,6 +91,8 @@ public class Dungeon {
 	public static HashSet<Integer> chapters;
 	public static GhostQuest ghostQuest;
 	public static WandmakerQuest wandmakerQuest;
+	public static ImpQuest impQuest;
+	public static BlacksmithQuest blacksmithQuest;
 	public static Journal journal;
 	
 	// Hero's field of view
@@ -131,8 +133,8 @@ public class Dungeon {
 		
 		ghostQuest = new GhostQuest();
 		wandmakerQuest = new WandmakerQuest();
-		Blacksmith.Quest.reset();
-		Imp.Quest.reset();
+		blacksmithQuest = new BlacksmithQuest();
+		impQuest = new ImpQuest();
 		
 		Room.shuffleTypes();
 		
@@ -396,8 +398,8 @@ public class Dungeon {
 			Bundle quests = new Bundle();
 			ghostQuest.storeInBundle( quests );
 			wandmakerQuest.storeInBundle( quests );
-			Blacksmith	.Quest.storeInBundle( quests );
-			Imp			.Quest.storeInBundle( quests );
+			blacksmithQuest.storeInBundle( quests );
+			impQuest.storeInBundle( quests );
 			bundle.put( QUESTS, quests );
 			
 			Room.storeRoomsInBundle( bundle );
@@ -499,14 +501,13 @@ public class Dungeon {
 			Bundle quests = bundle.getBundle( QUESTS );
 			ghostQuest = new GhostQuest();
 			wandmakerQuest = new WandmakerQuest();
+			blacksmithQuest = new BlacksmithQuest();
+			impQuest = new ImpQuest();
 			if (!quests.isNull()) {
 				ghostQuest.restoreFromBundle( quests );
 				wandmakerQuest.restoreFromBundle( quests );
-				Blacksmith.Quest.restoreFromBundle( quests );
-				Imp.Quest.restoreFromBundle( quests );
-			} else {
-				Blacksmith.Quest.reset();
-				Imp.Quest.reset();
+				blacksmithQuest.restoreFromBundle( quests );
+				impQuest.restoreFromBundle( quests );
 			}
 			
 			Room.restoreRoomsFromBundle( bundle );
@@ -548,8 +549,7 @@ public class Dungeon {
 		}
 	}
 	
-	public static Level loadLevel( HeroClass cl ) throws IOException {
-		
+	public static Level loadLevel( HeroClass cl ) throws IOException {	
 		Dungeon.level = null;
 		Actor.clear();
 		
@@ -560,8 +560,7 @@ public class Dungeon {
 		return (Level)bundle.get( "level" );
 	}
 	
-	public static void deleteGame( HeroClass cl, boolean deleteLevels ) {
-		
+	public static void deleteGame( HeroClass cl, boolean deleteLevels ) {	
 		Game.instance.deleteFile( gameFile( cl ) );
 		
 		if (deleteLevels) {
@@ -574,8 +573,7 @@ public class Dungeon {
 		GamesInProgress.delete( cl );
 	}
 	
-	public static Bundle gameBundle( String fileName ) throws IOException {
-		
+	public static Bundle gameBundle( String fileName ) throws IOException {		
 		InputStream input = Game.instance.openFileInput( fileName );
 		Bundle bundle = Bundle.read( input );
 		input.close();
@@ -599,8 +597,7 @@ public class Dungeon {
 		}
 	}
 	
-	public static void win( String desc ) {
-		
+	public static void win( String desc ) {	
 		hero.belongings.identify();
 		
 		if (challenges != 0) {
@@ -612,7 +609,6 @@ public class Dungeon {
 	}
 	
 	public static void observe() {
-
 		if (level == null) {
 			return;
 		}
@@ -627,8 +623,7 @@ public class Dungeon {
 	
 	private static boolean[] passable = new boolean[Level.LENGTH];
 	
-	public static int findPath( Char ch, int from, int to, boolean pass[], boolean[] visible ) {
-		
+	public static int findPath( Char ch, int from, int to, boolean pass[], boolean[] visible ) {	
 		if (Level.adjacent( from, to )) {
 			return Actor.findChar( to ) == null && (pass[to] || Level.avoid[to]) ? to : -1;
 		}
@@ -652,8 +647,7 @@ public class Dungeon {
 		
 	}
 	
-	public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {
-		
+	public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {		
 		if (ch.flying) {
 			BArray.or( pass, Level.avoid, passable );
 		} else {
@@ -670,8 +664,6 @@ public class Dungeon {
 		}
 		passable[cur] = true;
 		
-		return PathFinder.getStepBack( cur, from, passable );
-		
+		return PathFinder.getStepBack( cur, from, passable );	
 	}
-
 }

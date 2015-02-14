@@ -20,29 +20,22 @@ package com.watabou.pixeldungeon.actors.mobs.npcs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
-import com.watabou.pixeldungeon.actors.mobs.Golem;
-import com.watabou.pixeldungeon.actors.mobs.Mob;
-import com.watabou.pixeldungeon.actors.mobs.Monk;
-import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.quest.DwarfToken;
-import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.journal.Feature;
 import com.watabou.pixeldungeon.journal.Record;
-import com.watabou.pixeldungeon.levels.CityLevel;
-import com.watabou.pixeldungeon.levels.Room;
+import com.watabou.pixeldungeon.quest.ImpQuest;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ImpSprite;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.pixeldungeon.windows.WndImp;
 import com.watabou.pixeldungeon.windows.WndQuest;
-import com.watabou.utils.Bundle;
-import com.watabou.utils.Random;
 
 public class Imp extends NPC {
-	public Imp() {
+	private ImpQuest quest;
+	public Imp(ImpQuest quest) {
+		this.quest = quest;
 		name = Game.getVar(R.string.Imp_Name);
 		spriteClass = ImpSprite.class;
 	}
@@ -57,9 +50,8 @@ public class Imp extends NPC {
 	private boolean seenBefore = false;
 	
 	@Override
-	protected boolean act() {
-		
-		if (!Quest.given && Dungeon.visible[pos]) {
+	protected boolean act() {		
+		if (!quest.isGiven() && Dungeon.visible[pos]) {
 			if (!seenBefore) {
 				yell( Utils.format( TXT_HEY, Dungeon.hero.className() ) );
 			}
@@ -97,22 +89,19 @@ public class Imp extends NPC {
 	}
 	
 	@Override
-	public void interact() {
-		
+	public void interact() {		
 		sprite.turnTo( pos, Dungeon.hero.pos );
-		if (Quest.given) {
-			
+		if (quest.isGiven()) {			
 			DwarfToken tokens = Dungeon.hero.belongings.getItem( DwarfToken.class );
-			if (tokens != null && (tokens.quantity() >= 8 || (!Quest.alternative && tokens.quantity() >= 6))) {
+			if (tokens != null && (tokens.quantity() >= 8 || (!quest.isAlternative() && tokens.quantity() >= 6))) {
 				GameScene.show( new WndImp( this, tokens ) );
 			} else {
-				tell( Quest.alternative ? TXT_MONKS2 : TXT_GOLEMS2, Dungeon.hero.className() );
-			}
-			
+				tell( quest.isAlternative() ? TXT_MONKS2 : TXT_GOLEMS2, Dungeon.hero.className() );
+			}		
 		} else {
-			tell( Quest.alternative ? TXT_MONKS1 : TXT_GOLEMS1 );
-			Quest.given = true;
-			Quest.completed = false;
+			tell( quest.isAlternative() ? TXT_MONKS1 : TXT_GOLEMS1 );
+			quest.setGiven(true);
+			quest.complete();
 			
 			Dungeon.journal.add(new Record(Feature.IMP,
 					Dungeon.depth));
@@ -124,8 +113,7 @@ public class Imp extends NPC {
 			new WndQuest( this, Utils.format( format, args ) ) );
 	}
 	
-	public void flee() {
-		
+	public void flee() {	
 		yell( Utils.format( TXT_CYA, Dungeon.hero.className() ) );
 		
 		destroy();
@@ -135,105 +123,5 @@ public class Imp extends NPC {
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Imp_Desc);
-	}
-	
-	public static class Quest {
-		
-		private static boolean alternative;
-		
-		private static boolean spawned;
-		private static boolean given;
-		private static boolean completed;
-		
-		public static Ring reward;
-		
-		public static void reset() {
-			spawned = false;
-
-			reward = null;
-		}
-		
-		private static final String NODE		= "demon";
-		
-		private static final String ALTERNATIVE	= "alternative";
-		private static final String SPAWNED		= "spawned";
-		private static final String GIVEN		= "given";
-		private static final String COMPLETED	= "completed";
-		private static final String REWARD		= "reward";
-		
-		public static void storeInBundle( Bundle bundle ) {
-			
-			Bundle node = new Bundle();
-			
-			node.put( SPAWNED, spawned );
-			
-			if (spawned) {
-				node.put( ALTERNATIVE, alternative );
-				
-				node.put( GIVEN, given );
-				node.put( COMPLETED, completed );
-				node.put( REWARD, reward );
-			}
-			
-			bundle.put( NODE, node );
-		}
-		
-		public static void restoreFromBundle( Bundle bundle ) {
-
-			Bundle node = bundle.getBundle( NODE );
-			
-			if (!node.isNull() && (spawned = node.getBoolean( SPAWNED ))) {
-				alternative	= node.getBoolean( ALTERNATIVE );
-				
-				given = node.getBoolean( GIVEN );
-				completed = node.getBoolean( COMPLETED );
-				reward = (Ring)node.get( REWARD );
-			}
-		}
-		
-		public static void spawn( CityLevel level, Room room ) {
-			if (!spawned && Dungeon.depth > 16 && Random.Int( 20 - Dungeon.depth ) == 0) {
-				
-				Imp npc = new Imp();
-				do {
-					npc.pos = level.randomRespawnCell();
-				} while (npc.pos == -1 || level.heaps.get( npc.pos ) != null);
-				level.mobs.add( npc );
-				Actor.occupyCell( npc );
-				
-				spawned = true;	
-				alternative = Random.Int( 2 ) == 0;
-				
-				given = false;
-				
-				do {
-					reward = (Ring)Generator.random( Generator.Category.RING );
-				} while (reward.cursed);
-				reward.upgrade( 2 );
-				reward.cursed = true;
-			}
-		}
-		
-		public static void process( Mob mob ) {
-			if (spawned && given && !completed) {
-				if ((alternative && mob instanceof Monk) ||
-					(!alternative && mob instanceof Golem)) {
-					
-					Dungeon.level.drop( new DwarfToken(), mob.pos ).sprite.drop();
-				}
-			}
-		}
-		
-		public static void complete() {
-			reward = null;
-			completed = true;
-			
-			Dungeon.journal.remove(new Record(Feature.IMP,
-					Dungeon.depth));
-		}
-		
-		public static boolean isCompleted() {
-			return completed;
-		}
 	}
 }

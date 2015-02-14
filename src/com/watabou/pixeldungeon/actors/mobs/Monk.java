@@ -26,7 +26,6 @@ import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.actors.hero.Hero;
-import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
 import com.watabou.pixeldungeon.items.food.Food;
 import com.watabou.pixeldungeon.items.weapon.melee.Knuckles;
@@ -79,7 +78,7 @@ public class Monk extends Mob {
 	
 	@Override
 	public void die( Object cause ) {
-		Imp.Quest.process( this );
+		Dungeon.impQuest.process( this );
 		
 		super.die( cause );
 	}

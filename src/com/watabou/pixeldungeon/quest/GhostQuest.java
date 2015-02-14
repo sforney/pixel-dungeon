@@ -20,7 +20,6 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class GhostQuest {
-
 	public boolean spawned;
 	public boolean alternative;
 	public boolean given;
