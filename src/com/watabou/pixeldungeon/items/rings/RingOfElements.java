@@ -24,9 +24,9 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
+import com.watabou.pixeldungeon.actors.mobs.BurningFist;
 import com.watabou.pixeldungeon.actors.mobs.Eye;
 import com.watabou.pixeldungeon.actors.mobs.Warlock;
-import com.watabou.pixeldungeon.actors.mobs.Yog;
 import com.watabou.pixeldungeon.levels.traps.LightningTrap;
 import com.watabou.utils.Random;
 
@@ -55,7 +55,7 @@ public class RingOfElements extends Ring {
 		FULL.add( LightningTrap.Electricity.class );
 		FULL.add( Warlock.class );
 		FULL.add( Eye.class );
-		FULL.add( Yog.BurningFist.class );
+		FULL.add( BurningFist.class );
 	}
 	
 	public class Resistance extends RingBuff {

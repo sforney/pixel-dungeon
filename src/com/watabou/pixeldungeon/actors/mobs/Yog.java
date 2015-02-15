@@ -26,61 +26,40 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.blobs.Blob;
-import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
-import com.watabou.pixeldungeon.actors.buffs.Ooze;
-import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Sleep;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
-import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.effects.Pushing;
-import com.watabou.pixeldungeon.effects.particles.ShadowParticle;
 import com.watabou.pixeldungeon.items.keys.SkeletonKey;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
-import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.BurningFistSprite;
-import com.watabou.pixeldungeon.sprites.CharSprite;
-import com.watabou.pixeldungeon.sprites.LarvaSprite;
-import com.watabou.pixeldungeon.sprites.RottingFistSprite;
 import com.watabou.pixeldungeon.sprites.YogSprite;
-import com.watabou.pixeldungeon.utils.GLog;
-import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Random;
 
 public class Yog extends Mob {
-
-	{
-		name = Dungeon.depth == Statistics.deepestFloor ? Game
-				.getVar(R.string.Yog_Name1) : Game.getVar(R.string.Yog_Name2);
-
-		spriteClass = YogSprite.class;
-
-		HP = HT = 300;
-
-		EXP = 50;
-
-		state = PASSIVE;
-	}
-
 	private static final String TXT_DESC = Game.getVar(R.string.Yog_Desc);
 
 	private static int fistsCount = 0;
 
 	public Yog() {
 		super();
+		name = Dungeon.depth == Statistics.deepestFloor ? Game
+				.getVar(R.string.Yog_Name1) : Game.getVar(R.string.Yog_Name2);
+
+		spriteClass = YogSprite.class;
+		HP = HT = 300;
+		EXP = 50;
+		state = PASSIVE;
 	}
 
 	public void spawnFists() {
-		RottingFist fist1 = new RottingFist();
-		BurningFist fist2 = new BurningFist();
+		RottingFist fist1 = new RottingFist(this);
+		BurningFist fist2 = new BurningFist(this);
 
 		do {
 			fist1.pos = pos + Level.NEIGHBOURS8[Random.Int(8)];
@@ -92,9 +71,16 @@ public class Yog extends Mob {
 		GameScene.add(fist2);
 	}
 
+	public void fistDied() {
+		fistsCount--;
+	}
+
+	public void fistAdded() {
+		fistsCount++;
+	}
+
 	@Override
 	public void damage(int dmg, Object src) {
-
 		if (fistsCount > 0) {
 
 			for (Mob mob : Dungeon.level.mobs) {
@@ -103,7 +89,11 @@ public class Yog extends Mob {
 				}
 			}
 
-			dmg >>= fistsCount;
+			if (fistsCount == 2) {
+				dmg = dmg / 4;
+			} else if (fistsCount == 1) {
+				dmg = dmg / 2;
+			}
 		}
 
 		super.damage(dmg, src);
@@ -140,7 +130,6 @@ public class Yog extends Mob {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void die(Object cause) {
-
 		for (Mob mob : (Iterable<Mob>) Dungeon.level.mobs.clone()) {
 			if (mob instanceof BurningFist || mob instanceof RottingFist) {
 				mob.die(cause);
@@ -168,7 +157,6 @@ public class Yog extends Mob {
 
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 	static {
-
 		IMMUNITIES.add(Death.class);
 		IMMUNITIES.add(Terror.class);
 		IMMUNITIES.add(Amok.class);
@@ -182,253 +170,5 @@ public class Yog extends Mob {
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
-	}
-
-	public static class RottingFist extends Mob {
-
-		private static final int REGENERATION = 4;
-
-		{
-			name = Game.getVar(R.string.Yog_NameRottingFist);
-			spriteClass = RottingFistSprite.class;
-
-			HP = HT = 300;
-			defenseSkill = 25;
-
-			EXP = 0;
-
-			state = WANDERING;
-		}
-
-		public RottingFist() {
-			super();
-			fistsCount++;
-		}
-
-		@Override
-		public void die(Object cause) {
-			super.die(cause);
-			fistsCount--;
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 36;
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(24, 36);
-		}
-
-		@Override
-		public int dr() {
-			return 15;
-		}
-
-		@Override
-		public int attackProc(Char enemy, int damage) {
-			if (Random.Int(3) == 0) {
-				Buff.affect(enemy, Ooze.class);
-				enemy.sprite.burst(0xFF000000, 5);
-			}
-
-			return damage;
-		}
-
-		@Override
-		public boolean act() {
-
-			if (Level.water[pos] && HP < HT) {
-				sprite.emitter().burst(ShadowParticle.UP, 2);
-				HP += REGENERATION;
-			}
-
-			return super.act();
-		}
-
-		@Override
-		public String description() {
-			return TXT_DESC;
-
-		}
-
-		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
-		static {
-			RESISTANCES.add(ToxicGas.class);
-			RESISTANCES.add(Death.class);
-			RESISTANCES.add(ScrollOfPsionicBlast.class);
-		}
-
-		@Override
-		public HashSet<Class<?>> resistances() {
-			return RESISTANCES;
-		}
-
-		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
-		static {
-			IMMUNITIES.add(Amok.class);
-			IMMUNITIES.add(Sleep.class);
-			IMMUNITIES.add(Terror.class);
-			IMMUNITIES.add(Poison.class);
-			IMMUNITIES.add(Vertigo.class);
-		}
-
-		@Override
-		public HashSet<Class<?>> immunities() {
-			return IMMUNITIES;
-		}
-	}
-
-	public static class BurningFist extends Mob {
-
-		{
-			name = Game.getVar(R.string.Yog_NameBurningFist);
-			spriteClass = BurningFistSprite.class;
-
-			HP = HT = 200;
-			defenseSkill = 25;
-
-			EXP = 0;
-
-			state = WANDERING;
-		}
-
-		public BurningFist() {
-			super();
-			fistsCount++;
-		}
-
-		@Override
-		public void die(Object cause) {
-			super.die(cause);
-			fistsCount--;
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 36;
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(20, 32);
-		}
-
-		@Override
-		public int dr() {
-			return 15;
-		}
-
-		@Override
-		protected boolean canAttack(Char enemy) {
-			return Ballistica.cast(pos, enemy.pos, false, true) == enemy.pos;
-		}
-
-		@Override
-		public boolean attack(Char enemy) {
-
-			if (!Level.adjacent(pos, enemy.pos)) {
-				spend(attackDelay());
-
-				if (hit(this, enemy, true)) {
-
-					int dmg = damageRoll();
-					enemy.damage(dmg, this);
-
-					enemy.sprite.bloodBurstA(sprite.center(), dmg);
-					enemy.sprite.flash();
-
-					if (!enemy.isAlive() && enemy == Dungeon.hero) {
-						Dungeon.fail(Utils.format(
-								Game.getVar(R.string.ResultDescriptions_Boss),
-								name, Dungeon.depth));
-						GLog.n(TXT_KILL, name);
-					}
-					return true;
-				} else {
-					enemy.sprite.showStatus(CharSprite.NEUTRAL,
-							enemy.defenseVerb());
-					return false;
-				}
-			} else {
-				return super.attack(enemy);
-			}
-		}
-
-		@Override
-		public boolean act() {
-			for (int i = 0; i < Level.NEIGHBOURS9.length; i++) {
-				GameScene.add(Blob.seed(pos + Level.NEIGHBOURS9[i], 2,
-						Fire.class));
-			}
-			return super.act();
-		}
-
-		@Override
-		public String description() {
-			return TXT_DESC;
-
-		}
-
-		private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
-		static {
-			RESISTANCES.add(ToxicGas.class);
-			RESISTANCES.add(Death.class);
-			RESISTANCES.add(ScrollOfPsionicBlast.class);
-		}
-
-		@Override
-		public HashSet<Class<?>> resistances() {
-			return RESISTANCES;
-		}
-
-		private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
-		static {
-			IMMUNITIES.add(Amok.class);
-			IMMUNITIES.add(Sleep.class);
-			IMMUNITIES.add(Terror.class);
-			IMMUNITIES.add(Burning.class);
-		}
-
-		@Override
-		public HashSet<Class<?>> immunities() {
-			return IMMUNITIES;
-		}
-	}
-
-	public static class Larva extends Mob {
-		{
-			name = Game.getVar(R.string.Yog_NameLarva);
-			spriteClass = LarvaSprite.class;
-
-			HP = HT = 25;
-			defenseSkill = 20;
-
-			EXP = 0;
-
-			state = HUNTING;
-		}
-
-		@Override
-		public int attackSkill(Char target) {
-			return 30;
-		}
-
-		@Override
-		public int damageRoll() {
-			return Random.NormalIntRange(15, 20);
-		}
-
-		@Override
-		public int dr() {
-			return 8;
-		}
-
-		@Override
-		public String description() {
-			return TXT_DESC;
-
-		}
 	}
 }
