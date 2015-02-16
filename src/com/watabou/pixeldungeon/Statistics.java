@@ -92,5 +92,16 @@ public class Statistics {
 		duration		= bundle.getFloat( DURATION );
 		amuletObtained	= bundle.getBoolean( AMULET );
 	}
+	
+	public static void setCurrentFloor(int depth) {
+		if(depth > deepestFloor) {
+			deepestFloor = depth;
+			if (qualifiedForNoKilling) {
+				completedWithNoKilling = true;
+			} else {
+				completedWithNoKilling = false;
+			}
+		}
+	}
 
 }

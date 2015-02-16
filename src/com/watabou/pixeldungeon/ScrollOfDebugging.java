@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.items.Item; 
+import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 
 public class ScrollOfDebugging extends Item {
@@ -25,11 +26,9 @@ public class ScrollOfDebugging extends Item {
 	@Override
 	public void execute( Hero hero, String action ) {
 		if (action.equals( AC_READ )) {
-			
 			new ScrollOfEnchantment().collect();
-			
+			new PotionOfStrength().collect();
 		} else {
-		
 			super.execute( hero, action );
 			
 		}

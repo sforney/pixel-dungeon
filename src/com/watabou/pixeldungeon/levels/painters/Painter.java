@@ -25,7 +25,6 @@ import com.watabou.utils.Point;
 import com.watabou.utils.Rect;
 
 public class Painter {
-
 	public static void set( Level level, int cell, int value ) {
 		level.map[cell] = value;
 	}
