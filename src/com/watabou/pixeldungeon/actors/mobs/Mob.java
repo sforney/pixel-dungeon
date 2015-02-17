@@ -29,11 +29,13 @@ import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.buffs.Sleep;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.Flare;
+import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.effects.Wound;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.Item;
@@ -344,6 +346,17 @@ public abstract class Mob extends Char {
 				Badges.validateNightHunter();
 			}
 
+			//Fixed bug that caused Warlocks to only gain health from mobs that give XP
+			if (Dungeon.hero.subClass == HeroSubClass.WARLOCK) {		
+				int value = Math.min( HT - HP, 1 + (Dungeon.depth - 1) / 5 );
+				if (value > 0) {
+					Dungeon.hero.HP += value;
+					sprite.emitter().burst( Speck.factory( Speck.HEALING ), 1 );
+				}
+				
+				((Hunger)Dungeon.hero.buff( Hunger.class )).satisfy( 10 );
+			}
+			
 			if (Dungeon.hero.lvl <= maxLvl && EXP > 0) {
 				Dungeon.hero.sprite.showStatus( CharSprite.POSITIVE, TXT_EXP, EXP );
 				Dungeon.hero.earnExp( EXP );
