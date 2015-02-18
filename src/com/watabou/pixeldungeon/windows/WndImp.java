@@ -21,7 +21,7 @@ import com.watabou.noosa.BitmapTextMultiline;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.actors.hero.PickupAction;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Imp;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.quest.DwarfToken;
@@ -75,7 +75,7 @@ public class WndImp extends Window {
 
 		reward.identify();
 		if (reward.doPickUp( Dungeon.hero )) {
-			GLog.i( Hero.TXT_YOU_NOW_HAVE, reward.name() );
+			GLog.i( PickupAction.TXT_YOU_NOW_HAVE, reward.name() );
 		} else {
 			Dungeon.level.drop( reward, imp.pos ).sprite.drop();
 		}

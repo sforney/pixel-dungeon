@@ -27,6 +27,7 @@ import com.watabou.noosa.tweeners.Tweener;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.EmoIcon;
 import com.watabou.pixeldungeon.effects.FloatingText;
 import com.watabou.pixeldungeon.effects.IceBlock;
@@ -148,7 +149,11 @@ public class CharSprite extends MovieClip implements Tweener.Listener, MovieClip
 			GameScene.ripple( from );
 		}
 		
-		ch.onMotionComplete();
+		if(ch instanceof Hero) {
+			((Hero)ch).onOperateComplete();
+		} else {
+			ch.onMotionComplete();
+		}
 	}
 	
 	public void interruptMotion() {

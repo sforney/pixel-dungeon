@@ -65,4 +65,9 @@ public class Paralysis extends FlavourBuff {
 			ch.paralysed = false;
 		}
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaParalysis);
+	}
 }

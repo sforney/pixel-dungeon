@@ -39,4 +39,9 @@ public class Blindness extends FlavourBuff {
 	public String toString() {
 		return Game.getVar(R.string.Blindness_Info);
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaBlindness);
+	}
 }

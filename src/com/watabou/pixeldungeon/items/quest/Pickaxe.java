@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.actors.hero.PickupAction;
 import com.watabou.pixeldungeon.actors.mobs.Bat;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -104,7 +105,7 @@ public class Pickaxe extends Weapon {
 							
 							DarkGold gold = new DarkGold();
 							if (gold.doPickUp( Dungeon.hero )) {
-								GLog.i( Hero.TXT_YOU_NOW_HAVE, gold.name() );
+								GLog.i( PickupAction.TXT_YOU_NOW_HAVE, gold.name() );
 							} else {
 								Dungeon.level.drop( gold, hero.pos ).sprite.drop();
 							}

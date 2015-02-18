@@ -22,7 +22,7 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
-import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.actors.hero.PickupAction;
 import com.watabou.pixeldungeon.items.quest.DarkGold;
 import com.watabou.pixeldungeon.items.quest.Pickaxe;
 import com.watabou.pixeldungeon.journal.Feature;
@@ -75,7 +75,7 @@ public class Blacksmith extends NPC {
 					
 					Pickaxe pick = new Pickaxe();
 					if (pick.doPickUp( Dungeon.hero )) {
-						GLog.i( Hero.TXT_YOU_NOW_HAVE, pick.name() );
+						GLog.i( PickupAction.TXT_YOU_NOW_HAVE, pick.name() );
 					} else {
 						Dungeon.level.drop( pick, Dungeon.hero.pos ).sprite.drop();
 					}

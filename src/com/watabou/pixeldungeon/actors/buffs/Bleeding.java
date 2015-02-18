@@ -91,4 +91,9 @@ public class Bleeding extends Buff {
 		
 		return true;
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaBleeding);
+	}
 }

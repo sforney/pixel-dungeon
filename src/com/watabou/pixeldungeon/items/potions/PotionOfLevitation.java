@@ -22,7 +22,6 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Levitation;
 import com.watabou.pixeldungeon.actors.hero.Hero;
-import com.watabou.pixeldungeon.utils.GLog;
 
 public class PotionOfLevitation extends Potion {
 
@@ -34,7 +33,6 @@ public class PotionOfLevitation extends Potion {
 	protected void apply( Hero hero ) {
 		setKnown();
 		Buff.affect( hero, Levitation.class, Levitation.DURATION );
-		GLog.i(Game.getVar(R.string.PotionOfLevitation_Apply));
 	}
 	
 	@Override

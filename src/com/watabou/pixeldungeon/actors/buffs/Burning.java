@@ -70,7 +70,7 @@ public class Burning extends Buff implements Hero.Doom {
 		if (target.isAlive()) {
 			
 			if (target instanceof Hero) {
-				Buff.prolong( target, Light.class, TICK * 1.01f );
+				prolong( target, Light.class, TICK * 1.01f );
 			}
 
 			target.damage( Random.Int( 1, 5 ), this );
@@ -132,6 +132,11 @@ public class Burning extends Buff implements Hero.Doom {
 	@Override
 	public int icon() {
 		return BuffIndicator.FIRE;
+	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaBurning);
 	}
 	
 	@Override

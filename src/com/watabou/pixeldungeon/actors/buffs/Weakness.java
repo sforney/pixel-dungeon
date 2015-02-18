@@ -61,4 +61,9 @@ public class Weakness extends FlavourBuff {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaWeakness);
+	}
 }

@@ -34,4 +34,9 @@ public class Cripple extends FlavourBuff {
 	public String toString() {
 		return Game.getVar(R.string.Cripple_Info);
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaCripple);
+	}
 }

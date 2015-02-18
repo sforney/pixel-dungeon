@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
@@ -33,48 +32,30 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
-import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Blindness;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
-import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.Combo;
-import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.EarthrootArmor;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
 import com.watabou.pixeldungeon.actors.buffs.GasesImmunity;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
-import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.buffs.Light;
-import com.watabou.pixeldungeon.actors.buffs.Ooze;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Regeneration;
-import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.actors.buffs.SnipersMark;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
-import com.watabou.pixeldungeon.actors.buffs.Weakness;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.actors.mobs.npcs.NPC;
 import com.watabou.pixeldungeon.effects.CheckedCell;
 import com.watabou.pixeldungeon.effects.Flare;
 import com.watabou.pixeldungeon.effects.Speck;
-import com.watabou.pixeldungeon.items.Amulet;
 import com.watabou.pixeldungeon.items.Ankh;
 import com.watabou.pixeldungeon.items.DewVial;
-import com.watabou.pixeldungeon.items.Dewdrop;
 import com.watabou.pixeldungeon.items.Heap;
-import com.watabou.pixeldungeon.items.Heap.Type;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
 import com.watabou.pixeldungeon.items.armor.Armor;
-import com.watabou.pixeldungeon.items.keys.GoldenKey;
-import com.watabou.pixeldungeon.items.keys.IronKey;
-import com.watabou.pixeldungeon.items.keys.Key;
-import com.watabou.pixeldungeon.items.keys.SkeletonKey;
-import com.watabou.pixeldungeon.items.potions.Potion;
-import com.watabou.pixeldungeon.items.potions.PotionOfMight;
-import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.rings.RingOfAccuracy;
 import com.watabou.pixeldungeon.items.rings.RingOfDetection;
 import com.watabou.pixeldungeon.items.rings.RingOfElements;
@@ -82,54 +63,30 @@ import com.watabou.pixeldungeon.items.rings.RingOfEvasion;
 import com.watabou.pixeldungeon.items.rings.RingOfHaste;
 import com.watabou.pixeldungeon.items.rings.RingOfShadows;
 import com.watabou.pixeldungeon.items.rings.RingOfThorns;
-import com.watabou.pixeldungeon.items.scrolls.Scroll;
-import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfRecharging;
-import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.items.wands.Wand;
 import com.watabou.pixeldungeon.items.weapon.melee.MeleeWeapon;
 import com.watabou.pixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.Terrain;
-import com.watabou.pixeldungeon.levels.features.AlchemyPot;
-import com.watabou.pixeldungeon.levels.features.Chasm;
-import com.watabou.pixeldungeon.levels.features.Sign;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.scenes.InterlevelScene;
-import com.watabou.pixeldungeon.scenes.SurfaceScene;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.sprites.HeroSprite;
 import com.watabou.pixeldungeon.ui.AttackIndicator;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.pixeldungeon.utils.GLog;
-import com.watabou.pixeldungeon.windows.WndMessage;
 import com.watabou.pixeldungeon.windows.WndResurrect;
-import com.watabou.pixeldungeon.windows.WndTradeItem;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Hero extends Char {
-
-	private static final String TXT_LEAVE = Game.getVar(R.string.Hero_Leave);
-
 	private static final String TXT_LEVEL_UP = Game
 			.getVar(R.string.Hero_LevelUp);
 	private static final String TXT_NEW_LEVEL = Game
 			.getVar(R.string.Hero_NewLevel);
-
-	public static final String TXT_YOU_NOW_HAVE = Game
-			.getVar(R.string.Hero_YouNowHave);
-
-	private static final String TXT_SOMETHING_ELSE = Game
-			.getVar(R.string.Hero_SomethingElse);
-	private static final String TXT_LOCKED_CHEST = Game
-			.getVar(R.string.Hero_LockedChest);
-	private static final String TXT_LOCKED_DOOR = Game
-			.getVar(R.string.Hero_LockedDoor);
 	private static final String TXT_NOTICED_SMTH = Game
 			.getVar(R.string.Hero_NoticedSmth);
-
 	private static final String TXT_WAIT = Game.getVar(R.string.Hero_Wait);
 	private static final String TXT_SEARCH = Game.getVar(R.string.Hero_Search);
 
@@ -146,14 +103,12 @@ public class Hero extends Char {
 
 	public boolean ready = false;
 
-	public HeroAction curAction = null;
-	public HeroAction lastAction = null;
+	public BaseHeroAction curAction = null;
+	public BaseHeroAction lastAction = null;
 
 	private Char enemy;
 
 	public Armor.Glyph killerGlyph = null;
-
-	private Item theKey;
 
 	public boolean restoreHealth = false;
 
@@ -182,6 +137,7 @@ public class Hero extends Char {
 		belongings = new Belongings(this);
 
 		visibleEnemies = new ArrayList<Mob>();
+		this.live();
 	}
 
 	public int STR() {
@@ -337,19 +293,14 @@ public class Hero extends Char {
 
 	@Override
 	public float speed() {
-
 		int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
 		if (aEnc > 0) {
-
 			return (float) (super.speed() * Math.pow(1.3, -aEnc));
-
 		} else {
-
 			float speed = super.speed();
 			return ((HeroSprite) sprite)
 					.sprint(subClass == HeroSubClass.FREERUNNER
 							&& !isStarving()) ? 1.6f * speed : speed;
-
 		}
 	}
 
@@ -357,9 +308,7 @@ public class Hero extends Char {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon
 				: belongings.weapon;
 		if (wep != null) {
-
 			return wep.speedFactor(this);
-
 		} else {
 			return 1f;
 		}
@@ -383,22 +332,15 @@ public class Hero extends Char {
 
 	@Override
 	public boolean act() {
-
 		super.act();
-
 		if (paralysed) {
-
 			curAction = null;
-
 			spendAndNext(TICK);
 			return false;
 		}
-
 		checkVisibleMobs();
 		AttackIndicator.updateState();
-
 		if (curAction == null) {
-
 			if (restoreHealth) {
 				if (isStarving() || HP >= HT) {
 					restoreHealth = false;
@@ -408,67 +350,20 @@ public class Hero extends Char {
 					return false;
 				}
 			}
-
 			ready();
 			return false;
-
 		} else {
-
 			restoreHealth = false;
-
 			ready = false;
-
-			if (curAction instanceof HeroAction.Move) {
-
-				return actMove((HeroAction.Move) curAction);
-
-			} else if (curAction instanceof HeroAction.Interact) {
-
-				return actInteract((HeroAction.Interact) curAction);
-
-			} else if (curAction instanceof HeroAction.Buy) {
-
-				return actBuy((HeroAction.Buy) curAction);
-
-			} else if (curAction instanceof HeroAction.PickUp) {
-
-				return actPickUp((HeroAction.PickUp) curAction);
-
-			} else if (curAction instanceof HeroAction.OpenChest) {
-
-				return actOpenChest((HeroAction.OpenChest) curAction);
-
-			} else if (curAction instanceof HeroAction.Unlock) {
-
-				return actUnlock((HeroAction.Unlock) curAction);
-
-			} else if (curAction instanceof HeroAction.Descend) {
-
-				return actDescend((HeroAction.Descend) curAction);
-
-			} else if (curAction instanceof HeroAction.Ascend) {
-
-				return actAscend((HeroAction.Ascend) curAction);
-
-			} else if (curAction instanceof HeroAction.Attack) {
-
-				return actAttack((HeroAction.Attack) curAction);
-
-			} else if (curAction instanceof HeroAction.Cook) {
-
-				return actCook((HeroAction.Cook) curAction);
-
-			}
+			return curAction.perform();
 		}
-
-		return false;
 	}
 
 	public void busy() {
 		ready = false;
 	}
 
-	private void ready() {
+	void ready() {
 		sprite.idle();
 		curAction = null;
 		ready = true;
@@ -477,7 +372,7 @@ public class Hero extends Char {
 	}
 
 	public void interrupt() {
-		if (isAlive() && curAction != null && curAction.dst != pos) {
+		if (isAlive() && curAction != null && curAction.getTarget() != pos) {
 			lastAction = curAction;
 		}
 		curAction = null;
@@ -487,320 +382,6 @@ public class Hero extends Char {
 		curAction = lastAction;
 		lastAction = null;
 		act();
-	}
-
-	private boolean actMove(HeroAction.Move action) {
-
-		if (getCloser(action.dst)) {
-
-			return true;
-
-		} else {
-			if (Dungeon.level.map[pos] == Terrain.SIGN) {
-				Sign.read(pos);
-			}
-			ready();
-
-			return false;
-		}
-	}
-
-	private boolean actInteract(HeroAction.Interact action) {
-
-		NPC npc = action.npc;
-
-		if (Level.adjacent(pos, npc.pos)) {
-
-			ready();
-			sprite.turnTo(pos, npc.pos);
-			npc.interact();
-			return false;
-
-		} else {
-
-			if (Level.fieldOfView[npc.pos] && getCloser(npc.pos)) {
-
-				return true;
-
-			} else {
-				ready();
-				return false;
-			}
-
-		}
-	}
-
-	private boolean actBuy(HeroAction.Buy action) {
-		int dst = action.dst;
-		if (pos == dst || Level.adjacent(pos, dst)) {
-
-			ready();
-
-			Heap heap = Dungeon.level.heaps.get(dst);
-			if (heap != null && heap.type == Type.FOR_SALE && heap.size() == 1) {
-				GameScene.show(new WndTradeItem(heap, true));
-			}
-
-			return false;
-
-		} else if (getCloser(dst)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actCook(HeroAction.Cook action) {
-		int dst = action.dst;
-		if (Dungeon.visible[dst]) {
-
-			ready();
-			AlchemyPot.operate(this, dst);
-			return false;
-
-		} else if (getCloser(dst)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actPickUp(HeroAction.PickUp action) {
-		int dst = action.dst;
-		if (pos == dst) {
-
-			Heap heap = Dungeon.level.heaps.get(pos);
-			if (heap != null) {
-				Item item = heap.pickUp();
-				if (item.doPickUp(this)) {
-
-					if (item instanceof Dewdrop) {
-						// Do nothing
-					} else {
-						boolean important = ((item instanceof ScrollOfUpgrade || item instanceof ScrollOfEnchantment) && ((Scroll) item)
-								.isKnown())
-								|| ((item instanceof PotionOfStrength || item instanceof PotionOfMight) && ((Potion) item)
-										.isKnown());
-						if (important) {
-							GLog.p(TXT_YOU_NOW_HAVE, item.name());
-						} else {
-							GLog.i(TXT_YOU_NOW_HAVE, item.name());
-						}
-					}
-
-					if (!heap.isEmpty()) {
-						GLog.i(TXT_SOMETHING_ELSE);
-					}
-					curAction = null;
-				} else {
-					Dungeon.level.drop(item, pos).sprite.drop();
-					ready();
-				}
-			} else {
-				ready();
-			}
-
-			return false;
-
-		} else if (getCloser(dst)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actOpenChest(HeroAction.OpenChest action) {
-		int dst = action.dst;
-		if (Level.adjacent(pos, dst) || pos == dst) {
-
-			Heap heap = Dungeon.level.heaps.get(dst);
-			if (heap != null
-					&& (heap.type != Type.HEAP && heap.type != Type.FOR_SALE)) {
-
-				theKey = null;
-
-				if (heap.type == Type.LOCKED_CHEST
-						|| heap.type == Type.CRYSTAL_CHEST) {
-
-					theKey = belongings.getKey(GoldenKey.class, Dungeon.depth);
-
-					if (theKey == null) {
-						GLog.w(TXT_LOCKED_CHEST);
-						ready();
-						return false;
-					}
-				}
-
-				switch (heap.type) {
-				case TOMB:
-					Sample.INSTANCE.play(Assets.SND_TOMB);
-					Camera.main.shake(1, 0.5f);
-					break;
-				case SKELETON:
-					break;
-				default:
-					Sample.INSTANCE.play(Assets.SND_UNLOCK);
-				}
-
-				spend(Key.TIME_TO_UNLOCK);
-				sprite.operate(dst);
-
-			} else {
-				ready();
-			}
-
-			return false;
-
-		} else if (getCloser(dst)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actUnlock(HeroAction.Unlock action) {
-		int doorCell = action.dst;
-		if (Level.adjacent(pos, doorCell)) {
-
-			theKey = null;
-			int door = Dungeon.level.map[doorCell];
-
-			if (door == Terrain.LOCKED_DOOR) {
-
-				theKey = belongings.getKey(IronKey.class, Dungeon.depth);
-
-			} else if (door == Terrain.LOCKED_EXIT) {
-
-				theKey = belongings.getKey(SkeletonKey.class, Dungeon.depth);
-
-			}
-
-			if (theKey != null) {
-
-				spend(Key.TIME_TO_UNLOCK);
-				sprite.operate(doorCell);
-
-				Sample.INSTANCE.play(Assets.SND_UNLOCK);
-
-			} else {
-				GLog.w(TXT_LOCKED_DOOR);
-				ready();
-			}
-
-			return false;
-
-		} else if (getCloser(doorCell)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actDescend(HeroAction.Descend action) {
-		int stairs = action.dst;
-		if (pos == stairs && pos == Dungeon.level.exit) {
-
-			curAction = null;
-
-			Hunger hunger = buff(Hunger.class);
-			if (hunger != null && !hunger.isStarving()) {
-				hunger.satisfy(-Hunger.STARVING / 10);
-			}
-
-			InterlevelScene.mode = InterlevelScene.Mode.DESCEND;
-			Game.switchScene(InterlevelScene.class);
-
-			return false;
-
-		} else if (getCloser(stairs)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actAscend(HeroAction.Ascend action) {
-		int stairs = action.dst;
-		if (pos == stairs && pos == Dungeon.level.entrance) {
-
-			if (Dungeon.depth == 1) {
-
-				if (belongings.getItem(Amulet.class) == null) {
-					GameScene.show(new WndMessage(TXT_LEAVE));
-					ready();
-				} else {
-					Dungeon.win(Game.getVar(R.string.ResultDescriptions_Win));
-					Dungeon.deleteGame(Dungeon.hero.heroClass, true);
-					Game.switchScene(SurfaceScene.class);
-				}
-
-			} else {
-
-				curAction = null;
-
-				Hunger hunger = buff(Hunger.class);
-				if (hunger != null && !hunger.isStarving()) {
-					hunger.satisfy(-Hunger.STARVING / 10);
-				}
-
-				InterlevelScene.mode = InterlevelScene.Mode.ASCEND;
-				Game.switchScene(InterlevelScene.class);
-			}
-
-			return false;
-
-		} else if (getCloser(stairs)) {
-
-			return true;
-
-		} else {
-			ready();
-			return false;
-		}
-	}
-
-	private boolean actAttack(HeroAction.Attack action) {
-
-		enemy = action.target;
-
-		if (Level.adjacent(pos, enemy.pos) && enemy.isAlive()
-				&& !isCharmedBy(enemy)) {
-
-			spend(attackDelay());
-			sprite.attack(enemy.pos);
-
-			return false;
-
-		} else {
-
-			if (Level.fieldOfView[enemy.pos] && getCloser(enemy.pos)) {
-
-				return true;
-
-			} else {
-				ready();
-				return false;
-			}
-
-		}
 	}
 
 	public void rest(boolean tillHealthy) {
@@ -890,9 +471,7 @@ public class Hero extends Char {
 
 	private void checkVisibleMobs() {
 		ArrayList<Mob> visible = new ArrayList<Mob>();
-
 		boolean newMob = false;
-
 		for (Mob m : Dungeon.level.mobs) {
 			if (Level.fieldOfView[m.pos] && m.hostile) {
 				visible.add(m);
@@ -901,12 +480,10 @@ public class Hero extends Char {
 				}
 			}
 		}
-
 		if (newMob) {
 			interrupt();
 			restoreHealth = false;
 		}
-
 		visibleEnemies = visible;
 	}
 
@@ -918,117 +495,47 @@ public class Hero extends Char {
 		return visibleEnemies.get(index % visibleEnemies.size());
 	}
 
-	private boolean getCloser(final int target) {
-
-		if (rooted) {
-			Camera.main.shake(1, 1f);
-			return false;
-		}
-
-		int step = -1;
-
-		if (Level.adjacent(pos, target)) {
-
-			if (Actor.findChar(target) == null) {
-				if (Level.pit[target] && !flying && !Chasm.jumpConfirmed) {
-					Chasm.heroJump(this);
-					interrupt();
-					return false;
-				}
-				if (Level.passable[target] || Level.avoid[target]) {
-					step = target;
-				}
-			}
-
-		} else {
-
-			int len = Level.LENGTH;
-			boolean[] p = Level.passable;
-			boolean[] v = Dungeon.level.visited;
-			boolean[] m = Dungeon.level.mapped;
-			boolean[] passable = new boolean[len];
-			for (int i = 0; i < len; i++) {
-				passable[i] = p[i] && (v[i] || m[i]);
-			}
-
-			step = Dungeon.findPath(this, pos, target, passable,
-					Level.fieldOfView);
-		}
-
-		if (step != -1) {
-
-			int oldPos = pos;
-			move(step);
-			sprite.move(oldPos, pos);
-			spend(1 / speed());
-
-			return true;
-
-		} else {
-
-			return false;
-
-		}
-
-	}
-
 	public boolean handle(int cell) {
-
 		if (cell == -1) {
 			return false;
 		}
 
 		Char ch;
 		Heap heap;
-
 		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
-
-			curAction = new HeroAction.Cook(cell);
-
+			curAction = new CookAction(this, cell);
 		} else if (Level.fieldOfView[cell]
 				&& (ch = Actor.findChar(cell)) instanceof Mob) {
-
 			if (ch instanceof NPC) {
-				curAction = new HeroAction.Interact((NPC) ch);
+				curAction = new InteractAction(this, cell, (NPC) ch);
 			} else {
-				curAction = new HeroAction.Attack(ch);
+				curAction = new AttackAction(this, cell, ch);
 			}
-
 		} else if (Level.fieldOfView[cell]
 				&& (heap = Dungeon.level.heaps.get(cell)) != null) {
-
 			switch (heap.type) {
 			case HEAP:
-				curAction = new HeroAction.PickUp(cell);
+				curAction = new PickupAction(this, cell);
 				break;
 			case FOR_SALE:
-				curAction = heap.size() == 1 && heap.peek().price() > 0 ? new HeroAction.Buy(
-						cell) : new HeroAction.PickUp(cell);
+				curAction = heap.size() == 1 && heap.peek().price() > 0 ? new BuyAction(
+						this, cell) : new PickupAction(this, cell);
 				break;
 			default:
-				curAction = new HeroAction.OpenChest(cell);
+				curAction = new OpenChestAction(this, cell);
 			}
-
 		} else if (Dungeon.level.map[cell] == Terrain.LOCKED_DOOR
 				|| Dungeon.level.map[cell] == Terrain.LOCKED_EXIT) {
-
-			curAction = new HeroAction.Unlock(cell);
-
+			curAction = new UnlockAction(this, cell);
 		} else if (cell == Dungeon.level.exit) {
-
-			curAction = new HeroAction.Descend(cell);
-
+			curAction = new DescendAction(this, cell);
 		} else if (cell == Dungeon.level.entrance) {
-
-			curAction = new HeroAction.Ascend(cell);
-
+			curAction = new AscendAction(this, cell);
 		} else {
-
-			curAction = new HeroAction.Move(cell);
-			lastAction = null;
-
+			curAction = new MoveAction(this, cell);
 		}
-
+		lastAction = null;
+		
 		return act();
 	}
 
@@ -1054,7 +561,6 @@ public class Hero extends Char {
 		}
 
 		if (levelUp) {
-
 			GLog.p(TXT_NEW_LEVEL, lvl);
 			sprite.showStatus(CharSprite.POSITIVE, TXT_LEVEL_UP);
 			Sample.INSTANCE.play(Assets.SND_LEVELUP);
@@ -1092,39 +598,21 @@ public class Hero extends Char {
 		super.add(buff);
 
 		if (sprite != null) {
+			if(!buff.getText().isEmpty()) {
+				GLog.w(buff.getText());
+			}
 			if (buff instanceof Burning) {
-				GLog.w(Game.getVar(R.string.Hero_StaBurning));
 				interrupt();
 			} else if (buff instanceof Paralysis) {
-				GLog.w(Game.getVar(R.string.Hero_StaParalysis));
 				interrupt();
 			} else if (buff instanceof Poison) {
-				GLog.w(Game.getVar(R.string.Hero_StaPoison));
 				interrupt();
-			} else if (buff instanceof Ooze) {
-				GLog.w(Game.getVar(R.string.Hero_StaOoze));
-			} else if (buff instanceof Roots) {
-				GLog.w(Game.getVar(R.string.Hero_StaRoots));
-			} else if (buff instanceof Weakness) {
-				GLog.w(Game.getVar(R.string.Hero_StaWeakness));
-			} else if (buff instanceof Blindness) {
-				GLog.w(Game.getVar(R.string.Hero_StaBlindness));
 			} else if (buff instanceof Fury) {
-				GLog.w(Game.getVar(R.string.Hero_StaFury));
 				sprite.showStatus(CharSprite.POSITIVE,
 						Game.getVar(R.string.Hero_StaFurious));
-			} else if (buff instanceof Charm) {
-				GLog.w(Game.getVar(R.string.Hero_StaCharm));
-			} else if (buff instanceof Cripple) {
-				GLog.w(Game.getVar(R.string.Hero_StaCripple));
-			} else if (buff instanceof Bleeding) {
-				GLog.w(Game.getVar(R.string.Hero_StaBleeding));
 			} else if (buff instanceof Vertigo) {
-				GLog.w(Game.getVar(R.string.Hero_StaVertigo));
 				interrupt();
-			}
-
-			else if (buff instanceof Light) {
+			} else if (buff instanceof Light) {
 				sprite.add(CharSprite.State.ILLUMINATED);
 			}
 		}
@@ -1257,58 +745,16 @@ public class Hero extends Char {
 
 	@Override
 	public void onMotionComplete() {
-		Dungeon.observe();
-		search(false);
-
 		super.onMotionComplete();
 	}
-
+	
 	@Override
 	public void onAttackComplete() {
-
-		AttackIndicator.target(enemy);
-
-		attack(enemy);
-		curAction = null;
-
-		Invisibility.dispel();
-
 		super.onAttackComplete();
 	}
-
+	
 	@Override
 	public void onOperateComplete() {
-
-		if (curAction instanceof HeroAction.Unlock) {
-
-			if (theKey != null) {
-				theKey.detach(belongings.backpack);
-				theKey = null;
-			}
-
-			int doorCell = ((HeroAction.Unlock) curAction).dst;
-			int door = Dungeon.level.map[doorCell];
-
-			Level.set(doorCell, door == Terrain.LOCKED_DOOR ? Terrain.DOOR
-					: Terrain.UNLOCKED_EXIT);
-			GameScene.updateMap(doorCell);
-
-		} else if (curAction instanceof HeroAction.OpenChest) {
-
-			if (theKey != null) {
-				theKey.detach(belongings.backpack);
-				theKey = null;
-			}
-
-			Heap heap = Dungeon.level.heaps
-					.get(((HeroAction.OpenChest) curAction).dst);
-			if (heap.type == Type.SKELETON) {
-				Sample.INSTANCE.play(Assets.SND_BONES);
-			}
-			heap.open(this);
-		}
-		curAction = null;
-
 		super.onOperateComplete();
 	}
 
@@ -1433,5 +879,13 @@ public class Hero extends Char {
 
 	public static interface Doom {
 		public void onDeath();
+	}
+
+	public Char getEnemy() {
+		return enemy;
+	}
+
+	public void setEnemy(Char enemy) {
+		this.enemy = enemy;
 	}
 }

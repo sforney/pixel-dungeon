@@ -58,4 +58,9 @@ public class Ooze extends Buff {
 		}
 		return true;
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaOoze);
+	}
 }

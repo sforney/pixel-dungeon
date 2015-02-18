@@ -54,4 +54,8 @@ public class Levitation extends FlavourBuff {
 	public String toString() {
 		return Game.getVar(R.string.Levitation_Info);
 	}
+	
+	public String getText() {
+		return Game.getVar(R.string.PotionOfLevitation_Apply);
+	}
 }

@@ -89,4 +89,9 @@ public class Poison extends Buff implements Hero.Doom {
 				Game.getVar(R.string.ResultDescriptions_Poison), Dungeon.depth));
 		GLog.n(Game.getVar(R.string.Poison_Death));
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaPoison);
+	}
 }

@@ -57,4 +57,9 @@ public class Charm extends FlavourBuff {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() : 1;
 	}
+	
+	@Override
+	public String getText() {
+		return Game.getVar(R.string.Hero_StaCharm);
+	}
 }

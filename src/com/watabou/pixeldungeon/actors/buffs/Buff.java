@@ -26,7 +26,6 @@ public class Buff extends Actor {
 	public Char target;
 	
 	public boolean attachTo( Char target ) {
-
 		if (target.immunities().contains( getClass() )) {
 			return false;
 		}
@@ -80,6 +79,10 @@ public class Buff extends Actor {
 		T buff = affect( target, buffClass );
 		buff.spend( duration );
 		return buff;
+	}
+	
+	public String getText() {
+		return "";
 	}
 	
 	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
