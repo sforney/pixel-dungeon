@@ -137,7 +137,6 @@ public class Hero extends Char {
 		belongings = new Belongings(this);
 
 		visibleEnemies = new ArrayList<Mob>();
-		this.live();
 	}
 
 	public int STR() {

@@ -142,6 +142,7 @@ public class Dungeon {
 		QuickSlot.secondaryValue = null;
 		
 		hero = new Hero();
+		hero.live();
 		
 		Badges.reset();
 		
