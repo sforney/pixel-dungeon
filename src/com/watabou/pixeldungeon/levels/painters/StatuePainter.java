@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.levels.painters;
 
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.Statue;
 import com.watabou.pixeldungeon.items.keys.IronKey;
 import com.watabou.pixeldungeon.levels.Level;
@@ -66,6 +65,6 @@ public class StatuePainter extends Painter {
 		Statue statue = new Statue();
 		statue.pos = cx + cy * Level.WIDTH;
 		level.mobs.add( statue );
-		Actor.occupyCell( statue );
+		statue.occupyCell();
 	}
 }

@@ -535,7 +535,7 @@ public abstract class RegularLevel extends Level {
 				mob.pos = randomRespawnCell();
 			} while (mob.pos == -1);
 			mobs.add( mob );
-			Actor.occupyCell( mob );
+			mob.occupyCell();
 		}
 	}
 	

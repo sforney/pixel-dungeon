@@ -32,31 +32,28 @@ import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 public abstract class Actor implements Bundlable {
-	
-	public static final float TICK	= 1f;
-
 	private float time;
-	
+	public static final float TICK = 1.0f;
 	private int id = 0;
 	
 	protected abstract boolean act();
 	
 	
-	protected void spend( float time ) {
+	public void spend( float time ) {
 		this.time += time;
 	}
 
-	protected void postpone( float time ) {
+	public void postpone( float time ) {
 		if (this.time < now + time) {
 			this.time = now + time;
 		}
 	}
 	
-	protected float cooldown() {
+	public float cooldown() {
 		return time - now;
 	}
 	
-	protected void deactivate() {
+	public void deactivate() {
 		time = Float.MAX_VALUE;
 	}
 	
@@ -106,7 +103,7 @@ public abstract class Actor implements Bundlable {
 	
 	private static float now = 0;
 	
-	private static Char[] chars = new Char[Level.LENGTH];
+	protected static Char[] chars = new Char[Level.LENGTH];
 	
 	public static void clear() {
 		
@@ -149,6 +146,10 @@ public abstract class Actor implements Bundlable {
 		}
 		
 		current = null;
+	}
+	
+	public void initialize() {
+		Actor.init();
 	}
 	
 	public static void occupyCell( Char ch ) {

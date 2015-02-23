@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.levels.painters;
 
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.levels.Level;
@@ -55,6 +54,6 @@ public class BlacksmithPainter extends Painter {
 			npc.pos = room.random( 1 );
 		} while (level.heaps.get( npc.pos ) != null);
 		level.mobs.add( npc );
-		Actor.occupyCell( npc );
+		npc.occupyCell();
 	}
 }

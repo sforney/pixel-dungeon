@@ -3,7 +3,6 @@ package com.watabou.pixeldungeon.quest;
 import java.util.ArrayList;
 
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Wandmaker;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.quest.CorpseDust;
@@ -83,7 +82,7 @@ public class WandmakerQuest {
 			} while (level.map[npc.pos] == Terrain.ENTRANCE
 					|| level.map[npc.pos] == Terrain.SIGN);
 			level.mobs.add(npc);
-			Actor.occupyCell(npc);
+			npc.occupyCell();
 
 			spawned = true;
 			alternative = Random.Int(2) == 0;

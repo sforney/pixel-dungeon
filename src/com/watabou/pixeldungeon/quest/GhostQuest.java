@@ -2,7 +2,6 @@ package com.watabou.pixeldungeon.quest;
 
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.FetidRat;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Ghost;
 import com.watabou.pixeldungeon.items.Generator;
@@ -98,7 +97,7 @@ public class GhostQuest {
 				ghost.pos = level.randomRespawnCell();
 			} while (ghost.pos == -1);
 			level.mobs.add(ghost);
-			Actor.occupyCell(ghost);
+			ghost.occupyCell();
 
 			spawned = true;
 			alternative = Random.Int(2) == 0;

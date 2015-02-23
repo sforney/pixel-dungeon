@@ -1,7 +1,6 @@
 package com.watabou.pixeldungeon.quest;
 
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.Golem;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.actors.mobs.Monk;
@@ -73,7 +72,7 @@ public class ImpQuest {
 				npc.pos = level.randomRespawnCell();
 			} while (npc.pos == -1 || level.heaps.get(npc.pos) != null);
 			level.mobs.add(npc);
-			Actor.occupyCell(npc);
+			npc.occupyCell();
 
 			spawned = true;
 			alternative = Random.Int(2) == 0;

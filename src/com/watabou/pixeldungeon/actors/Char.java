@@ -217,6 +217,10 @@ public abstract class Char extends Actor {
 		return (magic ? acuRoll * 2 : acuRoll) >= defRoll;
 	}
 	
+	public void occupyCell() {
+		chars[pos] = this;
+	}
+	
 	public int attackSkill( Char target ) {
 		return 0;
 	}
@@ -301,7 +305,7 @@ public abstract class Char extends Actor {
 	}
 	
 	@Override
-	protected void spend( float time ) {
+	public void spend( float time ) {
 		
 		float timeScale = 1f;
 		if (buff( Slow.class ) != null) {
