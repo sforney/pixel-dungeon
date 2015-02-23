@@ -20,14 +20,14 @@ package com.watabou.pixeldungeon.items.wands;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
-import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.actors.Actor;
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.effects.MagicMissile;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.utils.Callback;
 
@@ -37,24 +37,25 @@ public class WandOfAmok extends Wand {
 	}
 
 	@Override
-	protected void onZap( int cell ) {
-		Char ch = Actor.findChar( cell );
+	protected void onZap(int cell) {
+		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
 			if (ch == Dungeon.hero) {
-				Buff.affect( ch, Vertigo.class, Vertigo.duration( ch ) );
+				Buff.affect(ch, Vertigo.class, Vertigo.duration(ch));
 			} else {
-				Buff.affect( ch, Amok.class, 3f + level() );
+				Buff.affect(ch, Amok.class, 3f + level());
 			}
 		} else {
 			GLog.i(Game.getVar(R.string.WandOfAmok_Info1));
 		}
 	}
-	
-	protected void fx( int cell, Callback callback ) {
-		MagicMissile.purpleLight( curUser.sprite.parent, curUser.pos, cell, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+
+	protected void fx(int cell, Callback callback) {
+		MagicMissile.purpleLight(curUser.sprite.parent, curUser.pos, cell,
+				callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WandOfAmok_Info);

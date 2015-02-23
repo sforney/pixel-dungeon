@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
 
@@ -86,7 +87,7 @@ public class Fire extends Blob {
 	}
 
 	private void burn(int pos) {
-		Char ch = findCharacter(pos);
+		Char ch = LevelState.findChar(pos);
 		if (ch != null) {
 			Buff.affect(ch, Burning.class).reignite(ch);
 		}

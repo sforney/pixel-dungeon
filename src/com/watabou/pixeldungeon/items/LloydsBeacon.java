@@ -24,10 +24,10 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.InterlevelScene;
 import com.watabou.pixeldungeon.sprites.ItemSprite.Glowing;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
@@ -103,7 +103,7 @@ public class LloydsBeacon extends Item {
 			}
 			
 			for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
-				if (Actor.findChar( hero.pos + Level.NEIGHBOURS8[i] ) != null) {
+				if (LevelState.findChar( hero.pos + Level.NEIGHBOURS8[i] ) != null) {
 					GLog.w( TXT_CREATURES );
 					return;
 				}

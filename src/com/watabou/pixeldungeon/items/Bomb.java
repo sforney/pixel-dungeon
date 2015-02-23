@@ -22,7 +22,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
@@ -30,85 +29,87 @@ import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.BlastParticle;
 import com.watabou.pixeldungeon.effects.particles.SmokeParticle;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
 public class Bomb extends Item {
-	
+
 	{
 		name = Game.getVar(R.string.Bomb_Name);
 		image = ItemSpriteSheet.BOMB;
 		defaultAction = AC_THROW;
 		stackable = true;
 	}
-	
+
 	@Override
-	protected void onThrow( int cell ) {
+	protected void onThrow(int cell) {
 		if (Level.pit[cell]) {
-			super.onThrow( cell );
+			super.onThrow(cell);
 		} else {
-			Sample.INSTANCE.play( Assets.SND_BLAST, 2 );
-			
+			Sample.INSTANCE.play(Assets.SND_BLAST, 2);
+
 			if (Dungeon.visible[cell]) {
-				CellEmitter.center( cell ).burst( BlastParticle.FACTORY, 30 );
+				CellEmitter.center(cell).burst(BlastParticle.FACTORY, 30);
 			}
-			
+
 			boolean terrainAffected = false;
 			for (int n : Level.NEIGHBOURS9) {
 				int c = cell + n;
 				if (c >= 0 && c < Level.LENGTH) {
 					if (Dungeon.visible[c]) {
-						CellEmitter.get( c ).burst( SmokeParticle.FACTORY, 4 );
+						CellEmitter.get(c).burst(SmokeParticle.FACTORY, 4);
 					}
-					
+
 					if (Level.flamable[c]) {
-						Level.set( c, Terrain.EMBERS );
-						GameScene.updateMap( c );
-						terrainAffected = true;	
+						Level.set(c, Terrain.EMBERS);
+						GameScene.updateMap(c);
+						terrainAffected = true;
 					}
-					
-					Char ch = Actor.findChar( c );
+
+					Char ch = LevelState.findChar(c);
 					if (ch != null) {
-						int dmg = Random.Int( 1 + Dungeon.depth, 10 + Dungeon.depth * 2 ) - Random.Int( ch.dr() );
+						int dmg = Random.Int(1 + Dungeon.depth,
+								10 + Dungeon.depth * 2) - Random.Int(ch.dr());
 						if (dmg > 0) {
-							ch.damage( dmg, this );
+							ch.damage(dmg, this);
 							if (ch.isAlive()) {
-								Buff.prolong( ch, Paralysis.class, 2 );
+								Buff.prolong(ch, Paralysis.class, 2);
 							}
 						}
 					}
 				}
 			}
-			
+
 			if (terrainAffected) {
 				Dungeon.observe();
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public Item random() {
-		quantity = Random.IntRange( 1, 3 );
+		quantity = Random.IntRange(1, 3);
 		return this;
-	}	
-	
+	}
+
 	@Override
 	public int price() {
 		return 10 * quantity;
 	}
-	
+
 	@Override
 	public String info() {
 		return Game.getVar(R.string.Bomb_Info);

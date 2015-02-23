@@ -21,7 +21,6 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
@@ -33,6 +32,7 @@ import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.CellSelector;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -86,7 +86,7 @@ public class WarriorArmor extends ClassArmor {
 			if (target != null && target != curUser.pos) {
 				
 				int cell = Ballistica.cast( curUser.pos, target, false, true );
-				if (Actor.findChar( cell ) != null && cell != curUser.pos) {
+				if (LevelState.findChar( cell ) != null && cell != curUser.pos) {
 					cell = Ballistica.trace[Ballistica.distance - 2];
 				}
 				
@@ -107,7 +107,7 @@ public class WarriorArmor extends ClassArmor {
 						Dungeon.observe();
 						
 						for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
-							Char mob = Actor.findChar( curUser.pos + Level.NEIGHBOURS8[i] );
+							Char mob = LevelState.findChar( curUser.pos + Level.NEIGHBOURS8[i] );
 							if (mob != null && mob != curUser) {
 								Buff.prolong( mob, Paralysis.class, SHOCK_TIME );
 							}

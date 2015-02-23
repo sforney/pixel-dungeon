@@ -27,7 +27,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Pushing;
@@ -36,6 +35,7 @@ import com.watabou.pixeldungeon.items.Gold;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.MimicSprite;
 import com.watabou.utils.Bundle;
@@ -128,13 +128,13 @@ public class Mimic extends Mob {
 	}
 
 	public static Mimic spawnAt(int pos, List<Item> items) {
-		Char ch = Actor.findChar(pos);
+		Char ch = LevelState.findChar(pos);
 		if (ch != null) {
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			for (int n : Level.NEIGHBOURS8) {
 				int cell = pos + n;
 				if ((Level.passable[cell] || Level.avoid[cell])
-						&& Actor.findChar(cell) == null) {
+						&& LevelState.findChar(cell) == null) {
 					candidates.add(cell);
 				}
 			}

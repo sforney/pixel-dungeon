@@ -506,7 +506,7 @@ public abstract class Char extends Actor {
 		if (Level.adjacent(step, pos) && buff(Vertigo.class) != null) {
 			step = pos + Level.NEIGHBOURS8[Random.Int(8)];
 			if (!(Level.passable[step] || Level.avoid[step])
-					|| findCharacter(step) != null) {
+					|| LevelState.findChar(step) != null) {
 				return;
 			}
 		}
@@ -559,9 +559,5 @@ public abstract class Char extends Actor {
 			buff.add();
 			buff.onAdd();
 		}
-	}
-	
-	public Char findCharacter(int pos) {
-		return findChar(pos);
 	}
 }

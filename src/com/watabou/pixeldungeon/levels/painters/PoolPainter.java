@@ -23,6 +23,7 @@ import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.PotionOfInvisibility;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Room;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.utils.Random;
@@ -75,7 +76,7 @@ public class PoolPainter extends Painter {
 			do {
 				piranha.pos = room.random();
 			} while (level.map[piranha.pos] != Terrain.WATER
-					|| piranha.findCharacter(piranha.pos) != null);
+					|| LevelState.findChar(piranha.pos) != null);
 			level.mobs.add(piranha);
 			piranha.occupyCell();
 		}

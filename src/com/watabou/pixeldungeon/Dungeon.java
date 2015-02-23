@@ -634,7 +634,7 @@ public class Dungeon {
 	public static int findPath(Char ch, int from, int to, boolean pass[],
 			boolean[] visible) {
 		if (Level.adjacent(from, to)) {
-			return ch.findCharacter(to) == null
+			return LevelState.findChar(to) == null
 					&& (pass[to] || Level.avoid[to]) ? to : -1;
 		}
 

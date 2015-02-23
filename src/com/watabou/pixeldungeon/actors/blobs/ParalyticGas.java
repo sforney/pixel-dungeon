@@ -24,6 +24,7 @@ import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
+import com.watabou.pixeldungeon.levels.LevelState;
 
 public class ParalyticGas extends Blob {
 
@@ -33,7 +34,7 @@ public class ParalyticGas extends Blob {
 
 		Char ch;
 		for (int i = 0; i < LENGTH; i++) {
-			if (cur[i] > 0 && (ch = findCharacter(i)) != null) {
+			if (cur[i] > 0 && (ch = LevelState.findChar(i)) != null) {
 				Buff.prolong(ch, Paralysis.class, Paralysis.duration(ch));
 			}
 		}

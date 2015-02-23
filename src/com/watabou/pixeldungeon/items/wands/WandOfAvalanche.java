@@ -23,7 +23,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
@@ -31,6 +30,7 @@ import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.pixeldungeon.utils.GLog;
@@ -56,7 +56,7 @@ public class WandOfAvalanche extends Wand {
 		for (int i = 0; i < Level.LENGTH; i++) {
 			int d = PathFinder.distance[i];
 			if (d < Integer.MAX_VALUE) {
-				Char ch = Actor.findChar(i);
+				Char ch = LevelState.findChar(i);
 				if (ch != null) {
 					ch.sprite.flash();
 					ch.damage(Random.Int(2, 6 + (size - d) * 2), this);

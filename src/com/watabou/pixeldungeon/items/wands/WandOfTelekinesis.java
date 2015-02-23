@@ -22,7 +22,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.effects.MagicMissile;
@@ -37,6 +36,7 @@ import com.watabou.pixeldungeon.items.scrolls.Scroll;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -69,7 +69,7 @@ public class WandOfTelekinesis extends Wand {
 
 			int before = Dungeon.level.map[c];
 
-			if ((ch = Actor.findChar(c)) != null) {
+			if ((ch = LevelState.findChar(c)) != null) {
 
 				if (i == Ballistica.distance - 1) {
 
@@ -79,7 +79,7 @@ public class WandOfTelekinesis extends Wand {
 
 					int next = Ballistica.trace[i + 1];
 					if ((Level.passable[next] || Level.avoid[next])
-							&& Actor.findChar(next) == null) {
+							&& LevelState.findChar(next) == null) {
 						new Pushing(ch, ch.pos, next).addDelayed(-1);
 
 						ch.pos = next;
@@ -114,7 +114,7 @@ public class WandOfTelekinesis extends Wand {
 			}
 
 			Dungeon.level.press(c, null);
-			if (before == Terrain.OPEN_DOOR && Actor.findChar(c) == null) {
+			if (before == Terrain.OPEN_DOOR && LevelState.findChar(c) == null) {
 
 				Level.set(c, Terrain.DOOR);
 				GameScene.updateMap(c);

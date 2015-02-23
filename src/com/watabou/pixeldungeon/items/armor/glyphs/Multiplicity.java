@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.npcs.MirrorImage;
@@ -29,6 +28,7 @@ import com.watabou.pixeldungeon.items.armor.Armor;
 import com.watabou.pixeldungeon.items.armor.Armor.Glyph;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.sprites.ItemSprite.Glowing;
@@ -36,44 +36,46 @@ import com.watabou.utils.Random;
 
 public class Multiplicity extends Glyph {
 
-	private static final String TXT_MULTIPLICITY = Game.getVar(R.string.Multiplicity_Txt);
-	
-	private static ItemSprite.Glowing PINK = new ItemSprite.Glowing( 0xCCAA88 );
-	
-	@Override
-	public int proc( Armor armor, Char attacker, Char defender, int damage) {
+	private static final String TXT_MULTIPLICITY = Game
+			.getVar(R.string.Multiplicity_Txt);
 
-		int level = Math.max( 0, armor.level );
-		
-		if (Random.Int( level / 2 + 6 ) >= 5) {
-			
+	private static ItemSprite.Glowing PINK = new ItemSprite.Glowing(0xCCAA88);
+
+	@Override
+	public int proc(Armor armor, Char attacker, Char defender, int damage) {
+
+		int level = Math.max(0, armor.level);
+
+		if (Random.Int(level / 2 + 6) >= 5) {
+
 			ArrayList<Integer> respawnPoints = new ArrayList<Integer>();
-			
-			for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
+
+			for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
 				int p = defender.pos + Level.NEIGHBOURS8[i];
-				if (Actor.findChar( p ) == null && (Level.passable[p] || Level.avoid[p])) {
-					respawnPoints.add( p );
+				if (LevelState.findChar(p) == null
+						&& (Level.passable[p] || Level.avoid[p])) {
+					respawnPoints.add(p);
 				}
 			}
-			
+
 			if (respawnPoints.size() > 0) {
 				MirrorImage mob = new MirrorImage();
-				mob.duplicate( (Hero)defender );
-				GameScene.add( mob );
-				WandOfBlink.appear( mob, Random.element( respawnPoints ) );
-				
-				defender.damage( Random.IntRange( 1, defender.HT / 6 ), this );
-				checkOwner( defender );
+				mob.duplicate((Hero) defender);
+				GameScene.add(mob);
+				WandOfBlink.appear(mob, Random.element(respawnPoints));
+
+				defender.damage(Random.IntRange(1, defender.HT / 6), this);
+				checkOwner(defender);
 			}
-			
+
 		}
-		
+
 		return damage;
 	}
-	
+
 	@Override
-	public String name( String weaponName) {
-		return String.format( TXT_MULTIPLICITY, weaponName );
+	public String name(String weaponName) {
+		return String.format(TXT_MULTIPLICITY, weaponName);
 	}
 
 	@Override

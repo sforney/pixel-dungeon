@@ -24,13 +24,14 @@ import com.watabou.pixeldungeon.actors.buffs.Frost;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.SnowParticle;
 import com.watabou.pixeldungeon.items.Heap;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.utils.Random;
 
 public class Freezing {
 
 	// Returns true, if this cell is visible
 	public static boolean affect(int cell, Fire fire) {
-		Char ch = fire.findCharacter(cell);
+		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
 			Buff.prolong(ch, Frost.class,
 					Frost.duration(ch) * Random.Float(1.0f, 1.5f));

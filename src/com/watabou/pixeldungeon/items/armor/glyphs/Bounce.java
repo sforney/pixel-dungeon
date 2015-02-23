@@ -20,13 +20,13 @@ package com.watabou.pixeldungeon.items.armor.glyphs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.effects.Pushing;
 import com.watabou.pixeldungeon.items.armor.Armor;
 import com.watabou.pixeldungeon.items.armor.Armor.Glyph;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.utils.Random;
 
 public class Bounce extends Glyph {
@@ -46,7 +46,7 @@ public class Bounce extends Glyph {
 				if (attacker.pos - defender.pos == ofs) {
 					int newPos = attacker.pos + ofs;
 					if ((Level.passable[newPos] || Level.avoid[newPos])
-							&& Actor.findChar(newPos) == null) {
+							&& LevelState.findChar(newPos) == null) {
 
 						new Pushing(attacker, attacker.pos, newPos)
 								.addDelayed(-1);

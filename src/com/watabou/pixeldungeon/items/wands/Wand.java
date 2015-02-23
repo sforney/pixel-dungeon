@@ -36,6 +36,7 @@ import com.watabou.pixeldungeon.items.ItemStatusHandler;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
 import com.watabou.pixeldungeon.items.bags.Bag;
 import com.watabou.pixeldungeon.items.rings.RingOfPower.Power;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.CellSelector;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -425,7 +426,7 @@ public abstract class Wand extends KindOfWeapon {
 						curWand.hitChars);
 				curUser.sprite.zap(cell);
 
-				QuickSlot.target(curItem, curUser.findCharacter(cell));
+				QuickSlot.target(curItem, LevelState.findChar(cell));
 
 				if (curWand.curCharges > 0) {
 

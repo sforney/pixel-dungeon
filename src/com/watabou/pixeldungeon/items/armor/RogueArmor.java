@@ -22,7 +22,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -32,82 +31,86 @@ import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.CellSelector;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.GLog;
 
 public class RogueArmor extends ClassArmor {
-	
-	private static final String TXT_FOV       = Game.getVar(R.string.RogueArmor_Fov);
-	private static final String TXT_NOT_ROGUE = Game.getVar(R.string.RogueArmor_NotRogue);
-	
-	private static final String AC_SPECIAL = Game.getVar(R.string.RogueArmor_ACSpecial); 
-	
+
+	private static final String TXT_FOV = Game.getVar(R.string.RogueArmor_Fov);
+	private static final String TXT_NOT_ROGUE = Game
+			.getVar(R.string.RogueArmor_NotRogue);
+
+	private static final String AC_SPECIAL = Game
+			.getVar(R.string.RogueArmor_ACSpecial);
+
 	{
 		name = Game.getVar(R.string.RogueArmor_Name);
 		image = ItemSpriteSheet.ARMOR_ROGUE;
 	}
-	
+
 	@Override
 	public String special() {
 		return AC_SPECIAL;
 	}
-	
+
 	@Override
-	public void doSpecial() {			
-		GameScene.selectCell( teleporter );
+	public void doSpecial() {
+		GameScene.selectCell(teleporter);
 	}
-	
+
 	@Override
-	public boolean doEquip( Hero hero ) {
+	public boolean doEquip(Hero hero) {
 		if (hero.heroClass == HeroClass.ROGUE) {
-			return super.doEquip( hero );
+			return super.doEquip(hero);
 		} else {
-			GLog.w( TXT_NOT_ROGUE );
+			GLog.w(TXT_NOT_ROGUE);
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.RogueArmor_Desc);
 	}
-	
-	protected static CellSelector.Listener teleporter = new  CellSelector.Listener() {
-		
+
+	protected static CellSelector.Listener teleporter = new CellSelector.Listener() {
+
 		@Override
-		public void onSelect( Integer target ) {
+		public void onSelect(Integer target) {
 			if (target != null) {
 
-				if (!Level.fieldOfView[target] || 
-					!(Level.passable[target] || Level.avoid[target]) || 
-					Actor.findChar( target ) != null) {
-					
-					GLog.w( TXT_FOV );
+				if (!Level.fieldOfView[target]
+						|| !(Level.passable[target] || Level.avoid[target])
+						|| LevelState.findChar(target) != null) {
+
+					GLog.w(TXT_FOV);
 					return;
 				}
-				
+
 				curUser.HP -= (curUser.HP / 3);
-				
+
 				for (Mob mob : Dungeon.level.mobs) {
 					if (Level.fieldOfView[mob.pos]) {
-						Buff.prolong( mob, Blindness.class, 2 );
+						Buff.prolong(mob, Blindness.class, 2);
 						mob.state = mob.WANDERING;
-						mob.sprite.emitter().burst( Speck.factory( Speck.LIGHT ), 4 );
+						mob.sprite.emitter().burst(Speck.factory(Speck.LIGHT),
+								4);
 					}
 				}
-				
-				WandOfBlink.appear( curUser, target );
-				CellEmitter.get( target ).burst( Speck.factory( Speck.WOOL ), 10 );
-				Sample.INSTANCE.play( Assets.SND_PUFF );
-				Dungeon.level.press( target, curUser );
+
+				WandOfBlink.appear(curUser, target);
+				CellEmitter.get(target).burst(Speck.factory(Speck.WOOL), 10);
+				Sample.INSTANCE.play(Assets.SND_PUFF);
+				Dungeon.level.press(target, curUser);
 				Dungeon.observe();
-				
-				curUser.spendAndNext( Actor.TICK );
+
+				curUser.spendAndNext(LevelState.TICK);
 			}
 		}
-		
+
 		@Override
 		public String prompt() {
 			return Game.getVar(R.string.RogueArmor_Prompt);

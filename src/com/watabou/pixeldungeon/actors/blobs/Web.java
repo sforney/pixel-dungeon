@@ -24,6 +24,7 @@ import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.particles.WebParticle;
+import com.watabou.pixeldungeon.levels.LevelState;
 
 public class Web extends Blob {
 
@@ -38,7 +39,7 @@ public class Web extends Blob {
 
 				volume += offv;
 
-				Char ch = findCharacter(i);
+				Char ch = LevelState.findChar(i);
 				if (ch != null) {
 					Buff.prolong(ch, Roots.class, TICK);
 				}

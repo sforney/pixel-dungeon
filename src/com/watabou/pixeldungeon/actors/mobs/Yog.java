@@ -36,6 +36,7 @@ import com.watabou.pixeldungeon.items.keys.SkeletonKey;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.YogSprite;
 import com.watabou.utils.Random;
@@ -105,7 +106,7 @@ public class Yog extends Mob {
 
 		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
 			int p = pos + Level.NEIGHBOURS8[i];
-			if (findCharacter(p) == null
+			if (LevelState.findChar(p) == null
 					&& (Level.passable[p] || Level.avoid[p])) {
 				spawnPoints.add(p);
 			}

@@ -49,7 +49,7 @@ public abstract class Actor implements Bundlable {
 		time = Float.MAX_VALUE;
 	}
 
-	protected void onAdd() {
+	public void onAdd() {
 
 	}
 
@@ -91,7 +91,7 @@ public abstract class Actor implements Bundlable {
 	}
 
 	public void addDelayed(float delay) {
-		add(LevelState.getNow() + delay);
+		LevelState.add(this, LevelState.getNow() + delay);
 	}
 
 	protected void add(float time) {
@@ -115,14 +115,6 @@ public abstract class Actor implements Bundlable {
 		if (id > 0) {
 			LevelState.getActorIds().remove(id);
 		}
-	}
-
-	public static Char findChar(int pos) {
-		return LevelState.getChars()[pos];
-	}
-
-	public Char findCharacter(int pos) {
-		return findChar(pos);
 	}
 
 	public Actor find(int id) {

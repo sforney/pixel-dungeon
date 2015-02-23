@@ -22,12 +22,12 @@ import java.util.HashSet;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.Lightning;
 import com.watabou.pixeldungeon.effects.particles.SparkParticle;
 import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.traps.LightningTrap;
 import com.watabou.utils.Random;
 
@@ -89,7 +89,7 @@ public class Shock extends Weapon.Enchantment {
 		
 		HashSet<Char> ns = new HashSet<Char>();
 		for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar( ch.pos + Level.NEIGHBOURS8[i] );
+			Char n = LevelState.findChar( ch.pos + Level.NEIGHBOURS8[i] );
 			if (n != null && !affected.contains( n )) {
 				ns.add( n );
 			}

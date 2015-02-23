@@ -121,6 +121,10 @@ public class LevelState {
 		} while (doNext);
 	}
 
+	public static void add(Actor actor, float time) {
+		LevelState.add(actor, time);
+	}
+
 	public static HashSet<Actor> getActors() {
 		return actors;
 	}
@@ -145,6 +149,10 @@ public class LevelState {
 		LevelState.now = now;
 	}
 
+	public static Char findChar(int pos) {
+		return chars[pos];
+	}
+	
 	public static Char[] getChars() {
 		return chars;
 	}

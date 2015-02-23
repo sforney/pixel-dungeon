@@ -396,7 +396,7 @@ public abstract class Level implements Bundlable {
 		do {
 			cell = Random.Int(LENGTH);
 		} while (!passable[cell] || Dungeon.visible[cell]
-				|| Actor.findChar(cell) != null);
+				|| LevelState.findChar(cell) != null);
 		return cell;
 	}
 

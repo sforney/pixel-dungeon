@@ -17,8 +17,8 @@
  */
 package com.watabou.pixeldungeon.mechanics;
 
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 
 public class Ballistica {
 
@@ -86,7 +86,7 @@ public class Ballistica {
 				return trace[--distance - 1];
 			}
 			
-			if (Level.losBlocking[cell] || (hitChars && Actor.findChar( cell ) != null)) {
+			if (Level.losBlocking[cell] || (hitChars && LevelState.findChar( cell ) != null)) {
 				return cell;
 			}
 		}

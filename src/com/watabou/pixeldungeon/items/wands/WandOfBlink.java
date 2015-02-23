@@ -23,10 +23,10 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.Speck;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.utils.Callback;
 
@@ -34,46 +34,47 @@ public class WandOfBlink extends Wand {
 	{
 		name = Game.getVar(R.string.WandOfBlink_Name);
 	}
-	
+
 	@Override
-	protected void onZap( int cell ) {
+	protected void onZap(int cell) {
 
 		int level = level();
-		
+
 		if (Ballistica.distance > level + 4) {
 			cell = Ballistica.trace[level + 3];
-		} else if (Actor.findChar( cell ) != null && Ballistica.distance > 1) {
+		} else if (LevelState.findChar(cell) != null && Ballistica.distance > 1) {
 			cell = Ballistica.trace[Ballistica.distance - 2];
 		}
-		
+
 		curUser.sprite.visible = true;
-		appear( Dungeon.hero, cell );
+		appear(Dungeon.hero, cell);
 		Dungeon.observe();
 	}
-	
+
 	@Override
-	protected void fx( int cell, Callback callback ) {
-		MagicMissile.whiteLight( curUser.sprite.parent, curUser.pos, cell, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+	protected void fx(int cell, Callback callback) {
+		MagicMissile.whiteLight(curUser.sprite.parent, curUser.pos, cell,
+				callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 		curUser.sprite.visible = false;
 	}
-	
-	public static void appear( Char ch, int pos ) {
-		
+
+	public static void appear(Char ch, int pos) {
+
 		ch.sprite.interruptMotion();
-		
-		ch.move( pos );
-		ch.sprite.place( pos );
-		
+
+		ch.move(pos);
+		ch.sprite.place(pos);
+
 		if (ch.invisible == 0) {
-			ch.sprite.alpha( 0 );
-			ch.sprite.parent.add( new AlphaTweener( ch.sprite, 1, 0.4f ) );
+			ch.sprite.alpha(0);
+			ch.sprite.parent.add(new AlphaTweener(ch.sprite, 1, 0.4f));
 		}
-		
-		ch.sprite.emitter().start( Speck.factory( Speck.LIGHT ), 0.2f, 3 );
-		Sample.INSTANCE.play( Assets.SND_TELEPORT );
+
+		ch.sprite.emitter().start(Speck.factory(Speck.LIGHT), 0.2f, 3);
+		Sample.INSTANCE.play(Assets.SND_TELEPORT);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WandOfBlink_Info);

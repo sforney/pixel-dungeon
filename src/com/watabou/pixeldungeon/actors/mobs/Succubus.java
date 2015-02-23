@@ -33,6 +33,7 @@ import com.watabou.pixeldungeon.items.scrolls.ScrollOfLullaby;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.sprites.SuccubusSprite;
 import com.watabou.utils.Random;
@@ -98,7 +99,7 @@ public class Succubus extends Mob {
 
 		int cell = Ballistica.cast(pos, target, true, true);
 
-		if (findCharacter(cell) != null && Ballistica.distance > 1) {
+		if (LevelState.findChar(cell) != null && Ballistica.distance > 1) {
 			cell = Ballistica.trace[Ballistica.distance - 2];
 		}
 

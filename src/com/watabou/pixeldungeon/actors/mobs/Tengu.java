@@ -38,6 +38,7 @@ import com.watabou.pixeldungeon.items.scrolls.ScrollOfMagicMapping;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -155,7 +156,7 @@ public class Tengu extends Mob {
 			newPos = Random.Int(Level.LENGTH);
 		} while (!Level.fieldOfView[newPos] || !Level.passable[newPos]
 				|| (enemy != null && Level.adjacent(newPos, enemy.pos))
-				|| findCharacter(newPos) != null);
+				|| LevelState.findChar(newPos) != null);
 
 		sprite.move(pos, newPos);
 		move(newPos);

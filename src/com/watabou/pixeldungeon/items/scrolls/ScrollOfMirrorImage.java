@@ -23,57 +23,58 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.mobs.npcs.MirrorImage;
 import com.watabou.pixeldungeon.items.wands.WandOfBlink;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.utils.Random;
 
 public class ScrollOfMirrorImage extends Scroll {
 
-	private static final int NIMAGES	= 3;
-	
+	private static final int NIMAGES = 3;
+
 	{
 		name = Game.getVar(R.string.ScrollOfMirrorImage_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
+
 		ArrayList<Integer> respawnPoints = new ArrayList<Integer>();
-		
-		for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
+
+		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
 			int p = curUser.pos + Level.NEIGHBOURS8[i];
-			if (Actor.findChar( p ) == null && (Level.passable[p] || Level.avoid[p])) {
-				respawnPoints.add( p );
+			if (LevelState.findChar(p) == null
+					&& (Level.passable[p] || Level.avoid[p])) {
+				respawnPoints.add(p);
 			}
 		}
-		
+
 		int nImages = NIMAGES;
 		while (nImages > 0 && respawnPoints.size() > 0) {
-			int index = Random.index( respawnPoints );
-			
+			int index = Random.index(respawnPoints);
+
 			MirrorImage mob = new MirrorImage();
-			mob.duplicate( curUser );
-			GameScene.add( mob );
-			WandOfBlink.appear( mob, respawnPoints.get( index ) );
-			
-			respawnPoints.remove( index );
+			mob.duplicate(curUser);
+			GameScene.add(mob);
+			WandOfBlink.appear(mob, respawnPoints.get(index));
+
+			respawnPoints.remove(index);
 			nImages--;
 		}
-		
+
 		if (nImages < NIMAGES) {
 			setKnown();
 		}
-		
-		Sample.INSTANCE.play( Assets.SND_READ );
+
+		Sample.INSTANCE.play(Assets.SND_READ);
 		Invisibility.dispel();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spendAndNext(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfMirrorImage_Info);

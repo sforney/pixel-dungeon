@@ -40,6 +40,7 @@ import com.watabou.pixeldungeon.items.rings.RingOfThorns;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.DM300Sprite;
@@ -117,7 +118,7 @@ public class DM300 extends Mob {
 			}
 		}
 
-		Char ch = findCharacter(cell);
+		Char ch = LevelState.findChar(cell);
 		if (ch != null && ch != this) {
 			Buff.prolong(ch, Paralysis.class, 2);
 		}

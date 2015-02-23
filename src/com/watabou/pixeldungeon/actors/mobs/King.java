@@ -117,7 +117,7 @@ public class King extends Mob {
 
 	private boolean canTryToSummon() {
 		if (Undead.count < maxArmySize()) {
-			Char ch = findCharacter(CityBossLevel.pedestal(nextPedestal));
+			Char ch = LevelState.findChar(CityBossLevel.pedestal(nextPedestal));
 			return ch == this || ch == null;
 		} else {
 			return false;
@@ -130,7 +130,7 @@ public class King extends Mob {
 			summon();
 			return true;
 		} else {
-			if (findCharacter(CityBossLevel.pedestal(nextPedestal)) == enemy) {
+			if (LevelState.findChar(CityBossLevel.pedestal(nextPedestal)) == enemy) {
 				nextPedestal = !nextPedestal;
 			}
 			return super.attack(enemy);
@@ -251,7 +251,7 @@ public class King extends Mob {
 		}
 
 		@Override
-		protected void onAdd() {
+		public void onAdd() {
 			count++;
 			super.onAdd();
 		}

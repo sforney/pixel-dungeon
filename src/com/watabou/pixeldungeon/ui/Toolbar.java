@@ -26,11 +26,11 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.plants.Plant;
 import com.watabou.pixeldungeon.scenes.CellSelector;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -199,7 +199,7 @@ public class Toolbar extends Component {
 				return;
 			}
 			
-			Mob mob = (Mob)Actor.findChar( cell );
+			Mob mob = (Mob)LevelState.findChar( cell );
 			if (mob != null) {
 				GameScene.show( new WndInfoMob( mob ) );
 				return;

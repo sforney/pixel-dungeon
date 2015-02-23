@@ -24,6 +24,7 @@ import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.particles.LeafParticle;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
 
@@ -54,7 +55,7 @@ public class Regrowth extends Blob {
 
 					}
 
-					Char ch = findCharacter(i);
+					Char ch = LevelState.findChar(i);
 					if (ch != null) {
 						Buff.prolong(ch, Roots.class, TICK);
 					}

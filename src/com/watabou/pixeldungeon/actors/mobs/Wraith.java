@@ -23,12 +23,12 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.effects.particles.ShadowParticle;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.WraithSprite;
 import com.watabou.utils.Bundle;
@@ -100,14 +100,14 @@ public class Wraith extends Mob {
 	public static void spawnAround( int pos ) {
 		for (int n : Level.NEIGHBOURS4) {
 			int cell = pos + n;
-			if (Level.passable[cell] && Actor.findChar( cell ) == null) {
+			if (Level.passable[cell] && LevelState.findChar( cell ) == null) {
 				spawnAt( cell );
 			}
 		}
 	}
 	
 	public static Wraith spawnAt( int pos ) {
-		if (Level.passable[pos] && Actor.findChar( pos ) == null) {
+		if (Level.passable[pos] && LevelState.findChar( pos ) == null) {
 			
 			Wraith w = new Wraith();
 			w.adjustStats( Dungeon.depth );

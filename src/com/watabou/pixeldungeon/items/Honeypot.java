@@ -25,12 +25,12 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Bee;
 import com.watabou.pixeldungeon.effects.Pushing;
 import com.watabou.pixeldungeon.effects.Splash;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
@@ -85,13 +85,13 @@ public class Honeypot extends Item {
 		}
 		
 		int newPos = pos;
-		if (Actor.findChar( pos ) != null) {
+		if (LevelState.findChar( pos ) != null) {
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			boolean[] passable = Level.passable;
 			
 			for (int n : Level.NEIGHBOURS4) {
 				int c = pos + n;
-				if (passable[c] && Actor.findChar( c ) == null) {
+				if (passable[c] && LevelState.findChar( c ) == null) {
 					candidates.add( c );
 				}
 			}

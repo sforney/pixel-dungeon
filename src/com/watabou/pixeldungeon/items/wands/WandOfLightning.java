@@ -24,12 +24,12 @@ import com.watabou.noosa.Camera;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Lightning;
 import com.watabou.pixeldungeon.effects.particles.SparkParticle;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.traps.LightningTrap;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -78,7 +78,7 @@ public class WandOfLightning extends Wand {
 
 		HashSet<Char> ns = new HashSet<Char>();
 		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
-			Char n = Actor.findChar(ch.pos + Level.NEIGHBOURS8[i]);
+			Char n = LevelState.findChar(ch.pos + Level.NEIGHBOURS8[i]);
 			if (n != null && !affected.contains(n)) {
 				ns.add(n);
 			}
@@ -95,7 +95,7 @@ public class WandOfLightning extends Wand {
 		nPoints = 0;
 		points[nPoints++] = Dungeon.hero.pos;
 
-		Char ch = Actor.findChar(cell);
+		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
 
 			affected.clear();

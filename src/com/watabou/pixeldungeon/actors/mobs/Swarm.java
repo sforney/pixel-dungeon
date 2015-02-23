@@ -29,6 +29,7 @@ import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.Pushing;
 import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.levels.features.Door;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -82,7 +83,7 @@ public class Swarm extends Mob {
 			int[] neighbours = { pos + 1, pos - 1, pos + Level.WIDTH,
 					pos - Level.WIDTH };
 			for (int n : neighbours) {
-				if (passable[n] && findCharacter(n) == null) {
+				if (passable[n] && LevelState.findChar(n) == null) {
 					candidates.add(n);
 				}
 			}

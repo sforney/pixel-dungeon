@@ -42,50 +42,49 @@ public class WandOfFlock extends Wand {
 	{
 		name = Game.getVar(R.string.WandOfFlock_Name);
 	}
-	
+
 	@Override
-	protected void onZap( int cell ) {
+	protected void onZap(int cell) {
 		int level = level();
-		
+
 		int n = level + 2;
-		
-		if (Actor.findChar( cell ) != null && Ballistica.distance > 2) {
+
+		if (LevelState.findChar(cell) != null && Ballistica.distance > 2) {
 			cell = Ballistica.trace[Ballistica.distance - 2];
 		}
-		
-		boolean[] passable = BArray.or( Level.passable, Level.avoid, null );
+
+		boolean[] passable = BArray.or(Level.passable, Level.avoid, null);
 		for (Actor actor : LevelState.getActors()) {
 			if (actor instanceof Char) {
-				passable[((Char)actor).pos] = false;
+				passable[((Char) actor).pos] = false;
 			}
 		}
-		
-		PathFinder.buildDistanceMap( cell, passable, n );
+
+		PathFinder.buildDistanceMap(cell, passable, n);
 		int dist = 0;
-		
-		if (Actor.findChar( cell ) != null) {
+
+		if (LevelState.findChar(cell) != null) {
 			PathFinder.distance[cell] = Integer.MAX_VALUE;
 			dist = 1;
 		}
-		
+
 		float lifespan = level + 3;
-		
-	sheepLabel:
-		for (int i=0; i < n; i++) {
+
+		sheepLabel: for (int i = 0; i < n; i++) {
 			do {
-				for (int j=0; j < Level.LENGTH; j++) {
+				for (int j = 0; j < Level.LENGTH; j++) {
 					if (PathFinder.distance[j] == dist) {
-						
+
 						Sheep sheep = new Sheep();
 						sheep.lifespan = lifespan;
 						sheep.pos = j;
-						GameScene.add( sheep );
-						Dungeon.level.mobPress( sheep );
-						
-						CellEmitter.get( j ).burst( Speck.factory( Speck.WOOL ), 4 );
-						
+						GameScene.add(sheep);
+						Dungeon.level.mobPress(sheep);
+
+						CellEmitter.get(j).burst(Speck.factory(Speck.WOOL), 4);
+
 						PathFinder.distance[j] = Integer.MAX_VALUE;
-						
+
 						continue sheepLabel;
 					}
 				}
@@ -93,10 +92,10 @@ public class WandOfFlock extends Wand {
 			} while (dist < n);
 		}
 	}
-	
-	protected void fx( int cell, Callback callback ) {
-		MagicMissile.wool( curUser.sprite.parent, curUser.pos, cell, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+
+	protected void fx(int cell, Callback callback) {
+		MagicMissile.wool(curUser.sprite.parent, curUser.pos, cell, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
 
 	@Override
@@ -105,17 +104,18 @@ public class WandOfFlock extends Wand {
 	}
 
 	public static class Sheep extends NPC {
-		private static final String[] QUOTES = Game.getVars(R.array.WandOfFlock_SheepBaa);
-		
+		private static final String[] QUOTES = Game
+				.getVars(R.array.WandOfFlock_SheepBaa);
+
 		{
 			name = Game.getVar(R.string.WandOfFlock_SheepName);
 			spriteClass = SheepSprite.class;
 		}
-		
+
 		public float lifespan;
-		
+
 		private boolean initialized = false;
-		
+
 		@Override
 		public boolean act() {
 			if (initialized) {
@@ -123,18 +123,18 @@ public class WandOfFlock extends Wand {
 
 				destroy();
 				sprite.die();
-				
+
 			} else {
 				initialized = true;
-				spend( lifespan + Random.Float( 2 ) );
+				spend(lifespan + Random.Float(2));
 			}
 			return true;
 		}
-		
+
 		@Override
-		public void damage( int dmg, Object src ) {
+		public void damage(int dmg, Object src) {
 		}
-		
+
 		@Override
 		public String description() {
 			return Game.getVar(R.string.WandOfFlock_SheepInfo);
@@ -142,7 +142,7 @@ public class WandOfFlock extends Wand {
 
 		@Override
 		public void interact() {
-			yell( Random.element( QUOTES ) );
+			yell(Random.element(QUOTES));
 		}
 	}
 }

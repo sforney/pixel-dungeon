@@ -29,6 +29,7 @@ import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.sprites.SkeletonSprite;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -62,7 +63,7 @@ public class Skeleton extends Mob {
 
 		boolean heroKilled = false;
 		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
-			Char ch = findCharacter(pos + Level.NEIGHBOURS8[i]);
+			Char ch = LevelState.findChar(pos + Level.NEIGHBOURS8[i]);
 			if (ch != null && ch.isAlive()) {
 				int damage = Math.max(0,
 						damageRoll() - Random.IntRange(0, ch.dr() / 2));

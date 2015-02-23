@@ -31,6 +31,7 @@ import com.watabou.pixeldungeon.items.Dewdrop;
 import com.watabou.pixeldungeon.items.wands.WandOfDisintegration;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.sprites.EyeSprite;
@@ -119,7 +120,7 @@ public class Eye extends Mob {
 
 			int pos = Ballistica.trace[i];
 
-			Char ch = findCharacter(pos);
+			Char ch = LevelState.findChar(pos);
 			if (ch == null) {
 				continue;
 			}
