@@ -10,6 +10,7 @@ import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
+import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 
 /*
@@ -55,14 +56,14 @@ public class LevelState {
 	}
 
 	public static void init() {
-		Dungeon.hero.addDelayed(-Float.MIN_VALUE);
+		addDelayed(Dungeon.hero, -Float.MIN_VALUE);
 
 		for (Mob mob : Dungeon.level.mobs) {
-			mob.add();
+			add(mob);
 		}
 
 		for (Blob blob : Dungeon.level.blobs.values()) {
-			blob.add();
+			add(blob);
 		}
 
 		currentActor = null;
@@ -100,7 +101,6 @@ public class LevelState {
 			}
 
 			if (currentActor != null) {
-
 				if (currentActor instanceof Char
 						&& ((Char) currentActor).sprite.isMoving) {
 					// If it's character's turn to act, but its sprite
@@ -119,10 +119,6 @@ public class LevelState {
 			}
 
 		} while (doNext);
-	}
-
-	public static void add(Actor actor, float time) {
-		LevelState.add(actor, time);
 	}
 
 	public static HashSet<Actor> getActors() {
@@ -159,5 +155,38 @@ public class LevelState {
 
 	public static void setChars(Char[] chars) {
 		LevelState.chars = chars;
+	}
+	
+	public static void add(Actor actor, float time) {
+		if (actors.contains(actor)) {
+			return;
+		}
+
+		if (actor.getId() > 0) {
+			actorIds.put(actor.getId(), actor);
+		}
+
+		actors.add(actor);
+		actor.setTime(actor.getTime() + time);
+		actor.onAdd();
+		
+		if(actor instanceof Char) {
+			Char chararacter = (Char)actor;
+			add(chararacter, time);
+			chars[chararacter.pos] = chararacter;
+			for (Buff buff : chararacter.buffs()) {
+				add(chararacter);
+				buff.onAdd();
+			}
+		}
+	}
+	
+	public static void addDelayed(Actor actor, float delay) {
+		add(actor, LevelState.getNow() + delay);
+	}
+	
+
+	public static void add(Actor actor) {
+		addDelayed(actor, LevelState.getNow());
 	}
 }

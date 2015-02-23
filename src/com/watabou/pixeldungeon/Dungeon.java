@@ -270,7 +270,7 @@ public class Dungeon {
 
 		Actor respawner = level.respawner();
 		if (respawner != null) {
-			level.respawner().add();
+			LevelState.add(level.respawner());
 		}
 
 		hero.pos = pos != -1 ? pos : level.exit;

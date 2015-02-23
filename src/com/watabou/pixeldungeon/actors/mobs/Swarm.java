@@ -100,7 +100,7 @@ public class Swarm extends Mob {
 				}
 
 				GameScene.add(clone, SPLIT_DELAY);
-				new Pushing(clone, pos, clone.pos).addDelayed(-1);
+				LevelState.add(new Pushing(clone, pos, clone.pos), -1);
 
 				HP -= clone.HP;
 			}

@@ -48,8 +48,8 @@ public class Bounce extends Glyph {
 					if ((Level.passable[newPos] || Level.avoid[newPos])
 							&& LevelState.findChar(newPos) == null) {
 
-						new Pushing(attacker, attacker.pos, newPos)
-								.addDelayed(-1);
+						LevelState.add(new Pushing(attacker, attacker.pos,
+								newPos), -1);
 
 						attacker.pos = newPos;
 						// FIXME

@@ -117,7 +117,7 @@ public class Yog extends Mob {
 			larva.pos = Random.element(spawnPoints);
 
 			GameScene.add(larva);
-			new Pushing(larva, pos, larva.pos).addDelayed(-1);
+			LevelState.add(new Pushing(larva, pos, larva.pos), -1);
 		}
 
 		return super.defenseProc(enemy, damage);

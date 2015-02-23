@@ -86,28 +86,6 @@ public abstract class Actor implements Bundlable {
 		LevelState.next(this);
 	}
 
-	public void add() {
-		addDelayed(LevelState.getNow());
-	}
-
-	public void addDelayed(float delay) {
-		LevelState.add(this, LevelState.getNow() + delay);
-	}
-
-	protected void add(float time) {
-		if (LevelState.getActors().contains(this)) {
-			return;
-		}
-
-		if (id > 0) {
-			LevelState.getActorIds().put(id, this);
-		}
-
-		LevelState.getActors().add(this);
-		time += time;
-		onAdd();
-	}
-
 	public void remove() {
 		LevelState.getActors().remove(this);
 		onRemove();
@@ -127,5 +105,13 @@ public abstract class Actor implements Bundlable {
 
 	public void setTime(float time) {
 		this.time = time;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 }

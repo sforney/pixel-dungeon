@@ -371,7 +371,7 @@ public abstract class Char extends Actor {
 	public void add(Buff buff) {
 
 		buffs.add(buff);
-		buff.add();
+		LevelState.add(buff);
 
 		if (sprite != null) {
 			if (buff instanceof Poison) {
@@ -550,14 +550,5 @@ public abstract class Char extends Actor {
 
 	public HashSet<Class<?>> immunities() {
 		return EMPTY;
-	}
-
-	protected void add(float time) {
-		super.add(time);
-		LevelState.getChars()[pos] = this;
-		for (Buff buff : buffs()) {
-			buff.add();
-			buff.onAdd();
-		}
 	}
 }

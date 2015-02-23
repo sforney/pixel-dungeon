@@ -80,7 +80,7 @@ public class WandOfTelekinesis extends Wand {
 					int next = Ballistica.trace[i + 1];
 					if ((Level.passable[next] || Level.avoid[next])
 							&& LevelState.findChar(next) == null) {
-						new Pushing(ch, ch.pos, next).addDelayed(-1);
+						LevelState.add(new Pushing(ch, ch.pos, next) ,-1);
 
 						ch.pos = next;
 						ch.freeCell(next);

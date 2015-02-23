@@ -140,7 +140,7 @@ public class Mimic extends Mob {
 			}
 			if (candidates.size() > 0) {
 				int newPos = Random.element(candidates);
-				new Pushing(ch, ch.pos, newPos).addDelayed(-1);
+				LevelState.add(new Pushing(ch, ch.pos, newPos), -1);
 
 				ch.pos = newPos;
 				// FIXME

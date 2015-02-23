@@ -461,7 +461,7 @@ public class GameScene extends PixelScene {
 	}
 
 	public static void add(Blob gas) {
-		gas.add();
+		LevelState.add(gas);
 		if (scene != null) {
 			scene.addBlobSprite(gas);
 		}
@@ -481,14 +481,14 @@ public class GameScene extends PixelScene {
 
 	public static void add(Mob mob) {
 		Dungeon.level.mobs.add(mob);
-		mob.add();
+		LevelState.add(mob, LevelState.getNow());
 		mob.occupyCell();
 		scene.addMobSprite(mob);
 	}
 
 	public static void add(Mob mob, float delay) {
 		Dungeon.level.mobs.add(mob);
-		mob.addDelayed(delay);
+		LevelState.addDelayed(mob, delay);
 		mob.occupyCell();
 		scene.addMobSprite(mob);
 	}
