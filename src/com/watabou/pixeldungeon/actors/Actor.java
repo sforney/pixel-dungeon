@@ -145,10 +145,6 @@ public abstract class Actor implements Bundlable {
 		current = null;
 	}
 
-	public void initialize() {
-		Actor.init();
-	}
-
 	/* protected */public void next() {
 		if (current == this) {
 			current = null;
@@ -211,29 +207,17 @@ public abstract class Actor implements Bundlable {
 	}
 
 	/*
-	private static void add(Actor actor, float time) {
-
-		if (all.contains(actor)) {
-			return;
-		}
-
-		if (actor.id > 0) {
-			ids.put(actor.id, actor);
-		}
-
-		all.add(actor);
-		actor.time += time;
-		actor.onAdd();
-
-		if (actor instanceof Char) {
-			Char ch = (Char) actor;
-			chars[ch.pos] = ch;
-			for (Buff buff : ch.buffs()) {
-				all.add(buff);
-				buff.onAdd();
-			}
-		}
-	}*/
+	 * private static void add(Actor actor, float time) {
+	 * 
+	 * if (all.contains(actor)) { return; }
+	 * 
+	 * if (actor.id > 0) { ids.put(actor.id, actor); }
+	 * 
+	 * all.add(actor); actor.time += time; actor.onAdd();
+	 * 
+	 * if (actor instanceof Char) { Char ch = (Char) actor; chars[ch.pos] = ch;
+	 * for (Buff buff : ch.buffs()) { all.add(buff); buff.onAdd(); } } }
+	 */
 
 	protected void add(float time) {
 		if (all.contains(this)) {
@@ -249,23 +233,24 @@ public abstract class Actor implements Bundlable {
 		onAdd();
 	}
 
-	public static void remove(Actor actor) {
+	public void remove() {
+		all.remove(this);
+		onRemove();
 
-		if (actor != null) {
-			all.remove(actor);
-			actor.onRemove();
-
-			if (actor.id > 0) {
-				ids.remove(actor.id);
-			}
+		if (id > 0) {
+			ids.remove(id);
 		}
 	}
 
 	public static Char findChar(int pos) {
 		return chars[pos];
 	}
-
-	public static Actor findById(int id) {
+	
+	public Char findCharacter(int pos) {
+		return findChar(pos);
+	}
+	
+	public Actor find(int id) {
 		return ids.get(id);
 	}
 

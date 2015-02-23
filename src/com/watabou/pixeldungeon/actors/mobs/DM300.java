@@ -27,7 +27,6 @@ import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
@@ -50,121 +49,120 @@ import com.watabou.utils.Random;
 public class DM300 extends Mob {
 
 	{
-		name = Dungeon.depth == Statistics.deepestFloor ? Game.getVar(R.string.DM300_Name1) : Game.getVar(R.string.DM300_Name2);
+		name = Dungeon.depth == Statistics.deepestFloor ? Game
+				.getVar(R.string.DM300_Name1) : Game
+				.getVar(R.string.DM300_Name2);
 
 		spriteClass = DM300Sprite.class;
-		
+
 		HP = HT = 200;
 		EXP = 30;
 		defenseSkill = 18;
-		
+
 		loot = new RingOfThorns().random();
 		lootChance = 0.333f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 18, 24 );
+		return Random.NormalIntRange(18, 24);
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 28;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 10;
 	}
-	
+
 	@Override
 	public boolean act() {
-		GameScene.add( Blob.seed( pos, 30, ToxicGas.class ) );
+		GameScene.add(Blob.seed(pos, 30, ToxicGas.class));
 		return super.act();
 	}
-	
+
 	@Override
-	public void move( int step ) {
-		super.move( step );
-		
+	public void move(int step) {
+		super.move(step);
+
 		if (Dungeon.level.map[step] == Terrain.INACTIVE_TRAP && HP < HT) {
-			
-			HP += Random.Int( 1, HT - HP );
-			sprite.emitter().burst( ElmoParticle.FACTORY, 5 );
-			
+
+			HP += Random.Int(1, HT - HP);
+			sprite.emitter().burst(ElmoParticle.FACTORY, 5);
+
 			if (Dungeon.visible[step] && Dungeon.hero.isAlive()) {
 				GLog.n(Game.getVar(R.string.DM300_Info1));
 			}
 		}
 
-		int[] cells = {
-			step-1, step+1, step-Level.WIDTH, step+Level.WIDTH, 
-			step-1-Level.WIDTH, 
-			step-1+Level.WIDTH, 
-			step+1-Level.WIDTH, 
-			step+1+Level.WIDTH
-		};
-		int cell = cells[Random.Int( cells.length )];
-		
+		int[] cells = { step - 1, step + 1, step - Level.WIDTH,
+				step + Level.WIDTH, step - 1 - Level.WIDTH,
+				step - 1 + Level.WIDTH, step + 1 - Level.WIDTH,
+				step + 1 + Level.WIDTH };
+		int cell = cells[Random.Int(cells.length)];
+
 		if (Dungeon.visible[cell]) {
-			CellEmitter.get( cell ).start( Speck.factory( Speck.ROCK ), 0.07f, 10 );
-			Camera.main.shake( 3, 0.7f );
-			Sample.INSTANCE.play( Assets.SND_ROCKS );
-			
+			CellEmitter.get(cell).start(Speck.factory(Speck.ROCK), 0.07f, 10);
+			Camera.main.shake(3, 0.7f);
+			Sample.INSTANCE.play(Assets.SND_ROCKS);
+
 			if (Level.water[cell]) {
-				GameScene.ripple( cell );
+				GameScene.ripple(cell);
 			} else if (Dungeon.level.map[cell] == Terrain.EMPTY) {
-				Level.set( cell, Terrain.EMPTY_DECO );
-				GameScene.updateMap( cell );
+				Level.set(cell, Terrain.EMPTY_DECO);
+				GameScene.updateMap(cell);
 			}
 		}
 
-		Char ch = Actor.findChar( cell );
+		Char ch = findCharacter(cell);
 		if (ch != null && ch != this) {
-			Buff.prolong( ch, Paralysis.class, 2 );
+			Buff.prolong(ch, Paralysis.class, 2);
 		}
 	}
-	
+
 	@Override
-	public void die( Object cause ) {
-		
-		super.die( cause );
-		
+	public void die(Object cause) {
+
+		super.die(cause);
+
 		GameScene.bossSlain();
-		Dungeon.level.drop( new SkeletonKey(), pos ).sprite.drop();
-		
+		Dungeon.level.drop(new SkeletonKey(), pos).sprite.drop();
+
 		Badges.validateBossSlain();
-		
+
 		yell(Game.getVar(R.string.DM300_Info2));
 	}
-	
+
 	@Override
 	public void notice() {
 		super.notice();
 		yell(Game.getVar(R.string.DM300_Info3));
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.DM300_Desc);
 	}
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	static {
-		RESISTANCES.add( Death.class );
-		RESISTANCES.add( ScrollOfPsionicBlast.class );
+		RESISTANCES.add(Death.class);
+		RESISTANCES.add(ScrollOfPsionicBlast.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
-	
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 	static {
-		IMMUNITIES.add( ToxicGas.class );
+		IMMUNITIES.add(ToxicGas.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;

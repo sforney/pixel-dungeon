@@ -504,7 +504,7 @@ public class Hero extends Char {
 		if (Dungeon.level.map[cell] == Terrain.ALCHEMY && cell != pos) {
 			curAction = new CookAction(this, cell);
 		} else if (Level.fieldOfView[cell]
-				&& (ch = Actor.findChar(cell)) instanceof Mob) {
+				&& (ch = findCharacter(cell)) instanceof Mob) {
 			if (ch instanceof NPC) {
 				curAction = new InteractAction(this, cell, (NPC) ch);
 			} else {

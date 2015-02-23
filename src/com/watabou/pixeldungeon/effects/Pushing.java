@@ -40,16 +40,13 @@ public class Pushing extends Actor {
 	
 	@Override
 	protected boolean act() {
-		if (sprite != null) {
-			
+		if (sprite != null) {		
 			if (effect == null) {
 				new Effect();
 			}
-			return false;
-			
-		} else {
-			
-			Actor.remove( Pushing.this );
+			return false;		
+		} else {		
+			remove();
 			return true;
 		}
 	}
@@ -80,17 +77,15 @@ public class Pushing extends Actor {
 		public void update() {
 			super.update();
 			
-			if ((delay += Game.elapsed) < DELAY) {
-				
+			if ((delay += Game.elapsed) < DELAY) {			
 				sprite.x = x;
 				sprite.y = y;
 				
-			} else {
-				
+			} else {		
 				sprite.point( end );
 				
 				killAndErase();
-				Actor.remove( Pushing.this );
+				remove( );
 				
 				next();
 			}

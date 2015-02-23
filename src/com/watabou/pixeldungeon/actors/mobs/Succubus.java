@@ -23,7 +23,6 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
@@ -39,102 +38,105 @@ import com.watabou.pixeldungeon.sprites.SuccubusSprite;
 import com.watabou.utils.Random;
 
 public class Succubus extends Mob {
-	
-	private static final int BLINK_DELAY	= 5;
-	
+
+	private static final int BLINK_DELAY = 5;
+
 	private int delay = 0;
-	
+
 	{
 		name = Game.getVar(R.string.Succubus_Name);
 		spriteClass = SuccubusSprite.class;
-		
+
 		HP = HT = 80;
 		defenseSkill = 25;
 		viewDistance = Light.DISTANCE;
-		
+
 		EXP = 12;
 		maxLvl = 25;
-		
+
 		loot = new ScrollOfLullaby();
 		lootChance = 0.05f;
 	}
-	
+
 	@Override
 	public int damageRoll() {
-		return Random.NormalIntRange( 15, 25 );
+		return Random.NormalIntRange(15, 25);
 	}
-	
+
 	@Override
-	public int attackProc( Char enemy, int damage ) {
-		
-		if (Random.Int( 3 ) == 0) {
-			Buff.affect( enemy, Charm.class, Charm.durationFactor( enemy ) * Random.IntRange( 3, 7 ) ).object = id();
-			enemy.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
-			Sample.INSTANCE.play( Assets.SND_CHARMS );
+	public int attackProc(Char enemy, int damage) {
+
+		if (Random.Int(3) == 0) {
+			Buff.affect(enemy, Charm.class, Charm.durationFactor(enemy)
+					* Random.IntRange(3, 7)).object = id();
+			enemy.sprite.centerEmitter().start(Speck.factory(Speck.HEART),
+					0.2f, 5);
+			Sample.INSTANCE.play(Assets.SND_CHARMS);
 		}
-		
+
 		return damage;
 	}
-	
+
 	@Override
-	protected boolean getCloser( int target ) {
-		if (Level.fieldOfView[target] && Level.distance( pos, target ) > 2 && delay <= 0) {
-			
-			blink( target );
-			spend( -1 / speed() );
+	protected boolean getCloser(int target) {
+		if (Level.fieldOfView[target] && Level.distance(pos, target) > 2
+				&& delay <= 0) {
+
+			blink(target);
+			spend(-1 / speed());
 			return true;
-			
+
 		} else {
-			
+
 			delay--;
-			return super.getCloser( target );
-			
+			return super.getCloser(target);
+
 		}
 	}
-	
-	private void blink( int target ) {
-		
-		int cell = Ballistica.cast( pos, target, true, true );
-		
-		if (Actor.findChar( cell ) != null && Ballistica.distance > 1) {
+
+	private void blink(int target) {
+
+		int cell = Ballistica.cast(pos, target, true, true);
+
+		if (findCharacter(cell) != null && Ballistica.distance > 1) {
 			cell = Ballistica.trace[Ballistica.distance - 2];
 		}
-		
-		WandOfBlink.appear( this, cell );
-		
+
+		WandOfBlink.appear(this, cell);
+
 		delay = BLINK_DELAY;
 	}
-	
+
 	@Override
-	public int attackSkill( Char target ) {
+	public int attackSkill(Char target) {
 		return 40;
 	}
-	
+
 	@Override
 	public int dr() {
 		return 10;
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Succubus_Desc);
 	}
-	
+
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();
 	static {
-		RESISTANCES.add( Leech.class );
+		RESISTANCES.add(Leech.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> resistances() {
 		return RESISTANCES;
 	}
-	
+
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
 	static {
-		IMMUNITIES.add( Sleep.class );
+		IMMUNITIES.add(Sleep.class);
 	}
-	
+
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;

@@ -22,7 +22,6 @@ import java.util.HashSet;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
@@ -120,7 +119,7 @@ public class Eye extends Mob {
 
 			int pos = Ballistica.trace[i];
 
-			Char ch = Actor.findChar(pos);
+			Char ch = findCharacter(pos);
 			if (ch == null) {
 				continue;
 			}

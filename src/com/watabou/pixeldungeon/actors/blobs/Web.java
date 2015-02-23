@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.blobs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
@@ -27,42 +26,41 @@ import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.particles.WebParticle;
 
 public class Web extends Blob {
-	
+
 	@Override
 	protected void evolve() {
-		
-		for (int i=0; i < LENGTH; i++) {
-			
+		for (int i = 0; i < LENGTH; i++) {
+
 			int offv = cur[i] > 0 ? cur[i] - 1 : 0;
 			off[i] = offv;
-			
+
 			if (offv > 0) {
-				
+
 				volume += offv;
-				
-				Char ch = Actor.findChar( i );
+
+				Char ch = findCharacter(i);
 				if (ch != null) {
-					Buff.prolong( ch, Roots.class, TICK );
+					Buff.prolong(ch, Roots.class, TICK);
 				}
 			}
 		}
 	}
-	
+
 	@Override
-	public void use( BlobEmitter emitter ) {
-		super.use( emitter );
-		
-		emitter.pour( WebParticle.FACTORY, 0.4f );
+	public void use(BlobEmitter emitter) {
+		super.use(emitter);
+
+		emitter.pour(WebParticle.FACTORY, 0.4f);
 	}
-	
-	public void seed( int cell, int amount ) {
+
+	public void seed(int cell, int amount) {
 		int diff = amount - cur[cell];
 		if (diff > 0) {
 			cur[cell] = amount;
 			volume += diff;
 		}
 	}
-	
+
 	@Override
 	public String tileDesc() {
 		return Game.getVar(R.string.Web_Info);

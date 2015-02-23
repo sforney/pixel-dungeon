@@ -24,7 +24,6 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
@@ -106,7 +105,7 @@ public class Yog extends Mob {
 
 		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
 			int p = pos + Level.NEIGHBOURS8[i];
-			if (Actor.findChar(p) == null
+			if (findCharacter(p) == null
 					&& (Level.passable[p] || Level.avoid[p])) {
 				spawnPoints.add(p);
 			}

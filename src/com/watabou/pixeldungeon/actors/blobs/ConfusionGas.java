@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.blobs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
@@ -34,7 +33,7 @@ public class ConfusionGas extends Blob {
 		
 		Char ch;
 		for (int i=0; i < LENGTH; i++) {
-			if (cur[i] > 0 && (ch = Actor.findChar( i )) != null) {
+			if (cur[i] > 0 && (ch = findCharacter( i )) != null) {
 				Buff.prolong( ch, Vertigo.class, Vertigo.duration( ch ) );
 			}
 		}

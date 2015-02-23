@@ -62,7 +62,7 @@ public class Skeleton extends Mob {
 
 		boolean heroKilled = false;
 		for (int i = 0; i < Level.NEIGHBOURS8.length; i++) {
-			Char ch = findChar(pos + Level.NEIGHBOURS8[i]);
+			Char ch = findCharacter(pos + Level.NEIGHBOURS8[i]);
 			if (ch != null && ch.isAlive()) {
 				int damage = Math.max(0,
 						damageRoll() - Random.IntRange(0, ch.dr() / 2));

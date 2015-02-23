@@ -21,7 +21,6 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
@@ -31,36 +30,36 @@ import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Random;
 
 public class ToxicGas extends Blob implements Hero.Doom {
-	
+
 	@Override
 	protected void evolve() {
 		super.evolve();
-		
+
 		int levelDamage = 5 + Dungeon.depth * 5;
-		
+
 		Char ch;
-		for (int i=0; i < LENGTH; i++) {
-			if (cur[i] > 0 && (ch = Actor.findChar( i )) != null) {
-				
+		for (int i = 0; i < LENGTH; i++) {
+			if (cur[i] > 0 && (ch = findCharacter(i)) != null) {
+
 				int damage = (ch.HT + levelDamage) / 40;
-				if (Random.Int( 40 ) < (ch.HT + levelDamage) % 40) {
+				if (Random.Int(40) < (ch.HT + levelDamage) % 40) {
 					damage++;
 				}
-				
-				ch.damage( damage, this );
+
+				ch.damage(damage, this);
 			}
 		}
-		
-		Blob blob = Dungeon.level.blobs.get( ParalyticGas.class );
+
+		Blob blob = Dungeon.level.blobs.get(ParalyticGas.class);
 		if (blob != null) {
-			
+
 			int par[] = blob.cur;
-			
-			for (int i=0; i < LENGTH; i++) {
-				
+
+			for (int i = 0; i < LENGTH; i++) {
+
 				int t = cur[i];
 				int p = par[i];
-				
+
 				if (p >= t) {
 					volume -= t;
 					cur[i] = 0;
@@ -71,25 +70,26 @@ public class ToxicGas extends Blob implements Hero.Doom {
 			}
 		}
 	}
-	
-	@Override
-	public void use( BlobEmitter emitter ) {
-		super.use( emitter );
 
-		emitter.pour( Speck.factory( Speck.TOXIC ), 0.6f );
+	@Override
+	public void use(BlobEmitter emitter) {
+		super.use(emitter);
+
+		emitter.pour(Speck.factory(Speck.TOXIC), 0.6f);
 	}
-	
+
 	@Override
 	public String tileDesc() {
 		return Game.getVar(R.string.ToxicGas_Info);
 	}
-	
+
 	@Override
 	public void onDeath() {
-		
+
 		Badges.validateDeathFromGas();
-		
-		Dungeon.fail( Utils.format( Game.getVar(R.string.ResultDescriptions_Gas), Dungeon.depth ) );
+
+		Dungeon.fail(Utils.format(Game.getVar(R.string.ResultDescriptions_Gas),
+				Dungeon.depth));
 		GLog.n(Game.getVar(R.string.ToxicGas_Info1));
 	}
 }

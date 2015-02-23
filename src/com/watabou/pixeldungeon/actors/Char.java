@@ -305,8 +305,8 @@ public abstract class Char extends Actor {
 
 	public void destroy() {
 		HP = 0;
-		Actor.remove(this);
-		this.freeCell(pos);
+		remove();
+		freeCell(pos);
 	}
 
 	public void die(Object src) {
@@ -450,7 +450,7 @@ public abstract class Char extends Actor {
 	public void remove(Buff buff) {
 
 		buffs.remove(buff);
-		Actor.remove(buff);
+		buff.remove();
 
 		if (buff instanceof Burning) {
 			sprite.remove(CharSprite.State.BURNING);
@@ -505,7 +505,7 @@ public abstract class Char extends Actor {
 		if (Level.adjacent(step, pos) && buff(Vertigo.class) != null) {
 			step = pos + Level.NEIGHBOURS8[Random.Int(8)];
 			if (!(Level.passable[step] || Level.avoid[step])
-					|| Actor.findChar(step) != null) {
+					|| findCharacter(step) != null) {
 				return;
 			}
 		}
@@ -558,5 +558,9 @@ public abstract class Char extends Actor {
 			buff.add();
 			buff.onAdd();
 		}
+	}
+	
+	public Char findCharacter(int pos) {
+		return findChar(pos);
 	}
 }

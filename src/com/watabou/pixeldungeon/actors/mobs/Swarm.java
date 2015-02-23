@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
@@ -76,7 +75,6 @@ public class Swarm extends Mob {
 
 	@Override
 	public int defenseProc(Char enemy, int damage) {
-
 		if (HP >= damage + 2) {
 			ArrayList<Integer> candidates = new ArrayList<Integer>();
 			boolean[] passable = Level.passable;
@@ -84,7 +82,7 @@ public class Swarm extends Mob {
 			int[] neighbours = { pos + 1, pos - 1, pos + Level.WIDTH,
 					pos - Level.WIDTH };
 			for (int n : neighbours) {
-				if (passable[n] && Actor.findChar(n) == null) {
+				if (passable[n] && findCharacter(n) == null) {
 					candidates.add(n);
 				}
 			}

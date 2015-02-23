@@ -2,7 +2,6 @@ package com.watabou.pixeldungeon.actors.hero;
 
 import com.watabou.noosa.Camera;
 import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.features.Chasm;
 
@@ -24,7 +23,7 @@ public abstract class BaseHeroAction implements HeroAction {
 		int step = -1;
 
 		if (Level.adjacent(hero.pos, target)) {
-			if (Actor.findChar(target) == null) {
+			if (hero.findCharacter(target) == null) {
 				if (Level.pit[target] && !hero.flying && !Chasm.jumpConfirmed) {
 					Chasm.heroJump(hero);
 					hero.interrupt();
