@@ -72,7 +72,7 @@ public class SummoningTrap {
 			int index = Random.index(candidates);
 
 			DUMMY.pos = candidates.get(index);
-			Actor.occupyCell(DUMMY);
+			DUMMY.occupyCell();
 
 			respawnPoints.add(candidates.remove(index));
 			nMobs--;

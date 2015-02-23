@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 
+import android.content.Context;
+
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
@@ -267,7 +269,7 @@ public class Dungeon {
 		
 		Actor respawner = level.respawner();
 		if (respawner != null) {
-			Actor.add( level.respawner() );
+			level.respawner().add();
 		}
 		
 		hero.pos = pos != -1 ? pos : level.exit;
@@ -422,7 +424,7 @@ public class Dungeon {
 			Badges.saveLocal( badges );
 			bundle.put( BADGES, badges );
 			
-			OutputStream output = Game.instance.openFileOutput( fileName, Game.MODE_PRIVATE );
+			OutputStream output = Game.instance.openFileOutput( fileName, Context.MODE_PRIVATE );
 			Bundle.write( bundle, output );
 			output.close();
 			
@@ -436,7 +438,7 @@ public class Dungeon {
 		Bundle bundle = new Bundle();
 		bundle.put( LEVEL, level );
 		
-		OutputStream output = Game.instance.openFileOutput( Utils.format( depthFile( hero.heroClass ), depth ), Game.MODE_PRIVATE );
+		OutputStream output = Game.instance.openFileOutput( Utils.format( depthFile( hero.heroClass ), depth ), Context.MODE_PRIVATE );
 		Bundle.write( bundle, output );
 		output.close();
 	}

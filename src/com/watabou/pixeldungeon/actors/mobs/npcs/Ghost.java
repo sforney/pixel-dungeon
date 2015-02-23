@@ -24,7 +24,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
@@ -123,7 +122,7 @@ public class Ghost extends NPC {
 				}
 				if (newPos != -1) {
 
-					Actor.freeCell(pos);
+					this.freeCell(pos);
 
 					CellEmitter.get(pos).start(Speck.factory(Speck.LIGHT),
 							0.2f, 3);
