@@ -39,7 +39,7 @@ public class Rotberry extends Plant {
 	}
 
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		return false;
 	}
 }

@@ -26,13 +26,13 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.windows.WndError;
 import com.watabou.pixeldungeon.windows.WndStory;
-import com.watabou.pixeldungeon.R;
 
 public class InterlevelScene extends PixelScene {
 
@@ -206,7 +206,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void descend() throws Exception {
 		
-		Actor.fixTime();
+		LevelState.fixTime();
 		if (Dungeon.hero == null) {
 			Dungeon.init();
 			if (noStory) {
@@ -229,7 +229,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void fall() throws Exception {
 		
-		Actor.fixTime();
+		LevelState.fixTime();
 		Dungeon.saveLevel();
 		
 		Level level;
@@ -243,7 +243,7 @@ public class InterlevelScene extends PixelScene {
 	}
 	
 	private void ascend() throws Exception {
-		Actor.fixTime();
+		LevelState.fixTime();
 		
 		Dungeon.saveLevel();
 		Dungeon.depth--;
@@ -253,7 +253,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void returnTo() throws Exception {
 		
-		Actor.fixTime();
+		LevelState.fixTime();
 		
 		Dungeon.saveLevel();
 		Dungeon.depth = returnDepth;
@@ -263,7 +263,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void restore() throws Exception {
 		
-		Actor.fixTime();
+		LevelState.fixTime();
 		
 		Dungeon.loadGame( StartScene.curClass );
 		if (Dungeon.depth == -1) {
@@ -277,7 +277,7 @@ public class InterlevelScene extends PixelScene {
 	
 	private void resurrect() throws Exception {
 		
-		Actor.fixTime(); 
+		LevelState.fixTime(); 
 		
 		if (Dungeon.bossLevel()) {
 			Dungeon.hero.resurrect( Dungeon.depth );

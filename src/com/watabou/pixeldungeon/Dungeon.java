@@ -51,6 +51,7 @@ import com.watabou.pixeldungeon.levels.HallsLevel;
 import com.watabou.pixeldungeon.levels.LastLevel;
 import com.watabou.pixeldungeon.levels.LastShopLevel;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.PrisonBossLevel;
 import com.watabou.pixeldungeon.levels.PrisonLevel;
 import com.watabou.pixeldungeon.levels.Room;
@@ -108,7 +109,7 @@ public class Dungeon {
 
 		challenges = PixelDungeon.challenges();
 
-		Actor.clear();
+		LevelState.clear();
 
 		PathFinder.setMapSize(Level.WIDTH, Level.HEIGHT);
 
@@ -158,7 +159,7 @@ public class Dungeon {
 	public static Level newLevel() {
 
 		Dungeon.level = null;
-		Actor.clear();
+		LevelState.clear();
 
 		depth++;
 		if (depth > Statistics.deepestFloor) {
@@ -238,8 +239,7 @@ public class Dungeon {
 	}
 
 	public static void resetLevel() {
-
-		Actor.clear();
+		LevelState.clear();
 
 		Arrays.fill(visible, false);
 
@@ -266,7 +266,7 @@ public class Dungeon {
 		nightMode = new Date().getHours() < 7;
 
 		Dungeon.level = level;
-		Actor.init();
+		LevelState.init();
 
 		Actor respawner = level.respawner();
 		if (respawner != null) {
@@ -412,7 +412,7 @@ public class Dungeon {
 
 			Statistics.storeInBundle(bundle);
 			journal.storeInBundle(bundle);
-			for (Actor actor : Actor.all()) {
+			for (Actor actor : LevelState.getActors()) {
 				actor.storeInBundle(bundle);
 			}
 
@@ -451,19 +451,15 @@ public class Dungeon {
 
 	public static void saveAll() throws IOException {
 		if (hero.isAlive()) {
-
-			Actor.fixTime();
+			LevelState.fixTime();
 			saveGame(gameFile(hero.heroClass));
 			saveLevel();
 
 			GamesInProgress.set(hero.heroClass, depth, hero.lvl,
 					challenges != 0);
-
 		} else if (WndResurrect.instance != null) {
-
 			WndResurrect.instance.hide();
 			Hero.reallyDie(WndResurrect.causeOfDeath);
-
 		}
 	}
 
@@ -562,7 +558,7 @@ public class Dungeon {
 
 	public static Level loadLevel(HeroClass cl) throws IOException {
 		Dungeon.level = null;
-		Actor.clear();
+		LevelState.clear();
 
 		InputStream input = Game.instance.openFileInput(Utils.format(
 				depthFile(cl), depth));
@@ -648,7 +644,7 @@ public class Dungeon {
 			System.arraycopy(pass, 0, passable, 0, Level.LENGTH);
 		}
 
-		for (Actor actor : Actor.all()) {
+		for (Actor actor : LevelState.getActors()) {
 			if (actor instanceof Char) {
 				int pos = ((Char) actor).pos;
 				if (visible[pos]) {
@@ -669,7 +665,7 @@ public class Dungeon {
 			System.arraycopy(pass, 0, passable, 0, Level.LENGTH);
 		}
 
-		for (Actor actor : Actor.all()) {
+		for (Actor actor : LevelState.getActors()) {
 			if (actor instanceof Char) {
 				int pos = ((Char) actor).pos;
 				if (visible[pos]) {

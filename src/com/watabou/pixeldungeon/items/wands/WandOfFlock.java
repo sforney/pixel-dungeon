@@ -29,6 +29,7 @@ import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.SheepSprite;
@@ -53,7 +54,7 @@ public class WandOfFlock extends Wand {
 		}
 		
 		boolean[] passable = BArray.or( Level.passable, Level.avoid, null );
-		for (Actor actor : Actor.all()) {
+		for (Actor actor : LevelState.getActors()) {
 			if (actor instanceof Char) {
 				passable[((Char)actor).pos] = false;
 			}
@@ -116,7 +117,7 @@ public class WandOfFlock extends Wand {
 		private boolean initialized = false;
 		
 		@Override
-		protected boolean act() {
+		public boolean act() {
 			if (initialized) {
 				HP = 0;
 

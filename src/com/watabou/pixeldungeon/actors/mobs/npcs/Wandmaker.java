@@ -49,7 +49,7 @@ public class Wandmaker extends NPC {
 	private final String TXT_DUST2  = Game.getVar(R.string.WandMaker_Dust2);
 	
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		throwItem();
 		return super.act();
 	}

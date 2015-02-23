@@ -371,7 +371,7 @@ public abstract class Level implements Bundlable {
 	public Actor respawner() {
 		return new Actor() {
 			@Override
-			protected boolean act() {
+			public boolean act() {
 				if (mobs.size() < nMobs()) {
 
 					Mob mob = Bestiary.mutable(Dungeon.depth);

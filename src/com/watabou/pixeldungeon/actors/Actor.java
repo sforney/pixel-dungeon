@@ -17,38 +17,32 @@
  */
 package com.watabou.pixeldungeon.actors;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
-import android.util.SparseArray;
-
-import com.watabou.pixeldungeon.Dungeon;
-import com.watabou.pixeldungeon.Statistics;
-import com.watabou.pixeldungeon.actors.blobs.Blob;
-import com.watabou.pixeldungeon.actors.mobs.Mob;
-import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
 public abstract class Actor implements Bundlable {
-	private float time;
+	private static final String TIME = "time";
+	private static final String ID = "id";
 	public static final float TICK = 1.0f;
+	
+	private float time;
 	private int id = 0;
 
-	protected abstract boolean act();
+	public abstract boolean act();
 
 	public void spend(float time) {
 		this.time += time;
 	}
 
 	public void postpone(float time) {
-		if (this.time < now + time) {
-			this.time = now + time;
+		if (this.time < LevelState.getNow() + time) {
+			this.time = LevelState.getNow() + time;
 		}
 	}
 
 	public float cooldown() {
-		return time - now;
+		return time - LevelState.getNow();
 	}
 
 	public void deactivate() {
@@ -61,9 +55,6 @@ public abstract class Actor implements Bundlable {
 
 	protected void onRemove() {
 	}
-
-	private static final String TIME = "time";
-	private static final String ID = "id";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -82,7 +73,7 @@ public abstract class Actor implements Bundlable {
 			return id;
 		} else {
 			int max = 0;
-			for (Actor a : all) {
+			for (Actor a : LevelState.getActors()) {
 				if (a.id > max) {
 					max = a.id;
 				}
@@ -91,170 +82,58 @@ public abstract class Actor implements Bundlable {
 		}
 	}
 
-	// **********************
-	// *** Static members ***
-
-	private static HashSet<Actor> all = new HashSet<Actor>();
-	private static Actor current;
-
-	private static SparseArray<Actor> ids = new SparseArray<Actor>();
-
-	private static float now = 0;
-
-	protected static Char[] chars = new Char[Level.LENGTH];
-
-	public static void clear() {
-
-		now = 0;
-
-		Arrays.fill(chars, null);
-		all.clear();
-
-		ids.clear();
-	}
-
-	public static void fixTime() {
-
-		if (Dungeon.hero != null && all.contains(Dungeon.hero)) {
-			Statistics.duration += now;
-		}
-
-		float min = Float.MAX_VALUE;
-		for (Actor a : all) {
-			if (a.time < min) {
-				min = a.time;
-			}
-		}
-		for (Actor a : all) {
-			a.time -= min;
-		}
-		now = 0;
-	}
-
-	public static void init() {
-		Dungeon.hero.addDelayed(-Float.MIN_VALUE);
-
-		for (Mob mob : Dungeon.level.mobs) {
-			mob.add();
-		}
-
-		for (Blob blob : Dungeon.level.blobs.values()) {
-			blob.add();
-		}
-
-		current = null;
-	}
-
 	/* protected */public void next() {
-		if (current == this) {
-			current = null;
-		}
-	}
-
-	public static void process() {
-
-		if (current != null) {
-			return;
-		}
-
-		boolean doNext;
-
-		do {
-			now = Float.MAX_VALUE;
-			current = null;
-
-			Arrays.fill(chars, null);
-
-			for (Actor actor : all) {
-				if (actor.time < now) {
-					now = actor.time;
-					current = actor;
-				}
-
-				if (actor instanceof Char) {
-					Char ch = (Char) actor;
-					chars[ch.pos] = ch;
-				}
-			}
-
-			if (current != null) {
-
-				if (current instanceof Char && ((Char) current).sprite.isMoving) {
-					// If it's character's turn to act, but its sprite
-					// is moving, wait till the movement is over
-					current = null;
-					break;
-				}
-
-				doNext = current.act();
-				if (doNext && !Dungeon.hero.isAlive()) {
-					doNext = false;
-					current = null;
-				}
-			} else {
-				doNext = false;
-			}
-
-		} while (doNext);
+		LevelState.next(this);
 	}
 
 	public void add() {
-		addDelayed(now);
+		addDelayed(LevelState.getNow());
 	}
 
 	public void addDelayed(float delay) {
-		add(now + delay);
+		add(LevelState.getNow() + delay);
 	}
 
-	/*
-	 * private static void add(Actor actor, float time) {
-	 * 
-	 * if (all.contains(actor)) { return; }
-	 * 
-	 * if (actor.id > 0) { ids.put(actor.id, actor); }
-	 * 
-	 * all.add(actor); actor.time += time; actor.onAdd();
-	 * 
-	 * if (actor instanceof Char) { Char ch = (Char) actor; chars[ch.pos] = ch;
-	 * for (Buff buff : ch.buffs()) { all.add(buff); buff.onAdd(); } } }
-	 */
-
 	protected void add(float time) {
-		if (all.contains(this)) {
+		if (LevelState.getActors().contains(this)) {
 			return;
 		}
 
 		if (id > 0) {
-			ids.put(id, this);
+			LevelState.getActorIds().put(id, this);
 		}
 
-		all.add(this);
+		LevelState.getActors().add(this);
 		time += time;
 		onAdd();
 	}
 
 	public void remove() {
-		all.remove(this);
+		LevelState.getActors().remove(this);
 		onRemove();
 
 		if (id > 0) {
-			ids.remove(id);
+			LevelState.getActorIds().remove(id);
 		}
 	}
 
 	public static Char findChar(int pos) {
-		return chars[pos];
+		return LevelState.getChars()[pos];
 	}
-	
+
 	public Char findCharacter(int pos) {
 		return findChar(pos);
 	}
-	
+
 	public Actor find(int id) {
-		return ids.get(id);
+		return LevelState.getActorIds().get(id);
 	}
 
-	public static HashSet<Actor> all() {
-		return all;
+	public float getTime() {
+		return time;
+	}
+
+	public void setTime(float time) {
+		this.time = time;
 	}
 }

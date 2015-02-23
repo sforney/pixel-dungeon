@@ -87,7 +87,7 @@ public class Bee extends NPC {
 	}
 	
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		HP--;
 		if (HP <= 0) {
 			die( null );

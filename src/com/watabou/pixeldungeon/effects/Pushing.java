@@ -39,7 +39,7 @@ public class Pushing extends Actor {
 	}
 	
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		if (sprite != null) {		
 			if (effect == null) {
 				new Effect();

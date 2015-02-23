@@ -42,6 +42,7 @@ import com.watabou.pixeldungeon.items.wands.WandOfDisintegration;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
 import com.watabou.pixeldungeon.levels.CityBossLevel;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.KingSprite;
 import com.watabou.pixeldungeon.sprites.UndeadSprite;
@@ -162,7 +163,7 @@ public class King extends Mob {
 		Sample.INSTANCE.play(Assets.SND_CHALLENGE);
 
 		boolean[] passable = Level.passable.clone();
-		for (Actor actor : Actor.all()) {
+		for (Actor actor : LevelState.getActors()) {
 			if (actor instanceof Char) {
 				passable[((Char) actor).pos] = false;
 			}

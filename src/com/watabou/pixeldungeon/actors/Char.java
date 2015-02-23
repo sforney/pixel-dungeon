@@ -51,6 +51,7 @@ import com.watabou.pixeldungeon.actors.mobs.Bestiary;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.levels.features.Door;
 import com.watabou.pixeldungeon.sprites.CharSprite;
@@ -97,7 +98,7 @@ public abstract class Char extends Actor {
 	private HashSet<Buff> buffs = new HashSet<Buff>();
 
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		Dungeon.level.updateFieldOfView(this);
 		return false;
 	}
@@ -230,11 +231,11 @@ public abstract class Char extends Actor {
 	}
 
 	public void occupyCell() {
-		chars[pos] = this;
+		LevelState.getChars()[pos] = this;
 	}
 
 	public void freeCell(int pos) {
-		chars[pos] = null;
+		LevelState.getChars()[pos] = null;
 	}
 
 	public int attackSkill(Char target) {
@@ -553,7 +554,7 @@ public abstract class Char extends Actor {
 
 	protected void add(float time) {
 		super.add(time);
-		chars[pos] = this;
+		LevelState.getChars()[pos] = this;
 		for (Buff buff : buffs()) {
 			buff.add();
 			buff.onAdd();

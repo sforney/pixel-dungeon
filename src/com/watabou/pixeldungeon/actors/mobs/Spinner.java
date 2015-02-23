@@ -67,7 +67,7 @@ public class Spinner extends Mob {
 	}
 	
 	@Override
-	protected boolean act() {
+	public boolean act() {
 		boolean result = super.act();
 		
 		if (state == FLEEING && buff( Terror.class ) == null) {

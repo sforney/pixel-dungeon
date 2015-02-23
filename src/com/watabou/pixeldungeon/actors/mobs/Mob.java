@@ -132,8 +132,7 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	protected boolean act() {
-
+	public boolean act() {
 		super.act();
 
 		boolean justAlerted = alerted;
