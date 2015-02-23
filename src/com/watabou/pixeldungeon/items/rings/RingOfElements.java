@@ -68,8 +68,8 @@ public class RingOfElements extends Ring {
 			}
 		}
 		
-		public float durationFactor() {
-			return level < 0 ? 1 : (2 + 0.5f * level) / (2 + level);
+		public int durationFactor() {
+			return level < 0 ? 1 : Math.round((2 + 0.5f * level) / (2 + level));
 		}
 	}
 }

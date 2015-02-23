@@ -25,7 +25,17 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
-import com.watabou.pixeldungeon.items.weapon.enchantments.*;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Fire;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Horror;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Instability;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Luck;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Paralysis;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Poison;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Shock;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Slow;
+import com.watabou.pixeldungeon.items.weapon.enchantments.Tempering;
 import com.watabou.pixeldungeon.items.weapon.missiles.MissileWeapon;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.utils.GLog;
@@ -44,7 +54,7 @@ public class Weapon extends KindOfWeapon {
 	
 	public int		STR	= 10;
 	public float	ACU	= 1;
-	public float	DLY	= 1f;
+	public int	DLY	= 10;
 	
 	public enum Imbue {
 		NONE, SPEED, ACCURACY
@@ -118,7 +128,7 @@ public class Weapon extends KindOfWeapon {
 	}
 	
 	@Override
-	public float speedFactor( Hero hero ) {
+	public int speedFactor( Hero hero ) {
 
 		int encumrance = STR - hero.STR();
 		if (this instanceof MissileWeapon && hero.heroClass == HeroClass.HUNTRESS) {
@@ -126,8 +136,7 @@ public class Weapon extends KindOfWeapon {
 		}
 		
 		return 
-			(encumrance > 0 ? (float)(DLY * Math.pow( 1.2, encumrance )) : DLY) * 
-			(imbue == Imbue.SPEED ? 0.6f : 1.0f);
+			encumrance > 0 ? (int)Math.round(DLY * Math.pow( 1.2, encumrance )) : (DLY * (imbue == Imbue.SPEED ? 6 : 10))/10;
 	}
 	
 	@Override

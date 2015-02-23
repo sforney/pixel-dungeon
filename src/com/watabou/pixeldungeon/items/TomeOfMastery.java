@@ -41,7 +41,7 @@ public class TomeOfMastery extends Item {
 
 	private static final String TXT_BLINDED	= Game.getVar(R.string.TomeOfMastery_Blinded);
 	
-	public static final float TIME_TO_READ = 10;
+	public static final int TIME_TO_READ = 100;
 	
 	public static final String AC_READ	= Game.getVar(R.string.TomeOfMastery_ACRead);
 	

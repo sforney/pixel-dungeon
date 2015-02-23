@@ -36,7 +36,7 @@ import com.watabou.utils.Random;
 
 public class Wraith extends Mob {
 
-	private static final float SPAWN_DELAY	= 2f;
+	private static final int SPAWN_DELAY	= 20;
 	
 	private int level;
 	

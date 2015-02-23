@@ -30,7 +30,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Frost extends FlavourBuff {
 
-	private static final float DURATION	= 5f;
+	private static final int DURATION	= 50;
 	
 	@Override
 	public boolean attachTo( Char target ) {
@@ -74,7 +74,7 @@ public class Frost extends FlavourBuff {
 		return Game.getVar(R.string.Frost_Info);
 	}
 	
-	public static float duration( Char ch ) {
+	public static int duration( Char ch ) {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}

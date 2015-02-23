@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Vertigo extends FlavourBuff {
 	
-	public static final float DURATION	= 10f;
+	public static final int DURATION	= 100;
 	
 	@Override
 	public int icon() {
@@ -37,7 +37,7 @@ public class Vertigo extends FlavourBuff {
 		return Game.getVar(R.string.Vertigo_Info);
 	}
 	
-	public static float duration( Char ch ) {
+	public static int duration( Char ch ) {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}

@@ -29,7 +29,7 @@ public class Barkskin extends Buff {
 	public boolean act() {
 		if (target.isAlive()) {
 
-			spend( TICK );
+			spendTurn();
 			if (--level <= 0) {
 				detach();
 			}

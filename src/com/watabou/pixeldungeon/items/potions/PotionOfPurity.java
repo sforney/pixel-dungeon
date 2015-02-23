@@ -37,92 +37,89 @@ import com.watabou.utils.PathFinder;
 
 public class PotionOfPurity extends Potion {
 
-	private static final String TXT_FRESHNESS = Game.getVar(R.string.PotionOfPurity_Freshness);
-	private static final String TXT_NO_SMELL  = Game.getVar(R.string.PotionOfPurity_NoSmell);
-	
-	private static final int DISTANCE	= 2;
-	
+	private static final String TXT_FRESHNESS = Game
+			.getVar(R.string.PotionOfPurity_Freshness);
+	private static final String TXT_NO_SMELL = Game
+			.getVar(R.string.PotionOfPurity_NoSmell);
+
+	private static final int DISTANCE = 2;
+
 	{
 		name = Game.getVar(R.string.PotionOfPurity_Name);
 	}
-	
+
 	@Override
-	public void shatter( int cell ) {
-		
-		PathFinder.buildDistanceMap( cell, BArray.not( Level.losBlocking, null ), DISTANCE );
-		
+	public void shatter(int cell) {
+
+		PathFinder.buildDistanceMap(cell, BArray.not(Level.losBlocking, null),
+				DISTANCE);
+
 		boolean procd = false;
-		
-		Blob[] blobs = {
-			Dungeon.level.blobs.get( ToxicGas.class ), 
-			Dungeon.level.blobs.get( ParalyticGas.class )
-		};
-		
-		for (int j=0; j < blobs.length; j++) {
-			
+
+		Blob[] blobs = { Dungeon.findBlob(ToxicGas.class),
+				Dungeon.findBlob(ParalyticGas.class) };
+
+		for (int j = 0; j < blobs.length; j++) {
+
 			Blob blob = blobs[j];
 			if (blob == null) {
 				continue;
 			}
-			
-			for (int i=0; i < Level.LENGTH; i++) {
+
+			for (int i = 0; i < Level.LENGTH; i++) {
 				if (PathFinder.distance[i] < Integer.MAX_VALUE) {
-					
-					int value = blob.cur[i]; 
+
+					int value = blob.cur[i];
 					if (value > 0) {
-						
+
 						blob.cur[i] = 0;
 						blob.volume -= value;
 						procd = true;
-						
+
 						if (Dungeon.visible[i]) {
-							CellEmitter.get( i ).burst( Speck.factory( Speck.DISCOVER ), 1 );
+							CellEmitter.get(i).burst(
+									Speck.factory(Speck.DISCOVER), 1);
 						}
 					}
-
 				}
 			}
 		}
-		
+
 		boolean heroAffected = PathFinder.distance[Dungeon.hero.pos] < Integer.MAX_VALUE;
-		
+
 		if (procd) {
-			
 			if (Dungeon.visible[cell]) {
-				splash( cell );
-				Sample.INSTANCE.play( Assets.SND_SHATTER );
+				splash(cell);
+				Sample.INSTANCE.play(Assets.SND_SHATTER);
 			}
-			
+
 			setKnown();
-			
+
 			if (heroAffected) {
-				GLog.p( TXT_FRESHNESS );
+				GLog.p(TXT_FRESHNESS);
 			}
-			
 		} else {
-			
-			super.shatter( cell );
-			
+			super.shatter(cell);
+
 			if (heroAffected) {
-				GLog.i( TXT_FRESHNESS );
+				GLog.i(TXT_FRESHNESS);
 				setKnown();
 			}
-			
 		}
 	}
-	
+
 	@Override
-	protected void apply( Hero hero ) {
-		GLog.w( TXT_NO_SMELL );
-		Buff.prolong( hero, GasesImmunity.class, GasesImmunity.DURATION );
+	protected void apply(Hero hero) {
+		GLog.w(TXT_NO_SMELL);
+		Buff.prolong(hero, GasesImmunity.class, GasesImmunity.DURATION);
 		setKnown();
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.PotionOfPurity_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 50 * quantity : super.price();

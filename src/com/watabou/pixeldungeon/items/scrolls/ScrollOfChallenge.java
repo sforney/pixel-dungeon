@@ -60,7 +60,7 @@ public class ScrollOfChallenge extends Scroll {
 		Sample.INSTANCE.play( Assets.SND_CHALLENGE );
 		Invisibility.dispel();
 		
-		curUser.spendAndNext( TIME_TO_READ );
+		curUser.spend( TIME_TO_READ );
 	}
 	
 	@Override

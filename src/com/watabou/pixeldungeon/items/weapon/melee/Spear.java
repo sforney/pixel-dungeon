@@ -26,11 +26,11 @@ public class Spear extends MeleeWeapon {
 		name = Game.getVar(R.string.Spear_Name);
 		image = ItemSpriteSheet.SPEAR;
 	}
-	
+
 	public Spear() {
-		super( 2, 1f, 1.5f );
+		super(2, 1f, 15);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.Spear_Info);

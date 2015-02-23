@@ -47,7 +47,7 @@ import com.watabou.utils.Random;
 
 public class Goo extends Mob implements Bundlable {
 
-	private static final float PUMP_UP_DELAY = 2f;
+	private static final int PUMP_UP_DELAY = 20;
 	private static final String GOO_PUMPED = "GOO_PUMPED";
 
 	{

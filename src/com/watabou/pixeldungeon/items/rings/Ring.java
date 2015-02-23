@@ -40,269 +40,262 @@ import com.watabou.utils.Random;
 
 public class Ring extends EquipableItem {
 
-	private static final int TICKS_TO_KNOW	= 200;
-	
-	private static final float TIME_TO_EQUIP = 1f;
-	
-	private static final String TXT_IDENTIFY = Game.getVar(R.string.Ring_Identify);
-	
-	private static final String TXT_UNEQUIP_TITLE = Game.getVar(R.string.Ring_UnequipTit);
-	private static final String TXT_UNEQUIP_MESSAGE = Game.getVar(R.string.Ring_UnequipMsg);
-	
+	private static final int TICKS_TO_KNOW = 2000;
+
+	private static final int TIME_TO_EQUIP = 10;
+
+	private static final String TXT_IDENTIFY = Game
+			.getVar(R.string.Ring_Identify);
+
+	private static final String TXT_UNEQUIP_TITLE = Game
+			.getVar(R.string.Ring_UnequipTit);
+	private static final String TXT_UNEQUIP_MESSAGE = Game
+			.getVar(R.string.Ring_UnequipMsg);
+
 	protected Buff buff;
-	
-	private static final Class<?>[] rings = { 
-		RingOfMending.class, 
-		RingOfDetection.class, 
-		RingOfShadows.class,
-		RingOfPower.class,
-		RingOfHerbalism.class,
-		RingOfAccuracy.class,
-		RingOfEvasion.class,
-		RingOfSatiety.class,
-		RingOfHaste.class,
-		RingOfHaggler.class,
-		RingOfElements.class,
-		RingOfThorns.class
-	};
+
+	private static final Class<?>[] rings = { RingOfMending.class,
+			RingOfDetection.class, RingOfShadows.class, RingOfPower.class,
+			RingOfHerbalism.class, RingOfAccuracy.class, RingOfEvasion.class,
+			RingOfSatiety.class, RingOfHaste.class, RingOfHaggler.class,
+			RingOfElements.class, RingOfThorns.class };
 	private static final String[] gems = Game.getVars(R.array.Ring_Gems);
-	private static final Integer[] images = {
-		ItemSpriteSheet.RING_DIAMOND, 
-		ItemSpriteSheet.RING_OPAL, 
-		ItemSpriteSheet.RING_GARNET, 
-		ItemSpriteSheet.RING_RUBY, 
-		ItemSpriteSheet.RING_AMETHYST, 
-		ItemSpriteSheet.RING_TOPAZ, 
-		ItemSpriteSheet.RING_ONYX, 
-		ItemSpriteSheet.RING_TOURMALINE, 
-		ItemSpriteSheet.RING_EMERALD, 
-		ItemSpriteSheet.RING_SAPPHIRE, 
-		ItemSpriteSheet.RING_QUARTZ, 
-		ItemSpriteSheet.RING_AGATE};
-	
+	private static final Integer[] images = { ItemSpriteSheet.RING_DIAMOND,
+			ItemSpriteSheet.RING_OPAL, ItemSpriteSheet.RING_GARNET,
+			ItemSpriteSheet.RING_RUBY, ItemSpriteSheet.RING_AMETHYST,
+			ItemSpriteSheet.RING_TOPAZ, ItemSpriteSheet.RING_ONYX,
+			ItemSpriteSheet.RING_TOURMALINE, ItemSpriteSheet.RING_EMERALD,
+			ItemSpriteSheet.RING_SAPPHIRE, ItemSpriteSheet.RING_QUARTZ,
+			ItemSpriteSheet.RING_AGATE };
+
 	private static ItemStatusHandler<Ring> handler;
-	
+
 	private String gem;
-	
+
 	private int ticksToKnow = TICKS_TO_KNOW;
-	
+
 	@SuppressWarnings("unchecked")
 	public static void initGems() {
-		handler = new ItemStatusHandler<Ring>( (Class<? extends Ring>[])rings, gems, images );
+		handler = new ItemStatusHandler<Ring>((Class<? extends Ring>[]) rings,
+				gems, images);
 	}
-	
-	public static void save( Bundle bundle ) {
-		handler.save( bundle );
+
+	public static void save(Bundle bundle) {
+		handler.save(bundle);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static void restore( Bundle bundle ) {
-		handler = new ItemStatusHandler<Ring>( (Class<? extends Ring>[])rings, gems, images, bundle );
+	public static void restore(Bundle bundle) {
+		handler = new ItemStatusHandler<Ring>((Class<? extends Ring>[]) rings,
+				gems, images, bundle);
 	}
-	
+
 	public Ring() {
 		super();
 		syncGem();
 	}
-	
+
 	public void syncGem() {
-		image	= handler.image( this );
-		gem		= handler.label( this );
+		image = handler.image(this);
+		gem = handler.label(this);
 	}
-	
+
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
-		ArrayList<String> actions = super.actions( hero );
-		actions.add( isEquipped( hero ) ? AC_UNEQUIP : AC_EQUIP );
+	public ArrayList<String> actions(Hero hero) {
+		ArrayList<String> actions = super.actions(hero);
+		actions.add(isEquipped(hero) ? AC_UNEQUIP : AC_EQUIP);
 		return actions;
 	}
-	
+
 	@Override
-	public boolean doEquip( final Hero hero ) {
-		
+	public boolean doEquip(final Hero hero) {
+
 		if (hero.belongings.ring1 != null && hero.belongings.ring2 != null) {
-			
+
 			final Ring r1 = hero.belongings.ring1;
 			final Ring r2 = hero.belongings.ring2;
-			
-			PixelDungeon.scene().add( 
-				new WndOptions( TXT_UNEQUIP_TITLE, TXT_UNEQUIP_MESSAGE, 
-					Utils.capitalize( r1.toString() ), 
-					Utils.capitalize( r2.toString() ) ) {
-					
-					@Override
-					protected void onSelect( int index ) {
-						
-						detach( hero.belongings.backpack );
-						
-						Ring equipped = (index == 0 ? r1 : r2);
-						if (equipped.doUnequip( hero, true, false )) {
-							doEquip( hero );
-						} else {
-							collect( hero.belongings.backpack );
+
+			PixelDungeon.scene().add(
+					new WndOptions(TXT_UNEQUIP_TITLE, TXT_UNEQUIP_MESSAGE,
+							Utils.capitalize(r1.toString()), Utils
+									.capitalize(r2.toString())) {
+
+						@Override
+						protected void onSelect(int index) {
+
+							detach(hero.belongings.backpack);
+
+							Ring equipped = (index == 0 ? r1 : r2);
+							if (equipped.doUnequip(hero, true, false)) {
+								doEquip(hero);
+							} else {
+								collect(hero.belongings.backpack);
+							}
 						}
-					}
-				} );
-			
+					});
+
 			return false;
-			
+
 		} else {
-			
+
 			if (hero.belongings.ring1 == null) {
 				hero.belongings.ring1 = this;
 			} else {
 				hero.belongings.ring2 = this;
 			}
-			
-			detach( hero.belongings.backpack );
-			
-			activate( hero );
-			
+
+			detach(hero.belongings.backpack);
+
+			activate(hero);
+
 			cursedKnown = true;
 			if (cursed) {
-				equipCursed( hero );
+				equipCursed(hero);
 				GLog.n(String.format(Game.getVar(R.string.Ring_Info2), this));
 			}
-			
-			hero.spendAndNext( TIME_TO_EQUIP );
+
+			hero.spend(TIME_TO_EQUIP);
 			return true;
-			
+
 		}
 
 	}
-	
-	public void activate( Char ch ) {
+
+	public void activate(Char ch) {
 		buff = buff();
-		buff.attachTo( ch );
+		buff.attachTo(ch);
 	}
 
 	@Override
-	public boolean doUnequip( Hero hero, boolean collect, boolean single ) {
-		if (super.doUnequip( hero, collect, single )) {
-			
+	public boolean doUnequip(Hero hero, boolean collect, boolean single) {
+		if (super.doUnequip(hero, collect, single)) {
+
 			if (hero.belongings.ring1 == this) {
 				hero.belongings.ring1 = null;
 			} else {
 				hero.belongings.ring2 = null;
 			}
-			
-			hero.remove( buff );
+
+			hero.remove(buff);
 			buff = null;
-			
+
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
-	public boolean isEquipped( Hero hero ) {
+	public boolean isEquipped(Hero hero) {
 		return hero.belongings.ring1 == this || hero.belongings.ring2 == this;
 	}
-	
+
 	@Override
 	public Item upgrade() {
-		
+
 		super.upgrade();
-		
+
 		if (buff != null) {
-			
+
 			Char owner = buff.target;
 			buff.detach();
 			if ((buff = buff()) != null) {
-				buff.attachTo( owner );
+				buff.attachTo(owner);
 			}
 		}
-		
+
 		return this;
 	}
-	
+
 	@Override
 	public Item degrade() {
-		
+
 		super.degrade();
-		
+
 		if (buff != null) {
-			
+
 			Char owner = buff.target;
 			buff.detach();
 			if ((buff = buff()) != null) {
-				buff.attachTo( owner );
+				buff.attachTo(owner);
 			}
 		}
-		
+
 		return this;
 	}
-	
+
 	@Override
-	public int maxDurability( int lvl ) {
+	public int maxDurability(int lvl) {
 		if (lvl <= 1) {
 			return Integer.MAX_VALUE;
 		} else {
 			return 80 * (lvl < 16 ? 16 - lvl : 1);
 		}
 	}
-	
+
 	public boolean isKnown() {
-		return handler.isKnown( this );
+		return handler.isKnown(this);
 	}
-	
+
 	protected void setKnown() {
 		if (!isKnown()) {
-			handler.know( this );
+			handler.know(this);
 		}
-		
+
 		Badges.validateAllRingsIdentified();
 	}
-	
+
 	@Override
 	public String name() {
-		return isKnown() ? name : String.format(Game.getVar(R.string.Ring_Name), gem);
+		return isKnown() ? name : String.format(
+				Game.getVar(R.string.Ring_Name), gem);
 	}
-	
+
 	@Override
 	public String desc() {
 		return String.format(Game.getVar(R.string.Ring_Info), gem);
 	}
-	
+
 	@Override
 	public String info() {
-		if (isEquipped( Dungeon.hero )) {
-			return String.format(Game.getVar(R.string.Ring_Info3a), desc(), name(), (cursed ? Game.getVar(R.string.Ring_Info3b) : ""));
+		if (isEquipped(Dungeon.hero)) {
+			return String.format(Game.getVar(R.string.Ring_Info3a), desc(),
+					name(), (cursed ? Game.getVar(R.string.Ring_Info3b) : ""));
 		} else if (cursed && cursedKnown) {
-			return String.format(Game.getVar(R.string.Ring_Info4), desc(), name());
+			return String.format(Game.getVar(R.string.Ring_Info4), desc(),
+					name());
 		} else {
 			return desc();
 		}
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return super.isIdentified() && isKnown();
 	}
-	
+
 	@Override
 	public Item identify() {
 		setKnown();
 		return super.identify();
 	}
-	
+
 	@Override
 	public Item random() {
-		int lvl = Random.Int( 1, 3 );
+		int lvl = Random.Int(1, 3);
 		if (Random.Float() < 0.3f) {
-			degrade( lvl );
+			degrade(lvl);
 			cursed = true;
 		} else {
-			upgrade( lvl );
+			upgrade(lvl);
 		}
 		return this;
 	}
-	
+
 	public static boolean allKnown() {
 		return handler.known().size() == rings.length - 2;
 	}
-	
+
 	@Override
 	public int price() {
 		int price = 80;
@@ -321,62 +314,65 @@ public class Ring extends EquipableItem {
 		}
 		return price;
 	}
-	
+
 	protected RingBuff buff() {
 		return null;
 	}
-	
-	private static final String UNFAMILIRIARITY	= "unfamiliarity";
-	
+
+	private static final String UNFAMILIRIARITY = "unfamiliarity";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( UNFAMILIRIARITY, ticksToKnow );
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(UNFAMILIRIARITY, ticksToKnow);
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		if ((ticksToKnow = bundle.getInt( UNFAMILIRIARITY )) == 0) {
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		if ((ticksToKnow = bundle.getInt(UNFAMILIRIARITY)) == 0) {
 			ticksToKnow = TICKS_TO_KNOW;
 		}
 	}
-	
+
 	public class RingBuff extends Buff {
-		
-		private final String TXT_KNOWN = Game.getVar(R.string.Ring_BuffKnown); 
-		
+
+		private final String TXT_KNOWN = Game.getVar(R.string.Ring_BuffKnown);
+
 		public int level;
+
 		public RingBuff() {
 			level = Ring.this.level;
 		}
-		
-		@Override
-		public boolean attachTo( Char target ) {
 
-			if (target instanceof Hero && ((Hero)target).heroClass == HeroClass.ROGUE && !isKnown()) {
+		@Override
+		public boolean attachTo(Char target) {
+
+			if (target instanceof Hero
+					&& ((Hero) target).heroClass == HeroClass.ROGUE
+					&& !isKnown()) {
 				setKnown();
-				GLog.i( TXT_KNOWN, name() );
-				Badges.validateItemLevelAquired( Ring.this );
+				GLog.i(TXT_KNOWN, name());
+				Badges.validateItemLevelAquired(Ring.this);
 			}
-			
+
 			return super.attachTo(target);
 		}
-		
+
 		@Override
 		public boolean act() {
-			
+
 			if (!isIdentified() && --ticksToKnow <= 0) {
 				String gemName = name();
 				identify();
-				GLog.w( TXT_IDENTIFY, gemName, Ring.this.toString() );
-				Badges.validateItemLevelAquired( Ring.this );
+				GLog.w(TXT_IDENTIFY, gemName, Ring.this.toString());
+				Badges.validateItemLevelAquired(Ring.this);
 			}
-			
+
 			use();
-			
-			spend( TICK );
-			
+
+			spendTurn();
+
 			return true;
 		}
 	}

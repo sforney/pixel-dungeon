@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Paralysis extends FlavourBuff {
 
-	private static final float DURATION	= 10f;
+	private static final int DURATION	= 100;
 	
 	@Override
 	public boolean attachTo( Char target ) {
@@ -53,7 +53,7 @@ public class Paralysis extends FlavourBuff {
 		return Game.getVar(R.string.Paralysis_Info);
 	}
 	
-	public static float duration( Char ch ) {
+	public static int duration( Char ch ) {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}

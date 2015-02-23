@@ -39,7 +39,7 @@ public class DewVial extends Item {
 	
 	private static final String AC_DRINK	= Game.getVar(R.string.DewVial_ACDRINK);
 	
-	private static final float TIME_TO_DRINK = 1f;
+	private static final int TIME_TO_DRINK = 10;
 	
 	private static final String TXT_VALUE	= "%+dHP";
 	private static final String TXT_STATUS	= "%d/%d";

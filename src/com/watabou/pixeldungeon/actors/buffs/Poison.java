@@ -65,9 +65,9 @@ public class Poison extends Buff implements Hero.Doom {
 	public boolean act() {
 		if (target.isAlive()) {
 			target.damage((int) (left / 3) + 1, this);
-			spend(TICK);
+			spendTurn();
 
-			if ((left -= TICK) <= 0) {
+			if ((left -= Dungeon.level.time.getTurnLength()) <= 0) {
 				detach();
 			}
 		} else {

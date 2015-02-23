@@ -37,7 +37,7 @@ public class Regeneration extends Buff {
 				bonus += ((RingOfMending.Rejuvenation)buff).level;
 			}
 			
-			spend( (float)(REGENERATION_DELAY / Math.pow( 1.2, bonus )) );
+			spend( (int)Math.round((REGENERATION_DELAY / Math.pow( 1.2, bonus ))));
 			
 		} else {
 			

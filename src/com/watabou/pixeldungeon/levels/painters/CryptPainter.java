@@ -18,8 +18,8 @@
 package com.watabou.pixeldungeon.levels.painters;
 
 import com.watabou.pixeldungeon.items.Generator;
-import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.Heap.Type;
+import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.keys.IronKey;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.Room;

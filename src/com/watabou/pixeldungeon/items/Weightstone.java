@@ -42,7 +42,7 @@ public class Weightstone extends Item {
 	private static final String TXT_FAST          = Game.getVar(R.string.Weightstone_Fast);
 	private static final String TXT_ACCURATE      = Game.getVar(R.string.Weightstone_Accurate);
 	
-	private static final float TIME_TO_APPLY = 2;
+	private static final int TIME_TO_APPLY = 20;
 	
 	private static final String AC_APPLY = Game.getVar(R.string.Weightstone_ACApply);
 	

@@ -37,7 +37,7 @@ public abstract class Scroll extends Item {
 	
 	public static final String AC_READ	= Game.getVar(R.string.Scroll_ACRead);
 	
-	protected static final float TIME_TO_READ	= 1f;
+	protected static final int TIME_TO_READ	= 10;
 	
 	private static final Class<?>[] scrolls = {
 		ScrollOfIdentify.class, 

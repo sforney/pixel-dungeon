@@ -28,7 +28,7 @@ public class Dagger extends MeleeWeapon {
 	}
 	
 	public Dagger() {
-		super( 1, 1.2f, 1f );
+		super( 1, 1.2f, 10 );
 	}
 	
 	@Override

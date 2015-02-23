@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Light extends FlavourBuff {
 
-	public static final float DURATION	= 250f;
+	public static final int DURATION	= 2500;
 	public static final int DISTANCE	= 4;
 	
 	@Override

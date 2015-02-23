@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Cripple extends FlavourBuff {
 
-	public static final float DURATION	= 10f;
+	public static final int DURATION	= 100;
 	
 	@Override
 	public int icon() {

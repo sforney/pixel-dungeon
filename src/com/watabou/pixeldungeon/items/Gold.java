@@ -36,56 +36,59 @@ import com.watabou.utils.Random;
 
 public class Gold extends Item {
 
-	private static final String TXT_COLLECT	= Game.getVar(R.string.Gold_Collect);
-	private static final String TXT_INFO	= Game.getVar(R.string.Gold_Info)+" "+TXT_COLLECT;
-	private static final String TXT_INFO_1	= Game.getVar(R.string.Gold_Info1)+" "+TXT_COLLECT;
-	private static final String TXT_VALUE	= "%+d";
-	
+	private static final String TXT_COLLECT = Game
+			.getVar(R.string.Gold_Collect);
+	private static final String TXT_INFO = Game.getVar(R.string.Gold_Info)
+			+ " " + TXT_COLLECT;
+	private static final String TXT_INFO_1 = Game.getVar(R.string.Gold_Info1)
+			+ " " + TXT_COLLECT;
+	private static final String TXT_VALUE = "%+d";
+
 	{
 		name = Game.getVar(R.string.Gold_Name);
 		image = ItemSpriteSheet.GOLD;
 		stackable = true;
 	}
-	
+
 	public Gold() {
-		this( 1 );
+		this(1);
 	}
-	
-	public Gold( int value ) {
+
+	public Gold(int value) {
 		this.quantity = value;
 	}
-	
+
 	@Override
-	public ArrayList<String> actions( Hero hero ) {
+	public ArrayList<String> actions(Hero hero) {
 		return new ArrayList<String>();
 	}
-	
+
 	@Override
-	public boolean doPickUp( Hero hero ) {
-		
+	public boolean doPickUp(Hero hero) {
+
 		Dungeon.gold += quantity;
 		Statistics.goldCollected += quantity;
 		Badges.validateGoldCollected();
-		
-		GameScene.pickUp( this );
-		hero.sprite.showStatus( CharSprite.NEUTRAL, TXT_VALUE, quantity );
-		hero.spendAndNext( TIME_TO_PICK_UP );
-		
-		Sample.INSTANCE.play( Assets.SND_GOLD, 1, 1, Random.Float( 0.9f, 1.1f ) );
-		
+
+		GameScene.pickUp(this);
+		hero.sprite.showStatus(CharSprite.NEUTRAL, TXT_VALUE, quantity);
+		hero.spend(TIME_TO_PICK_UP);
+
+		Sample.INSTANCE.play(Assets.SND_GOLD, 1, 1, Random.Float(0.9f, 1.1f));
+
 		return true;
 	}
-	
+
 	@Override
 	public boolean isUpgradable() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isIdentified() {
 		return true;
 	}
-	
+
 	@Override
 	public String info() {
 		switch (quantity) {
@@ -94,27 +97,27 @@ public class Gold extends Item {
 		case 1:
 			return TXT_INFO_1;
 		default:
-			return Utils.format( TXT_INFO, quantity );
+			return Utils.format(TXT_INFO, quantity);
 		}
 	}
-	
+
 	@Override
 	public Item random() {
-		quantity = Random.Int( 20 + Dungeon.depth * 10, 40 + Dungeon.depth * 20 );
+		quantity = Random.Int(20 + Dungeon.depth * 10, 40 + Dungeon.depth * 20);
 		return this;
 	}
-	
-	private static final String VALUE	= "value";
-	
+
+	private static final String VALUE = "value";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( VALUE, quantity );
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(VALUE, quantity);
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		quantity = bundle.getInt( VALUE );
+		quantity = bundle.getInt(VALUE);
 	}
 }

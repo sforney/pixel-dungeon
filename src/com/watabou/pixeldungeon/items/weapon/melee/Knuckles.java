@@ -26,11 +26,11 @@ public class Knuckles extends MeleeWeapon {
 		name = Game.getVar(R.string.Knuckles_Name);
 		image = ItemSpriteSheet.KNUCKLEDUSTER;
 	}
-	
+
 	public Knuckles() {
-		super( 1, 1f, 0.5f );
+		super(1, 1f, 5);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.Knuckles_Info);

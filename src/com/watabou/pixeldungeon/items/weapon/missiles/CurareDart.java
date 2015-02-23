@@ -28,7 +28,7 @@ import com.watabou.utils.Random;
 
 public class CurareDart extends MissileWeapon {
 
-	public static final float DURATION	= 3f;
+	public static final int DURATION	= 30;
 	
 	{
 		name = Game.getVar(R.string.CurareDart_Name);

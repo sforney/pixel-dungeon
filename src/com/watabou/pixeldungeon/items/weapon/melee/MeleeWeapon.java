@@ -28,7 +28,7 @@ public class MeleeWeapon extends Weapon {
 	
 	private int tier;
 	
-	public MeleeWeapon( int tier, float acu, float dly ) {
+	public MeleeWeapon( int tier, float acu, int dly ) {
 		super();
 		
 		this.tier = tier;
@@ -47,7 +47,7 @@ public class MeleeWeapon extends Weapon {
 	}
 	
 	private int max() {
-		return (int)((tier * tier - tier + 10) / ACU * DLY);
+		return (int)((tier * tier - tier + 10) / ACU * DLY/10);
 	}
 	
 	@Override

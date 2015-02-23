@@ -3,7 +3,9 @@ package com.watabou.pixeldungeon;
 import java.util.ArrayList;
 
 import com.watabou.pixeldungeon.actors.hero.Hero;
-import com.watabou.pixeldungeon.items.Item; 
+import com.watabou.pixeldungeon.items.Item;
+import com.watabou.pixeldungeon.items.potions.PotionOfLiquidFlame;
+import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
 
 public class ScrollOfDebugging extends Item {
@@ -24,14 +26,12 @@ public class ScrollOfDebugging extends Item {
 	
 	@Override
 	public void execute( Hero hero, String action ) {
-		if (action.equals( AC_READ )) {
-			
-			new ScrollOfEnchantment().collect();
-			
-		} else {
-		
-			super.execute( hero, action );
-			
+		if (action.equals( AC_READ )) {		
+			new ScrollOfEnchantment().collect();	
+			new PotionOfLiquidFlame().collect();
+			new PotionOfToxicGas().collect();
+		} else {	
+			super.execute( hero, action );		
 		}
 	}
 	

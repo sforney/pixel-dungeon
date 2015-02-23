@@ -48,7 +48,7 @@ public class WandOfMagicMissile extends Wand {
 	private static final String TXT_DISENCHANTED = Game
 			.getVar(R.string.WandOfMagicMissile_Desinchanted);
 
-	private static final float TIME_TO_DISENCHANT = 2f;
+	private static final int TIME_TO_DISENCHANT = 20;
 
 	private boolean disenchantEquipped;
 
@@ -140,7 +140,7 @@ public class WandOfMagicMissile extends Wand {
 				GLog.w(TXT_DISENCHANTED, item.name());
 
 				item.upgrade();
-				curUser.spendAndNext(TIME_TO_DISENCHANT);
+				curUser.spend(TIME_TO_DISENCHANT);
 
 				Badges.validateItemLevelAquired(item);
 

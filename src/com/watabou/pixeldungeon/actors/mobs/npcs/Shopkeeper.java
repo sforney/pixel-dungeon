@@ -36,61 +36,61 @@ public class Shopkeeper extends NPC {
 		name = Game.getVar(R.string.Shopkeeper_Name);
 		spriteClass = ShopkeeperSprite.class;
 	}
-	
+
 	@Override
 	protected boolean act() {
-		
 		throwItem();
-		
-		sprite.turnTo( pos, Dungeon.hero.pos );
-		spend( TICK );
+
+		sprite.turnTo(pos, Dungeon.hero.pos);
+		spendTurn();
 		return true;
 	}
-	
+
 	@Override
-	public void damage( int dmg, Object src ) {
+	public void damage(int dmg, Object src) {
 		flee();
 	}
-	
+
 	@Override
-	public void add( Buff buff ) {
+	public void add(Buff buff) {
 		flee();
 	}
-	
+
 	protected void flee() {
-		for (Heap heap: Dungeon.level.heaps.values()) {
+		for (Heap heap : Dungeon.level.heaps.values()) {
 			if (heap.type == Heap.Type.FOR_SALE) {
-				CellEmitter.get( heap.pos ).burst( ElmoParticle.FACTORY, 4 );
+				CellEmitter.get(heap.pos).burst(ElmoParticle.FACTORY, 4);
 				heap.destroy();
 			}
 		}
-		
+
 		destroy();
-		
+
 		sprite.killAndErase();
-		CellEmitter.get( pos ).burst( ElmoParticle.FACTORY, 6 );
+		CellEmitter.get(pos).burst(ElmoParticle.FACTORY, 6);
 	}
-	
+
 	@Override
 	public boolean reset() {
 		return true;
 	}
-	
+
 	@Override
 	public String description() {
 		return Game.getVar(R.string.Shopkeeper_Desc);
 	}
-	
+
 	public static WndBag sell() {
-		return GameScene.selectItem( itemSelector, WndBag.Mode.FOR_SALE, Game.getVar(R.string.Shopkeeper_Sell));
+		return GameScene.selectItem(itemSelector, WndBag.Mode.FOR_SALE,
+				Game.getVar(R.string.Shopkeeper_Sell));
 	}
-	
+
 	private static WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
-		public void onSelect( Item item ) {
+		public void onSelect(Item item) {
 			if (item != null) {
 				WndBag parentWnd = sell();
-				GameScene.show( new WndTradeItem( item, parentWnd ) );
+				GameScene.show(new WndTradeItem(item, parentWnd));
 			}
 		}
 	};

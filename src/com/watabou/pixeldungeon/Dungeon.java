@@ -28,6 +28,7 @@ import java.util.HashSet;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -264,11 +265,6 @@ public class Dungeon {
 		
 		Dungeon.level = level;
 		Actor.init();
-		
-		Actor respawner = level.respawner();
-		if (respawner != null) {
-			Actor.add( level.respawner() );
-		}
 		
 		hero.pos = pos != -1 ? pos : level.exit;
 		
@@ -646,6 +642,21 @@ public class Dungeon {
 		
 		return PathFinder.getStep( from, to, passable );
 		
+	}
+	
+	public static Blob findBlob(Class<?> waterClass) {
+		for(Blob b : level.blobs) {
+			if(b.getClass() == waterClass) {
+				return b;
+			}
+		}
+		return null;
+	}
+	
+	public static void addBlob(Blob b) {
+		if(findBlob(b.getClass()) != null) {
+			level.blobs.add(b);
+		}
 	}
 	
 	public static int flee( Char ch, int cur, int from, boolean pass[], boolean[] visible ) {		

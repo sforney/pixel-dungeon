@@ -97,7 +97,7 @@ public class Statue extends Mob {
 	}
 	
 	@Override
-	protected float attackDelay() {
+	protected int attackDelay() {
 		return weapon.DLY;
 	}
 	

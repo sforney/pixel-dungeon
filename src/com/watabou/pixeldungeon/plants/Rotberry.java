@@ -29,7 +29,7 @@ public class Rotberry extends Plant {
 		Dungeon.level.drop(new RotberrySeed(), pos).sprite.drop();
 
 		if (ch != null) {
-			Buff.prolong(ch, Roots.class, TICK * 3);
+			Buff.prolong(ch, Roots.class, Dungeon.level.time.getTurnLength() * 3);
 		}
 	}
 

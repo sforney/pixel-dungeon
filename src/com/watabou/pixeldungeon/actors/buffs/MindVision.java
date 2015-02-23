@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class MindVision extends FlavourBuff {
 
-	public static final float DURATION = 20f;
+	public static final int DURATION = 200;
 	
 	public int distance = 2;
 	

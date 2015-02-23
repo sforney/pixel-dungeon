@@ -26,13 +26,13 @@ import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.windows.WndError;
 import com.watabou.pixeldungeon.windows.WndStory;
-import com.watabou.pixeldungeon.R;
 
 public class InterlevelScene extends PixelScene {
 
@@ -205,8 +205,6 @@ public class InterlevelScene extends PixelScene {
 	}
 	
 	private void descend() throws Exception {
-		
-		Actor.fixTime();
 		if (Dungeon.hero == null) {
 			Dungeon.init();
 			if (noStory) {
@@ -217,19 +215,19 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.saveLevel();
 		}
 		
-		Level level;
+		Level level;		
 		if (Dungeon.depth >= Statistics.deepestFloor) {
 			level = Dungeon.newLevel();
 		} else {
 			Dungeon.depth++;
 			level = Dungeon.loadLevel( Dungeon.hero.heroClass );
 		}
+		
+		//Actor.fixTime();
 		Dungeon.switchLevel( level, level.entrance );
 	}
 	
 	private void fall() throws Exception {
-		
-		Actor.fixTime();
 		Dungeon.saveLevel();
 		
 		Level level;
@@ -239,6 +237,7 @@ public class InterlevelScene extends PixelScene {
 			Dungeon.depth++;
 			level = Dungeon.loadLevel( Dungeon.hero.heroClass );
 		}
+		Actor.fixTime();
 		Dungeon.switchLevel( level, fallIntoPit ? level.pitCell() : level.randomRespawnCell() );
 	}
 	

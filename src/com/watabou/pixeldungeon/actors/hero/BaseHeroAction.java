@@ -51,7 +51,7 @@ public abstract class BaseHeroAction implements HeroAction {
 			int oldPos = hero.pos;
 			hero.move(step);
 			hero.sprite.move(oldPos, hero.pos);
-			hero.spend(1 / hero.speed());
+			hero.spend(hero.speed());
 			Dungeon.observe();
 			return true;
 		} else {

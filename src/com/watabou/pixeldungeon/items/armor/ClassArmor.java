@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.items.armor;
 
 import java.util.ArrayList;
 
-
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.hero.Hero;

@@ -75,8 +75,8 @@ public class Ghost extends NPC {
 	}
 
 	@Override
-	public float speed() {
-		return 0.5f;
+	public int speed() {
+		return 5;
 	}
 
 	@Override

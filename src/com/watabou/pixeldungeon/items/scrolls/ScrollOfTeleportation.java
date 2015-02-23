@@ -29,26 +29,28 @@ import com.watabou.pixeldungeon.utils.GLog;
 
 public class ScrollOfTeleportation extends Scroll {
 
-	public static final String TXT_TELEPORTED = Game.getVar(R.string.ScrollOfTeleportation_Teleport);
-	public static final String TXT_NO_TELEPORT = Game.getVar(R.string.ScrollOfTeleportation_NoTeleport);
-	
+	public static final String TXT_TELEPORTED = Game
+			.getVar(R.string.ScrollOfTeleportation_Teleport);
+	public static final String TXT_NO_TELEPORT = Game
+			.getVar(R.string.ScrollOfTeleportation_NoTeleport);
+
 	{
 		name = Game.getVar(R.string.ScrollOfTeleportation_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
 
-		Sample.INSTANCE.play( Assets.SND_READ );
+		Sample.INSTANCE.play(Assets.SND_READ);
 		Invisibility.dispel();
-		
-		teleportHero( curUser );
+
+		teleportHero(curUser);
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
-	public static void teleportHero( Hero  hero ) {
+
+	public static void teleportHero(Hero hero) {
 
 		int count = 10;
 		int pos;
@@ -58,27 +60,27 @@ public class ScrollOfTeleportation extends Scroll {
 				break;
 			}
 		} while (pos == -1);
-		
+
 		if (pos == -1) {
-			
-			GLog.w( TXT_NO_TELEPORT );
-			
+
+			GLog.w(TXT_NO_TELEPORT);
+
 		} else {
 
-			WandOfBlink.appear( hero, pos );
-			Dungeon.level.press( pos, hero );
+			WandOfBlink.appear(hero, pos);
+			Dungeon.level.press(pos, hero);
 			Dungeon.observe();
-			
-			GLog.i( TXT_TELEPORTED );
-			
+
+			GLog.i(TXT_TELEPORTED);
+
 		}
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfTeleportation_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();

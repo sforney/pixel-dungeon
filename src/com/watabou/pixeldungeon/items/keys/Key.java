@@ -23,7 +23,7 @@ import com.watabou.utils.Bundle;
 
 public class Key extends Item {
 
-	public static final float TIME_TO_UNLOCK = 1f;
+	public static final int TIME_TO_UNLOCK = 10;
 	
 	{
 		stackable = false;

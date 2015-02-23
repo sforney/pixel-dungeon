@@ -47,7 +47,7 @@ public class LloydsBeacon extends Item {
 	
 	private static final String TXT_SET = Game.getVar(R.string.LloidsBeacon_Set);
 	
-	public static final float TIME_TO_USE = 1;
+	public static final int TIME_TO_USE = 10;
 	
 	public static final String AC_SET		= Game.getVar(R.string.LloidsBeacon_ACSet);
 	public static final String AC_RETURN	= Game.getVar(R.string.LloidsBeacon_ACReturn);

@@ -132,7 +132,7 @@ public class Bee extends NPC {
 		Dungeon.hero.sprite.move( Dungeon.hero.pos, curPos );
 		Dungeon.hero.move( curPos );
 		
-		Dungeon.hero.spend( 1 / Dungeon.hero.speed() );
+		Dungeon.hero.spend( Math.round(10 / Dungeon.hero.speed()) );
 		Dungeon.hero.busy();
 	}
 	
@@ -164,10 +164,10 @@ public class Bee extends NPC {
 				
 				int oldPos = pos;
 				if (getCloser( Dungeon.hero.pos )) {
-					spend( 1 / speed() );
+					spend(speed());
 					return moveSprite( oldPos, pos );
 				} else {
-					spend( TICK );
+					spendTurn();
 				}
 				
 			}

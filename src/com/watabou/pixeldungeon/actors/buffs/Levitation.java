@@ -25,36 +25,36 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Levitation extends FlavourBuff {
 
-	public static final float DURATION	= 20f;
-	
+	public static final int DURATION = 200;
+
 	@Override
-	public boolean attachTo( Char target ) {
-		if (super.attachTo( target )) {
+	public boolean attachTo(Char target) {
+		if (super.attachTo(target)) {
 			target.flying = true;
-			Roots.detach( target, Roots.class );
+			Roots.detach(target, Roots.class);
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void detach() {
 		target.flying = false;
-		Dungeon.level.press( target.pos, target );
+		Dungeon.level.press(target.pos, target);
 		super.detach();
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.LEVITATION;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Levitation_Info);
 	}
-	
+
 	public String getText() {
 		return Game.getVar(R.string.PotionOfLevitation_Apply);
 	}

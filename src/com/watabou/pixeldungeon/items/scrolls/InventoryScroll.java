@@ -29,66 +29,72 @@ import com.watabou.pixeldungeon.windows.WndOptions;
 
 public abstract class InventoryScroll extends Scroll {
 
-	protected String inventoryTitle = Game.getVar(R.string.InventoryScroll_Title);
+	protected String inventoryTitle = Game
+			.getVar(R.string.InventoryScroll_Title);
 	protected WndBag.Mode mode = WndBag.Mode.ALL;
 
-	private static final String TXT_WARNING	= Game.getVar(R.string.InventoryScroll_Warning);
-	private static final String TXT_YES		= Game.getVar(R.string.InventoryScroll_Yes);
-	private static final String TXT_NO		= Game.getVar(R.string.InventoryScroll_No);
-	
+	private static final String TXT_WARNING = Game
+			.getVar(R.string.InventoryScroll_Warning);
+	private static final String TXT_YES = Game
+			.getVar(R.string.InventoryScroll_Yes);
+	private static final String TXT_NO = Game
+			.getVar(R.string.InventoryScroll_No);
+
 	@Override
 	protected void doRead() {
-		
+
 		if (!isKnown()) {
 			setKnown();
 			identifiedByUse = true;
 		} else {
 			identifiedByUse = false;
 		}
-		
-		GameScene.selectItem( itemSelector, mode, inventoryTitle );
+
+		GameScene.selectItem(itemSelector, mode, inventoryTitle);
 	}
-	
+
 	private void confirmCancelation() {
-		GameScene.show( new WndOptions( name(), TXT_WARNING, TXT_YES, TXT_NO ) {
+		GameScene.show(new WndOptions(name(), TXT_WARNING, TXT_YES, TXT_NO) {
 			@Override
-			protected void onSelect( int index ) {
+			protected void onSelect(int index) {
 				switch (index) {
 				case 0:
-					curUser.spendAndNext( TIME_TO_READ );
+					curUser.spend(TIME_TO_READ);
 					identifiedByUse = false;
 					break;
 				case 1:
-					GameScene.selectItem( itemSelector, mode, inventoryTitle );
+					GameScene.selectItem(itemSelector, mode, inventoryTitle);
 					break;
 				}
 			}
-			public void onBackPressed() {};
-		} );
+
+			public void onBackPressed() {
+			};
+		});
 	}
-	
-	protected abstract void onItemSelected( Item item );
-	
+
+	protected abstract void onItemSelected(Item item);
+
 	protected static boolean identifiedByUse = false;
 	protected static WndBag.Listener itemSelector = new WndBag.Listener() {
 		@Override
-		public void onSelect( Item item ) {
+		public void onSelect(Item item) {
 			if (item != null) {
 
-				((InventoryScroll)curItem).onItemSelected( item );
-				curUser.spendAndNext( TIME_TO_READ );
-				
-				Sample.INSTANCE.play( Assets.SND_READ );
+				((InventoryScroll) curItem).onItemSelected(item);
+				curUser.spend(TIME_TO_READ);
+
+				Sample.INSTANCE.play(Assets.SND_READ);
 				Invisibility.dispel();
-				
+
 			} else if (identifiedByUse) {
-				
-				((InventoryScroll)curItem).confirmCancelation();
-				
+
+				((InventoryScroll) curItem).confirmCancelation();
+
 			} else {
 
-				curItem.collect( curUser.belongings.backpack );
-				
+				curItem.collect(curUser.belongings.backpack);
+
 			}
 		}
 	};

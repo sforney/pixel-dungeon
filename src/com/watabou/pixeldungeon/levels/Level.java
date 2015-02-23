@@ -20,9 +20,10 @@ package com.watabou.pixeldungeon.levels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
+import com.forney.pixeldungeon.time.Time;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.Scene;
 import com.watabou.noosa.audio.Sample;
@@ -30,9 +31,9 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.actors.Respawner;
 import com.watabou.pixeldungeon.actors.blobs.Alchemy;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.WellWater;
@@ -43,7 +44,6 @@ import com.watabou.pixeldungeon.actors.buffs.MindVision;
 import com.watabou.pixeldungeon.actors.buffs.Shadows;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
-import com.watabou.pixeldungeon.actors.mobs.Bestiary;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.effects.particles.FlowParticle;
 import com.watabou.pixeldungeon.effects.particles.WindParticle;
@@ -65,7 +65,14 @@ import com.watabou.pixeldungeon.levels.features.Chasm;
 import com.watabou.pixeldungeon.levels.features.Door;
 import com.watabou.pixeldungeon.levels.features.HighGrass;
 import com.watabou.pixeldungeon.levels.painters.Painter;
-import com.watabou.pixeldungeon.levels.traps.*;
+import com.watabou.pixeldungeon.levels.traps.AlarmTrap;
+import com.watabou.pixeldungeon.levels.traps.FireTrap;
+import com.watabou.pixeldungeon.levels.traps.GrippingTrap;
+import com.watabou.pixeldungeon.levels.traps.LightningTrap;
+import com.watabou.pixeldungeon.levels.traps.ParalyticTrap;
+import com.watabou.pixeldungeon.levels.traps.PoisonTrap;
+import com.watabou.pixeldungeon.levels.traps.SummoningTrap;
+import com.watabou.pixeldungeon.levels.traps.ToxicTrap;
 import com.watabou.pixeldungeon.mechanics.ShadowCaster;
 import com.watabou.pixeldungeon.plants.Plant;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -91,7 +98,7 @@ public abstract class Level implements Bundlable {
 	public static final int[] NEIGHBOURS9 = { 0, +1, -1, +WIDTH, -WIDTH,
 			+1 + WIDTH, +1 - WIDTH, -1 + WIDTH, -1 - WIDTH };
 
-	protected static final float TIME_TO_RESPAWN = 50;
+	public static final int TIME_TO_RESPAWN = 50;
 
 	private static final String TXT_HIDDEN_PLATE_CLICKS = Game
 			.getVar(R.string.Level_HiddenPlate);
@@ -102,6 +109,7 @@ public abstract class Level implements Bundlable {
 	public int[] map;
 	public boolean[] visited;
 	public boolean[] mapped;
+	public Time time;
 
 	public int viewDistance = Dungeon.isChallenged(Challenges.DARKNESS) ? 3 : 8;
 
@@ -125,7 +133,7 @@ public abstract class Level implements Bundlable {
 
 	public HashSet<Mob> mobs;
 	public SparseArray<Heap> heaps;
-	public HashMap<Class<? extends Blob>, Blob> blobs;
+	public List<Blob> blobs;
 	public SparseArray<Plant> plants;
 
 	protected ArrayList<Item> itemsToSpawn = new ArrayList<Item>();
@@ -145,9 +153,11 @@ public abstract class Level implements Bundlable {
 	private static final String PLANTS = "plants";
 	private static final String MOBS = "mobs";
 	private static final String BLOBS = "blobs";
+	private static final String TIME = "time"; 
+	private Respawner respawner;
 
 	public void create() {
-
+		time = new Time();
 		resizingNeeded = false;
 
 		map = new int[LENGTH];
@@ -158,9 +168,10 @@ public abstract class Level implements Bundlable {
 
 		mobs = new HashSet<Mob>();
 		heaps = new SparseArray<Heap>();
-		blobs = new HashMap<Class<? extends Blob>, Blob>();
+		blobs = new ArrayList<Blob>();
 		plants = new SparseArray<Plant>();
-
+		respawner = new Respawner();
+		
 		if (!Dungeon.bossLevel()) {
 			addItemToSpawn(Generator.random(Generator.Category.FOOD));
 			if (Dungeon.posNeeded()) {
@@ -227,12 +238,16 @@ public abstract class Level implements Bundlable {
 
 		mobs = new HashSet<Mob>();
 		heaps = new SparseArray<Heap>();
-		blobs = new HashMap<Class<? extends Blob>, Blob>();
+		blobs = new ArrayList<Blob>();
 		plants = new SparseArray<Plant>();
-
+		
 		map = bundle.getIntArray(MAP);
 		visited = bundle.getBooleanArray(VISITED);
 		mapped = bundle.getBooleanArray(MAPPED);
+		int bundleTime = bundle.getInt(TIME);
+		if(bundleTime > 0) {
+			time.setTime(bundleTime);
+		}
 
 		entrance = bundle.getInt(ENTRANCE);
 		exit = bundle.getInt(EXIT);
@@ -273,7 +288,7 @@ public abstract class Level implements Bundlable {
 		collection = bundle.getCollection(BLOBS);
 		for (Bundlable b : collection) {
 			Blob blob = (Blob) b;
-			blobs.put(blob.getClass(), blob);
+			blobs.add(blob);
 		}
 
 		buildFlagMaps();
@@ -290,7 +305,8 @@ public abstract class Level implements Bundlable {
 		bundle.put(HEAPS, heaps.values());
 		bundle.put(PLANTS, plants.values());
 		bundle.put(MOBS, mobs);
-		bundle.put(BLOBS, blobs.values());
+		bundle.put(BLOBS, blobs);
+		bundle.put(TIME, time.getTime());
 	}
 
 	public int tunnelTile() {
@@ -366,29 +382,6 @@ public abstract class Level implements Bundlable {
 
 	public int nMobs() {
 		return 0;
-	}
-
-	public Actor respawner() {
-		return new Actor() {
-			@Override
-			protected boolean act() {
-				if (mobs.size() < nMobs()) {
-
-					Mob mob = Bestiary.mutable(Dungeon.depth);
-					mob.state = mob.WANDERING;
-					mob.pos = randomRespawnCell();
-					if (Dungeon.hero.isAlive() && mob.pos != -1) {
-						GameScene.add(mob);
-						if (Statistics.amuletObtained) {
-							mob.beckon(Dungeon.hero.pos);
-						}
-					}
-				}
-				spend(Dungeon.nightMode || Statistics.amuletObtained ? TIME_TO_RESPAWN / 2
-						: TIME_TO_RESPAWN);
-				return true;
-			}
-		};
 	}
 
 	public int randomRespawnCell() {
@@ -1015,5 +1008,13 @@ public abstract class Level implements Bundlable {
 			}
 			return "";
 		}
+	}
+
+	public Respawner getRespawner() {
+		return respawner;
+	}
+
+	public void setRespawner(Respawner respawner) {
+		this.respawner = respawner;
 	}
 }

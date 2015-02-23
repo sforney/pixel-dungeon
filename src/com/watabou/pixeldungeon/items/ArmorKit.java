@@ -38,7 +38,7 @@ public class ArmorKit extends Item {
 	private static final String TXT_SELECT_ARMOR = Game.getVar(R.string.ArmorKit_SelectArmor);
 	private static final String TXT_UPGRADED     = Game.getVar(R.string.ArmorKit_Upgraded);
 	
-	private static final float TIME_TO_UPGRADE = 2;
+	private static final int TIME_TO_UPGRADE = 20;
 	
 	private static final String AC_APPLY = Game.getVar(R.string.ArmorKit_ACAplly);
 	

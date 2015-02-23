@@ -35,46 +35,48 @@ public class ScrollOfLullaby extends Scroll {
 	{
 		name = Game.getVar(R.string.ScrollOfLullaby_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
-		curUser.sprite.centerEmitter().start( Speck.factory( Speck.NOTE ), 0.3f, 5 );
-		Sample.INSTANCE.play( Assets.SND_LULLABY );
+
+		curUser.sprite.centerEmitter()
+				.start(Speck.factory(Speck.NOTE), 0.3f, 5);
+		Sample.INSTANCE.play(Assets.SND_LULLABY);
 		Invisibility.dispel();
-		
+
 		int count = 0;
 		Mob affected = null;
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.affect( mob, Sleep.class );
-				if (mob.buff( Sleep.class ) != null) {
+				Buff.affect(mob, Sleep.class);
+				if (mob.buff(Sleep.class) != null) {
 					affected = mob;
 					count++;
 				}
 			}
 		}
-		
+
 		switch (count) {
 		case 0:
 			GLog.i(Game.getVar(R.string.ScrollOfLullaby_Info1));
 			break;
 		case 1:
-			GLog.i(String.format(Game.getVar(R.string.ScrollOfLullaby_Info2), affected.name));
+			GLog.i(String.format(Game.getVar(R.string.ScrollOfLullaby_Info2),
+					affected.name));
 			break;
 		default:
 			GLog.i(Game.getVar(R.string.ScrollOfLullaby_Info3));
 		}
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfLullaby_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 50 * quantity : super.price();

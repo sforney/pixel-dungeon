@@ -22,7 +22,6 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
-
 import com.watabou.pixeldungeon.sprites.RatKingSprite;
 
 public class RatKing extends NPC {
@@ -40,8 +39,8 @@ public class RatKing extends NPC {
 	}
 	
 	@Override
-	public float speed() {
-		return 2f;
+	public int speed() {
+		return 20;
 	}
 	
 	@Override

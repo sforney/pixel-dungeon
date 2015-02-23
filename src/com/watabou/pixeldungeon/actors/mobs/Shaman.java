@@ -38,7 +38,7 @@ import com.watabou.utils.Random;
 
 public class Shaman extends Mob implements Callback {
 
-	private static final float TIME_TO_ZAP = 2f;
+	private static final int TIME_TO_ZAP = 20;
 
 	private static final String TXT_LIGHTNING_KILLED = Game
 			.getVar(R.string.Shaman_Killed);
@@ -126,7 +126,6 @@ public class Shaman extends Mob implements Callback {
 
 	@Override
 	public void call() {
-		next();
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class Viscosity extends Glyph {
 		@Override
 		public boolean attachTo(Char target) {
 			if (super.attachTo(target)) {
-				postpone(TICK);
+				postponeTurn();
 				return true;
 			} else {
 				return false;
@@ -137,7 +137,7 @@ public class Viscosity extends Glyph {
 
 					Badges.validateDeathFromGlyph();
 				}
-				spend(TICK);
+				spendTurn();
 
 				if (--damage <= 0) {
 					detach();

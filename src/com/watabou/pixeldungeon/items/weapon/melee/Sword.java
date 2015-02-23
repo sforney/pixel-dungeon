@@ -26,11 +26,11 @@ public class Sword extends MeleeWeapon {
 		name = Game.getVar(R.string.Sword_Name);
 		image = ItemSpriteSheet.SWORD;
 	}
-	
+
 	public Sword() {
-		super( 3, 1f, 1f );
+		super(3, 1f, 10);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.Sword_Info);

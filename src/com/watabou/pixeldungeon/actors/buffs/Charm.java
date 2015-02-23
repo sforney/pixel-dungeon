@@ -53,7 +53,7 @@ public class Charm extends FlavourBuff {
 		return Game.getVar(R.string.Charm_Info);
 	}
 	
-	public static float durationFactor( Char ch ) {
+	public static int durationFactor( Char ch ) {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() : 1;
 	}

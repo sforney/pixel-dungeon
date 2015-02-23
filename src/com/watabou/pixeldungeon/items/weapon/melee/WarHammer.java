@@ -26,11 +26,11 @@ public class WarHammer extends MeleeWeapon {
 		name = Game.getVar(R.string.WarHammer_Name);
 		image = ItemSpriteSheet.WAR_HAMMER;
 	}
-	
+
 	public WarHammer() {
-		super( 5, 1.2f, 1f );
+		super(5, 1.2f, 10);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.WarHammer_Info);

@@ -32,10 +32,10 @@ import com.watabou.utils.Random;
 
 public class Hunger extends Buff implements Hero.Doom {
 
-	private static final float STEP = 10f;
+	private static final int STEP = 100;
 
-	public static final float HUNGRY = 260f;
-	public static final float STARVING = 360f;
+	public static final int HUNGRY = 2600;
+	public static final int STARVING = 3600;
 
 	private static final String TXT_HUNGRY = Game
 			.getVar(R.string.Hunger_Hungry);
@@ -104,9 +104,9 @@ public class Hunger extends Buff implements Hero.Doom {
 
 			}
 
-			float step = ((Hero) target).heroClass == HeroClass.ROGUE ? STEP * 1.2f
+			int step = ((Hero) target).heroClass == HeroClass.ROGUE ? STEP * 12
 					: STEP;
-			spend(target.buff(Shadows.class) == null ? step : step * 1.5f);
+			spend(target.buff(Shadows.class) == null ? step : step * 15);
 
 		} else {
 

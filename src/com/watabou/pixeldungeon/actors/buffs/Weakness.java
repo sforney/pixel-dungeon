@@ -26,7 +26,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Weakness extends FlavourBuff {
 
-	private static final float DURATION = 40f;
+	private static final int DURATION = 400;
 
 	@Override
 	public int icon() {
@@ -57,7 +57,7 @@ public class Weakness extends FlavourBuff {
 		((Hero)target).weakened = false;
 	}
 	
-	public static float duration( Char ch ) {
+	public static int duration( Char ch ) {
 		Resistance r = ch.buff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}

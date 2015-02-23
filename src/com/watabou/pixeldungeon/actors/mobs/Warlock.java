@@ -38,7 +38,7 @@ import com.watabou.utils.Random;
 
 public class Warlock extends Mob implements Callback {
 
-	private static final float TIME_TO_ZAP = 1f;
+	private static final int TIME_TO_ZAP = 10;
 
 	private static final String TXT_SHADOWBOLT_KILLED = Game
 			.getVar(R.string.Warlock_Killed);
@@ -121,12 +121,10 @@ public class Warlock extends Mob implements Callback {
 
 	public void onZapComplete() {
 		zap();
-		next();
 	}
 
 	@Override
 	public void call() {
-		next();
 	}
 
 	@Override

@@ -29,12 +29,14 @@ import com.watabou.pixeldungeon.Bones;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.GamesInProgress;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.ScrollOfDebugging;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Combo;
+import com.watabou.pixeldungeon.actors.buffs.DefenseSkillModifier;
 import com.watabou.pixeldungeon.actors.buffs.EarthrootArmor;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
 import com.watabou.pixeldungeon.actors.buffs.GasesImmunity;
@@ -92,8 +94,8 @@ public class Hero extends Char {
 
 	public static final int STARTING_STR = 10;
 
-	private static final float TIME_TO_REST = 1f;
-	private static final float TIME_TO_SEARCH = 2f;
+	private static final int TIME_TO_REST = 10;
+	private static final int TIME_TO_SEARCH = 20;
 
 	public HeroClass heroClass = HeroClass.ROGUE;
 	public HeroSubClass subClass = HeroSubClass.NONE;
@@ -129,7 +131,7 @@ public class Hero extends Char {
 		super();
 
 		name = Game.getVar(R.string.Hero_Name);
-
+		nextAction = 0;
 		HP = HT = 20;
 		STR = STARTING_STR;
 		awareness = 0.1f;
@@ -198,6 +200,7 @@ public class Hero extends Char {
 	public void live() {
 		Buff.affect(this, Regeneration.class);
 		Buff.affect(this, Hunger.class);
+		new ScrollOfDebugging().collect();
 	}
 
 	public int tier() {
@@ -236,7 +239,12 @@ public class Hero extends Char {
 
 	@Override
 	public int defenseSkill(Char enemy) {
-
+		int skill = 0;
+		for(Buff buff : buffs()) {
+			if(buff instanceof DefenseSkillModifier) {
+				skill = ((DefenseSkillModifier) buff).modifyDefenseSkill(skill);
+			}
+		}
 		int bonus = 0;
 		for (Buff buff : buffs(RingOfEvasion.Evasion.class)) {
 			bonus += ((RingOfEvasion.Evasion) buff).level;
@@ -291,50 +299,44 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public float speed() {
+	public int speed() {
 		int aEnc = belongings.armor != null ? belongings.armor.STR - STR() : 0;
 		if (aEnc > 0) {
-			return (float) (super.speed() * Math.pow(1.3, -aEnc));
+			return (int)Math.round((super.speed() * Math.pow(1.3, -aEnc)));
 		} else {
-			float speed = super.speed();
+			int speed = super.speed();
 			return ((HeroSprite) sprite)
 					.sprint(subClass == HeroSubClass.FREERUNNER
-							&& !isStarving()) ? 1.6f * speed : speed;
+							&& !isStarving()) ? 16 * speed : speed;
 		}
 	}
 
-	public float attackDelay() {
+	public int attackDelay() {
 		KindOfWeapon wep = rangedWeapon != null ? rangedWeapon
 				: belongings.weapon;
 		if (wep != null) {
 			return wep.speedFactor(this);
 		} else {
-			return 1f;
+			return 10;
 		}
 	}
 
 	@Override
-	public void spend(float time) {
+	public void spend(int time) {
 		int hasteLevel = 0;
 		for (Buff buff : buffs(RingOfHaste.Haste.class)) {
 			hasteLevel += ((RingOfHaste.Haste) buff).level;
 		}
-		super.spend(hasteLevel == 0 ? time : (float) (time * Math.pow(1.1,
-				-hasteLevel)));
+		super.spend(hasteLevel == 0 ? time : (int)Math.round((time * Math.pow(1.1,
+				-hasteLevel))));
 	};
-
-	public void spendAndNext(float time) {
-		busy();
-		spend(time);
-		next();
-	}
 
 	@Override
 	public boolean act() {
 		super.act();
 		if (paralysed) {
 			curAction = null;
-			spendAndNext(TICK);
+			spendTurn();
 			return false;
 		}
 		checkVisibleMobs();
@@ -345,7 +347,6 @@ public class Hero extends Char {
 					restoreHealth = false;
 				} else {
 					spend(TIME_TO_REST);
-					next();
 					return false;
 				}
 			}
@@ -384,7 +385,7 @@ public class Hero extends Char {
 	}
 
 	public void rest(boolean tillHealthy) {
-		spendAndNext(TIME_TO_REST);
+		spend(TIME_TO_REST);
 		if (!tillHealthy) {
 			sprite.showStatus(CharSprite.DEFAULT, TXT_WAIT);
 		}
@@ -423,7 +424,7 @@ public class Hero extends Char {
 				}
 			case SNIPER:
 				if (rangedWeapon != null) {
-					Buff.prolong(this, SnipersMark.class, attackDelay() * 1.1f).object = enemy
+					Buff.prolong(this, SnipersMark.class, Math.round(attackDelay() * 1.1f)).object = enemy
 							.id();
 				}
 				break;
@@ -831,10 +832,10 @@ public class Hero extends Char {
 			sprite.showStatus(CharSprite.DEFAULT, TXT_SEARCH);
 			sprite.operate(pos);
 			if (smthFound) {
-				spendAndNext(Random.Float() < level ? TIME_TO_SEARCH
+				spend(Random.Float() < level ? TIME_TO_SEARCH
 						: TIME_TO_SEARCH * 2);
 			} else {
-				spendAndNext(TIME_TO_SEARCH);
+				spend(TIME_TO_SEARCH);
 			}
 
 		}
@@ -869,11 +870,6 @@ public class Hero extends Char {
 	public HashSet<Class<?>> immunities() {
 		GasesImmunity buff = buff(GasesImmunity.class);
 		return buff == null ? super.immunities() : GasesImmunity.IMMUNITIES;
-	}
-
-	@Override
-	public void next() {
-		super.next();
 	}
 
 	public static interface Doom {

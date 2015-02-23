@@ -129,7 +129,7 @@ public class WndBlacksmith extends Window {
 		}
 		first.upgrade();
 		GLog.p(Game.getVar(R.string.Blacksmith_LooksBetter), first.name() );
-		Dungeon.hero.spendAndNext( 2f );
+		Dungeon.hero.spend(20);
 		Badges.validateItemLevelAquired( first );
 
 		if (second.isEquipped( Dungeon.hero )) {

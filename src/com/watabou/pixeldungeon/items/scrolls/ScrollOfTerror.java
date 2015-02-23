@@ -35,45 +35,47 @@ public class ScrollOfTerror extends Scroll {
 	{
 		name = Game.getVar(R.string.ScrollOfTerror_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
-		new Flare( 5, 32 ).color( 0xFF0000, true ).show( curUser.sprite, 2f );
-		Sample.INSTANCE.play( Assets.SND_READ );
+
+		new Flare(5, 32).color(0xFF0000, true).show(curUser.sprite, 2f);
+		Sample.INSTANCE.play(Assets.SND_READ);
 		Invisibility.dispel();
-		
+
 		int count = 0;
 		Mob affected = null;
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.affect( mob, Terror.class, Terror.DURATION ).object = curUser.id();
-				
+				Buff.affect(mob, Terror.class, Terror.DURATION).object = curUser
+						.id();
+
 				count++;
 				affected = mob;
 			}
 		}
-		
+
 		switch (count) {
 		case 0:
 			GLog.i(Game.getVar(R.string.ScrollOfTerror_Info1));
 			break;
 		case 1:
-			GLog.i(String.format(Game.getVar(R.string.ScrollOfTerror_Info2), affected.name));
+			GLog.i(String.format(Game.getVar(R.string.ScrollOfTerror_Info2),
+					affected.name));
 			break;
 		default:
 			GLog.i(Game.getVar(R.string.ScrollOfTerror_Info3));
 		}
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfTerror_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 50 * quantity : super.price();

@@ -80,19 +80,14 @@ public class Pushing extends Actor {
 		public void update() {
 			super.update();
 			
-			if ((delay += Game.elapsed) < DELAY) {
-				
+			if ((delay += Game.elapsed) < DELAY) {		
 				sprite.x = x;
-				sprite.y = y;
-				
-			} else {
-				
+				sprite.y = y;		
+			} else {		
 				sprite.point( end );
 				
 				killAndErase();
-				Actor.remove( Pushing.this );
-				
-				next();
+				Actor.remove( Pushing.this );			
 			}
 		}
 	}

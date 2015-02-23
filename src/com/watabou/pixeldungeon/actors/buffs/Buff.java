@@ -60,7 +60,7 @@ public class Buff extends Actor {
 		}
 	}
 	
-	public static<T extends FlavourBuff> T append( Char target, Class<T> buffClass, float duration ) {
+	public static<T extends FlavourBuff> T append( Char target, Class<T> buffClass, int duration ) {
 		T buff = append( target, buffClass );
 		buff.spend( duration );
 		return buff;
@@ -75,7 +75,7 @@ public class Buff extends Actor {
 		}
 	}
 	
-	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
+	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, int duration ) {
 		T buff = affect( target, buffClass );
 		buff.spend( duration );
 		return buff;
@@ -85,7 +85,7 @@ public class Buff extends Actor {
 		return "";
 	}
 	
-	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, float duration ) {
+	public static<T extends FlavourBuff> T prolong( Char target, Class<T> buffClass, int duration ) {
 		T buff = affect( target, buffClass );
 		buff.postpone( duration );
 		return buff;

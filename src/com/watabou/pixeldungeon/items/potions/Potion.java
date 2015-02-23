@@ -51,7 +51,7 @@ public class Potion extends Item {
 	private static final String TXT_R_U_SURE_DRINK = Game.getVar(R.string.Potion_SureDrink);
 	private static final String TXT_R_U_SURE_THROW = Game.getVar(R.string.Potion_SureThrow);
 	
-	private static final float TIME_TO_DRINK = 1f;
+	private static final int TIME_TO_DRINK = 10;
 	
 	private static final Class<?>[] potions = {
 		PotionOfHealing.class, 

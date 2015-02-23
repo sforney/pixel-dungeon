@@ -8,7 +8,7 @@ import com.watabou.utils.Bundle;
 
 public class EarthrootArmor extends Buff {
 	
-	private final float STEP = 1f;
+	private final int STEP = 10;
 	
 	public int pos;
 	public int level;

@@ -35,35 +35,35 @@ public class ScrollOfPsionicBlast extends Scroll {
 	{
 		name = Game.getVar(R.string.ScrollOfPsionicBlast_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
-		GameScene.flash( 0xFFFFFF );
-		
-		Sample.INSTANCE.play( Assets.SND_BLAST );
+
+		GameScene.flash(0xFFFFFF);
+
+		Sample.INSTANCE.play(Assets.SND_BLAST);
 		Invisibility.dispel();
-		
-		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
+
+		for (Mob mob : Dungeon.level.mobs.toArray(new Mob[0])) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.prolong( mob, Blindness.class, Random.Int( 3, 6 ) );
-				mob.damage( Random.IntRange( 1, mob.HT * 2 / 3 ), this );
+				Buff.prolong(mob, Blindness.class, Random.Int(3, 6));
+				mob.damage(Random.IntRange(1, mob.HT * 2 / 3), this);
 			}
 		}
-		
-		Buff.prolong( curUser, Blindness.class, Random.Int( 3, 6 ) );
+
+		Buff.prolong(curUser, Blindness.class, Random.Int(3, 6));
 		Dungeon.observe();
-		
+
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfPsionicBlast_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 80 * quantity : super.price();

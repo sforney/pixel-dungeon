@@ -51,7 +51,7 @@ public class Swarm extends Mob {
 		flying = true;
 	}
 	
-	private static final float SPLIT_DELAY	= 1f;
+	private static final int SPLIT_DELAY	= 10;
 	
 	int generation	= 0;
 	

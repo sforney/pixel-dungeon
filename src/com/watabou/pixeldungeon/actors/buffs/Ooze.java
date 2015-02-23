@@ -51,7 +51,7 @@ public class Ooze extends Buff {
 						Dungeon.depth));
 				GLog.n(TXT_DEATH, toString());
 			}
-			spend(TICK);
+			spendTurn();
 		}
 		if (Level.water[target.pos]) {
 			detach();

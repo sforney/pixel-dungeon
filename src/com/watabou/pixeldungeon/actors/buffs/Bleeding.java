@@ -78,7 +78,7 @@ public class Bleeding extends Buff {
 					GLog.n(Game.getVar(R.string.Bleeding_Death));
 				}
 				
-				spend( TICK );
+				spendTurn();
 			} else {
 				detach();
 			}

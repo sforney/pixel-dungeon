@@ -70,7 +70,7 @@ public class Burning extends Buff implements Hero.Doom {
 		if (target.isAlive()) {
 			
 			if (target instanceof Hero) {
-				prolong( target, Light.class, TICK * 1.01f );
+				prolong( target, Light.class, Dungeon.level.time.getTurnLength());
 			}
 
 			target.damage( Random.Int( 1, 5 ), this );
@@ -112,8 +112,8 @@ public class Burning extends Buff implements Hero.Doom {
 			GameScene.add( Blob.seed( target.pos, 4, Fire.class ) );
 		}
 		
-		spend( TICK );
-		left -= TICK;
+		spendTurn();
+		left -= Dungeon.level.time.getTurnLength();
 		
 		if (left <= 0 ||
 			Random.Float() > (2 + (float)target.HP / target.HT) / 3 ||

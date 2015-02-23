@@ -20,7 +20,7 @@ public class Seed extends Item {
 	private static final String TXT_INFO = Game.getVar(R.string.Plant_Info);
 	protected static final String TXT_SEED = Game.getVar(R.string.Plant_Seed);
 
-	private static final float TIME_TO_PLANT = 1f;
+	private static final int TIME_TO_PLANT = 10;
 
 	{
 		stackable = true;

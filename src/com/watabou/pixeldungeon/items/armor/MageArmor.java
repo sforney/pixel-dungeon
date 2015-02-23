@@ -22,7 +22,6 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
@@ -67,7 +66,7 @@ public class MageArmor extends ClassArmor {
 		
 		curUser.HP -= (curUser.HP / 3);
 		
-		curUser.spend( Actor.TICK );
+		curUser.spend( Dungeon.level.time.getTurnLength() );
 		curUser.sprite.operate( curUser.pos );
 		curUser.busy();
 		

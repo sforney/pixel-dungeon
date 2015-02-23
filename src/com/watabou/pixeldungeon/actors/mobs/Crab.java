@@ -33,7 +33,7 @@ public class Crab extends Mob {
 		
 		HP = HT = 15;
 		defenseSkill = 5;
-		baseSpeed = 2f;
+		baseSpeed = 20;
 		
 		EXP = 3;
 		maxLvl = 9;

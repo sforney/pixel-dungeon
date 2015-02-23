@@ -34,7 +34,7 @@ public class Shuriken extends MissileWeapon {
 		MIN = 2;
 		MAX = 6;
 		
-		DLY = 0.5f;
+		DLY = 5;
 	}
 	
 	public Shuriken() {

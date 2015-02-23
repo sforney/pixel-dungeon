@@ -76,8 +76,8 @@ public class Thief extends Mob {
 	}
 	
 	@Override
-	protected float attackDelay() {
-		return 0.5f;
+	protected int attackDelay() {
+		return 5;
 	}
 	
 	@Override

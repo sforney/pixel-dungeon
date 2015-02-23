@@ -71,9 +71,9 @@ import com.watabou.pixeldungeon.ui.Toast;
 import com.watabou.pixeldungeon.ui.Toolbar;
 import com.watabou.pixeldungeon.ui.Window;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.windows.WndBag;
 import com.watabou.pixeldungeon.windows.WndBag.Mode;
 import com.watabou.pixeldungeon.windows.WndGame;
-import com.watabou.pixeldungeon.windows.WndBag;
 import com.watabou.pixeldungeon.windows.WndStory;
 import com.watabou.utils.Random;
 
@@ -184,7 +184,7 @@ public class GameScene extends PixelScene {
 		gases = new Group();
 		add( gases );
 		
-		for (Blob blob : Dungeon.level.blobs.values()) {
+		for (Blob blob : Dungeon.level.blobs) {
 			blob.emitter = null;
 			addBlobSprite( blob );
 		}
@@ -351,12 +351,21 @@ public class GameScene extends PixelScene {
 		water.offset( 0, -5 * Game.elapsed );
 		
 		Actor.process();
+		processBlobs();
 		
 		if (Dungeon.hero.ready && !Dungeon.hero.paralysed) {
 			log.newLine();
 		}
 		
 		cellSelector.enabled = Dungeon.hero.ready;
+	}
+	
+	public void processBlobs() {
+		for(Blob b : Dungeon.level.blobs) {
+			if(b.getNextAction() < Dungeon.level.time.getTime()) {
+				b.act();
+			}
+		}
 	}
 	
 	@Override
@@ -453,7 +462,7 @@ public class GameScene extends PixelScene {
 	}
 	
 	public static void add( Blob gas ) {
-		Actor.add( gas );
+		Dungeon.level.blobs.add( gas );
 		if (scene != null) {
 			scene.addBlobSprite( gas );
 		}
@@ -478,7 +487,7 @@ public class GameScene extends PixelScene {
 		scene.addMobSprite( mob );
 	}
 	
-	public static void add( Mob mob, float delay ) {
+	public static void add( Mob mob, int delay ) {
 		Dungeon.level.mobs.add( mob );
 		Actor.addDelayed( mob, delay );
 		Actor.occupyCell( mob );
@@ -627,9 +636,7 @@ public class GameScene extends PixelScene {
 	private static final CellSelector.Listener defaultCellListener = new CellSelector.Listener() {
 		@Override
 		public void onSelect( Integer cell ) {
-			if (Dungeon.hero.handle( cell )) {
-				Dungeon.hero.next();
-			}
+			Dungeon.hero.handle( cell );
 		}
 		@Override
 		public String prompt() {

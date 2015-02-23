@@ -8,7 +8,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
 public class Health extends Buff {
-	private final float STEP = 5f;
+	private final int STEP = 50;
 
 	private int pos;
 

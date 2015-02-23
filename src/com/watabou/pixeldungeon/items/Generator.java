@@ -111,7 +111,7 @@ import com.watabou.pixeldungeon.items.weapon.missiles.Dart;
 import com.watabou.pixeldungeon.items.weapon.missiles.IncendiaryDart;
 import com.watabou.pixeldungeon.items.weapon.missiles.Javelin;
 import com.watabou.pixeldungeon.items.weapon.missiles.Shuriken;
-import com.watabou.pixeldungeon.items.weapon.missiles.Tamahawk;
+import com.watabou.pixeldungeon.items.weapon.missiles.Tomahawk;
 import com.watabou.utils.Random;
 
 public class Generator {
@@ -222,7 +222,7 @@ public class Generator {
 			CurareDart.class,
 			Shuriken.class,
 			Boomerang.class,
-			Tamahawk.class };
+			Tomahawk.class };
 		Category.WEAPON.probs = new float[]{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1 };
 		
 		Category.ARMOR.classes = new Class<?>[]{ 

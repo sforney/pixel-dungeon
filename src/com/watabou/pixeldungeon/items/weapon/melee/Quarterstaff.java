@@ -26,11 +26,11 @@ public class Quarterstaff extends MeleeWeapon {
 		name = Game.getVar(R.string.Quarterstaff_Name);
 		image = ItemSpriteSheet.QUARTERSTAFF;
 	}
-	
+
 	public Quarterstaff() {
-		super( 2, 1f, 1f );
+		super(2, 1f, 10);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.Quarterstaff_Info);

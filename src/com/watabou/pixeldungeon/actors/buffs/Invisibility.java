@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Invisibility extends FlavourBuff {
 
-	public static final float DURATION	= 15f;
+	public static final int DURATION	= 150;
 	
 	@Override
 	public boolean attachTo( Char target ) {

@@ -32,37 +32,37 @@ public class ScrollOfRecharging extends Scroll {
 	{
 		name = Game.getVar(R.string.ScrollOfRecharging_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
-		int count = curUser.belongings.charge( true );		
-		charge( curUser );
-		
-		Sample.INSTANCE.play( Assets.SND_READ );
+
+		int count = curUser.belongings.charge(true);
+		charge(curUser);
+
+		Sample.INSTANCE.play(Assets.SND_READ);
 		Invisibility.dispel();
-		
+
 		if (count > 0) {
-			GLog.i((count > 1 ? Game.getVar(R.string.ScrollOfRecharging_Info1b) 
-					          : Game.getVar(R.string.ScrollOfRecharging_Info1a)) );
-			SpellSprite.show( curUser, SpellSprite.CHARGE );
+			GLog.i((count > 1 ? Game.getVar(R.string.ScrollOfRecharging_Info1b)
+					: Game.getVar(R.string.ScrollOfRecharging_Info1a)));
+			SpellSprite.show(curUser, SpellSprite.CHARGE);
 		} else {
 			GLog.i(Game.getVar(R.string.ScrollOfRecharging_Info2));
 		}
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfRecharging_Info);
 	}
-	
-	public static void charge( Hero hero ) {
-		hero.sprite.centerEmitter().burst( EnergyParticle.FACTORY, 15 );
+
+	public static void charge(Hero hero) {
+		hero.sprite.centerEmitter().burst(EnergyParticle.FACTORY, 15);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();

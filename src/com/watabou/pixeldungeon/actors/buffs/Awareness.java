@@ -21,7 +21,7 @@ import com.watabou.pixeldungeon.Dungeon;
 
 public class Awareness extends FlavourBuff {
 
-	public static final float DURATION = 2f;
+	public static final int DURATION = 20;
 
 	@Override
 	public void detach() {

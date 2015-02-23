@@ -66,7 +66,7 @@ public class Shadows extends Invisibility {
 	public boolean act() {
 		if (target.isAlive()) {
 			
-			spend( TICK * 2 );
+			spend( Dungeon.level.time.getTurnLength() * 2 );
 			
 			if (--left <= 0 || Dungeon.hero.visibleEnemies() > 0) {
 				detach();

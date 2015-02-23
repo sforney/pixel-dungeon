@@ -26,7 +26,7 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-public class Tamahawk extends MissileWeapon {
+public class Tomahawk extends MissileWeapon {
 
 	{
 		name = Game.getVar(R.string.Tamahawk_Name);
@@ -38,11 +38,11 @@ public class Tamahawk extends MissileWeapon {
 		MAX = 20;
 	}
 	
-	public Tamahawk() {
+	public Tomahawk() {
 		this( 1 );
 	}
 	
-	public Tamahawk( int number ) {
+	public Tomahawk( int number ) {
 		super();
 		quantity = number;
 	}

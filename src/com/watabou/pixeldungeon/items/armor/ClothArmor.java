@@ -18,8 +18,8 @@
 package com.watabou.pixeldungeon.items.armor;
 
 import com.watabou.noosa.Game;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 
 
 public class ClothArmor extends Armor {

@@ -33,70 +33,71 @@ import com.watabou.pixeldungeon.utils.GLog;
 
 public class ScrollOfMagicMapping extends Scroll {
 
-	private static final String TXT_LAYOUT = Game.getVar(R.string.ScrollOfMagicMapping_Layout);
-	
+	private static final String TXT_LAYOUT = Game
+			.getVar(R.string.ScrollOfMagicMapping_Layout);
+
 	{
 		name = Game.getVar(R.string.ScrollOfMagicMapping_Name);
 	}
-	
+
 	@Override
 	protected void doRead() {
-		
+
 		int length = Level.LENGTH;
 		int[] map = Dungeon.level.map;
 		boolean[] mapped = Dungeon.level.mapped;
 		boolean[] discoverable = Level.discoverable;
 
 		boolean noticed = false;
-		
-		for (int i=0; i < length; i++) {
-			
+
+		for (int i = 0; i < length; i++) {
+
 			int terr = map[i];
-			
+
 			if (discoverable[i]) {
-				
+
 				mapped[i] = true;
 				if ((Terrain.flags[terr] & Terrain.SECRET) != 0) {
-					
-					Level.set( i, Terrain.discover( terr ) );						
-					GameScene.updateMap( i );
-					
+
+					Level.set(i, Terrain.discover(terr));
+					GameScene.updateMap(i);
+
 					if (Dungeon.visible[i]) {
-						GameScene.discoverTile( i, terr );
-						discover( i );
-						
+						GameScene.discoverTile(i, terr);
+						discover(i);
+
 						noticed = true;
 					}
 				}
 			}
 		}
 		Dungeon.observe();
-		
-		GLog.i( TXT_LAYOUT );
+
+		GLog.i(TXT_LAYOUT);
 		if (noticed) {
-			Sample.INSTANCE.play( Assets.SND_SECRET );
+			Sample.INSTANCE.play(Assets.SND_SECRET);
 		}
-		
-		SpellSprite.show( curUser, SpellSprite.MAP );
-		Sample.INSTANCE.play( Assets.SND_READ );
+
+		SpellSprite.show(curUser, SpellSprite.MAP);
+		Sample.INSTANCE.play(Assets.SND_READ);
 		Invisibility.dispel();
-		
+
 		setKnown();
-		
-		curUser.spendAndNext( TIME_TO_READ );
+
+		curUser.spend(TIME_TO_READ);
 	}
-	
+
 	@Override
 	public String desc() {
 		return Game.getVar(R.string.ScrollOfMagicMapping_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 25 * quantity : super.price();
 	}
-	
-	public static void discover( int cell ) {
-		CellEmitter.get( cell ).start( Speck.factory( Speck.DISCOVER ), 0.1f, 4 );
+
+	public static void discover(int cell) {
+		CellEmitter.get(cell).start(Speck.factory(Speck.DISCOVER), 0.1f, 4);
 	}
 }

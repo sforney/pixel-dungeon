@@ -41,7 +41,7 @@ public class Piranha extends Mob {
 		name = Game.getVar(R.string.Piranha_Name);
 		spriteClass = PiranhaSprite.class;
 
-		baseSpeed = 2f;
+		baseSpeed = 20;
 		
 		EXP = 0;
 	}

@@ -31,7 +31,7 @@ public class Fury extends Buff {
 			detach();
 		}
 		
-		spend( TICK );
+		spendTurn();
 		
 		return true;
 	}

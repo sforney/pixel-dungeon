@@ -31,7 +31,7 @@ import com.watabou.utils.Random;
 
 public class SummoningTrap {
 
-	private static final float DELAY = 2f;
+	private static final int DELAY = 20;
 	
 	private static final Mob DUMMY = new Mob() {};
 	
