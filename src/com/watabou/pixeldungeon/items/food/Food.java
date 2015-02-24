@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.items.food;
 
 import java.util.ArrayList;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
@@ -33,20 +32,32 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfRecharging;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class Food extends Item {
-
 	private static final float TIME_TO_EAT	= 3f;
 	
-	public static final String AC_EAT = Game.getVar(R.string.Food_ACEat);
+	public static String AC_EAT;
 	
 	public float energy = Hunger.HUNGRY;
-	public String message = Game.getVar(R.string.Food_Message);
+	public String message;
 	
-	{
+	
+	public Food() {
+		init();
+	}
+	
+	public Food(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
 		stackable = true;
-		name = Game.getVar(R.string.Food_Name);
-		image = ItemSpriteSheet.RATION;
+		name = resolver.getVar(R.string.Food_Name);
+		image = ItemSpriteSheet.RATION;		
+		message = resolver.getVar(R.string.Food_Message);
+		AC_EAT = resolver.getVar(R.string.Food_ACEat);
 	}
 	
 	@Override
@@ -99,7 +110,7 @@ public class Food extends Item {
 	
 	@Override
 	public String info() {
-		return Game.getVar(R.string.Food_Info);
+		return resolver.getVar(R.string.Food_Info);
 	}
 	
 	@Override
