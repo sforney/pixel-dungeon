@@ -17,18 +17,27 @@
  */
 package com.watabou.pixeldungeon.actors.mobs;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.food.MysteryMeat;
 import com.watabou.pixeldungeon.sprites.CrabSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Crab extends Mob {
 
-	{
-		name = Game.getVar(R.string.Crab_Name);
+	public Crab() {
+		init();
+	}
+	
+	public Crab(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.Crab_Name);
 		spriteClass = CrabSprite.class;
 		
 		HP = HT = 15;
@@ -38,8 +47,8 @@ public class Crab extends Mob {
 		EXP = 3;
 		maxLvl = 9;
 		
-		loot = new MysteryMeat();
-		lootChance = 0.167f;
+		loot = new MysteryMeat(resolver);
+		lootChance = 0.167f;		
 	}
 	
 	@Override
@@ -59,7 +68,7 @@ public class Crab extends Mob {
 	
 	@Override
 	public String defenseVerb() {
-		return Game.getVar(R.string.Crab_Defense);
+		return resolver.getVar(R.string.Crab_Defense);
 	}
 	
 	@Override
@@ -70,6 +79,6 @@ public class Crab extends Mob {
 	
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Crab_Desc);
+		return resolver.getVar(R.string.Crab_Desc);
 	}
 }

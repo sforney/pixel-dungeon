@@ -1,7 +1,6 @@
 package com.forney.pixeldungeon.actors.mobs;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +21,7 @@ public class ScorpioTest {
 	@Test
 	public void testDamageRoll() {
 		Scorpio scorpio = new Scorpio(new TestStringResolver());
-		for(int i = 0; i < 1000; i++) {
-			int damage = scorpio.damageRoll();	
-			assertTrue("Damage roll was: " + damage, damage >= 20 && damage <= 32);
-		}
+		MobTestUtils.testDamageRoll(20, 32, scorpio);
 	}
 	
 	@Test

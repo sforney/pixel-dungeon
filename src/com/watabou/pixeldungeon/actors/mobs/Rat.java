@@ -17,23 +17,32 @@
  */
 package com.watabou.pixeldungeon.actors.mobs;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.sprites.RatSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Rat extends Mob {
 
-	{
-		name = Game.getVar(R.string.Rat_Name);
+	public Rat() {
+		init();
+	}
+	
+	public Rat(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.Rat_Name);
 		spriteClass = RatSprite.class;
 		
 		HP = HT = 8;
 		defenseSkill = 3;
 		
-		maxLvl = 5;
+		maxLvl = 5;		
 	}
 	
 	@Override
@@ -60,6 +69,6 @@ public class Rat extends Mob {
 	
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Rat_Desc);
+		return resolver.getVar(R.string.Rat_Desc);
 	}
 }
