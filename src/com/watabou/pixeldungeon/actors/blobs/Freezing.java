@@ -37,7 +37,9 @@ public class Freezing {
 					Frost.duration(ch) * Random.Float(1.0f, 1.5f));
 		}
 
-		fire.clear(cell);
+		if(fire != null) {
+			fire.clear(cell);
+		}
 
 		Heap heap = Dungeon.level.heaps.get(cell);
 		if (heap != null) {

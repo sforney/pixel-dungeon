@@ -24,7 +24,7 @@ import com.watabou.utils.Bundle;
 public abstract class Actor implements Bundlable {
 	private static final String TIME = "time";
 	private static final String ID = "id";
-	public static final float TICK = 1.0f;
+	public static final float TICK = LevelState.TICK;
 	
 	private float time;
 	private int id = 0;
