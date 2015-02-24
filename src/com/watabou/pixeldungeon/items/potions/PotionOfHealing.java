@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
@@ -28,18 +27,28 @@ import com.watabou.pixeldungeon.actors.buffs.Weakness;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfHealing extends Potion {
 
-	{
-		name = Game.getVar(R.string.PotionOfHealing_Name);
+	public PotionOfHealing() {
+		
+	}
+	
+	public PotionOfHealing(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfHealing_Name);
 	}
 	
 	@Override
 	protected void apply( Hero hero ) {
 		setKnown();
 		heal( Dungeon.hero );
-		GLog.p(Game.getVar(R.string.PotionOfHealing_Apply));
+		GLog.p(resolver.getVar(R.string.PotionOfHealing_Apply));
 	}
 	
 	public static void heal( Hero hero ) {
@@ -55,7 +64,7 @@ public class PotionOfHealing extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfHealing_Info);
+		return resolver.getVar(R.string.PotionOfHealing_Info);
 	}
 	
 	@Override

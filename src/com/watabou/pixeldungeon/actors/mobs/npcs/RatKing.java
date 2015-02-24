@@ -31,7 +31,7 @@ public class RatKing extends NPC {
 		name = Game.getVar(R.string.RatKing_Name);
 		spriteClass = RatKingSprite.class;
 		
-		state = SLEEPEING;
+		state = SLEEPING;
 	}
 	
 	@Override
@@ -65,7 +65,7 @@ public class RatKing extends NPC {
 	@Override
 	public void interact() {
 		sprite.turnTo( pos, Dungeon.hero.pos );
-		if (state == SLEEPEING) {
+		if (state == SLEEPING) {
 			notice();
 			yell(Game.getVar(R.string.RatKing_Info1));
 			state = WANDERING;

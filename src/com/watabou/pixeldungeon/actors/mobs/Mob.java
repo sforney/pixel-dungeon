@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.mobs;
 
 import java.util.HashSet;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
@@ -41,26 +40,40 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public abstract class Mob extends Char {
+	private String TXT_DIED;
 
-	private static final String TXT_DIED = Game.getVar(R.string.Mob_Died);
+	protected String TXT_ECHO;// FIXME
 
-	protected static final String TXT_ECHO = Game.getVar(R.string.Mob_Echo);// FIXME
+	protected String TXT_NOTICE1 = "?!";
+	protected String TXT_RAGE = "#$%^";
+	protected String TXT_EXP = "%+dEXP";
 
-	protected static final String TXT_NOTICE1 = "?!";
-	protected static final String TXT_RAGE = "#$%^";
-	protected static final String TXT_EXP = "%+dEXP";
-
-	public AiState SLEEPEING = new Sleeping();
+	public AiState SLEEPING = new Sleeping();
 	public AiState HUNTING = new Hunting();
 	public AiState WANDERING = new Wandering();
 	public AiState FLEEING = new Fleeing();
 	public AiState PASSIVE = new Passive();
-	public AiState state = SLEEPEING;
+	public AiState state = SLEEPING;
+	
+	public Mob() {
+		init();
+	}
+	
+	public Mob(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	private void init() {
+		TXT_DIED = resolver.getVar(R.string.Mob_Died);
+		TXT_ECHO = resolver.getVar(R.string.Mob_Echo);// FIXME
+	}
 
 	public Class<? extends CharSprite> spriteClass;
 
@@ -87,7 +100,7 @@ public abstract class Mob extends Char {
 
 		super.storeInBundle(bundle);
 
-		if (state == SLEEPEING) {
+		if (state == SLEEPING) {
 			bundle.put(STATE, Sleeping.TAG);
 		} else if (state == WANDERING) {
 			bundle.put(STATE, Wandering.TAG);
@@ -108,7 +121,7 @@ public abstract class Mob extends Char {
 
 		String state = bundle.getString(STATE);
 		if (state.equals(Sleeping.TAG)) {
-			this.state = SLEEPEING;
+			this.state = SLEEPING;
 		} else if (state.equals(Wandering.TAG)) {
 			this.state = WANDERING;
 		} else if (state.equals(Hunting.TAG)) {
@@ -209,7 +222,7 @@ public abstract class Mob extends Char {
 			if (sprite != null) {
 				new Flare(4, 32).color(0x44ffff, true).show(sprite, 2f);
 			}
-			state = SLEEPEING;
+			state = SLEEPING;
 			postpone(Sleep.SWS);
 		}
 	}
@@ -312,7 +325,7 @@ public abstract class Mob extends Char {
 
 		Terror.recover(this);
 
-		if (state == SLEEPEING) {
+		if (state == SLEEPING) {
 			state = WANDERING;
 		}
 		alerted = true;
@@ -415,7 +428,7 @@ public abstract class Mob extends Char {
 	}
 
 	public String description() {
-		return Game.getVar(R.string.Mob_Desc);
+		return resolver.getVar(R.string.Mob_Desc);
 	}
 
 	public void notice() {
@@ -423,7 +436,7 @@ public abstract class Mob extends Char {
 	}
 
 	public void yell(String str) {
-		GLog.n(Game.getVar(R.string.Mob_Yell), name, str);
+		GLog.n(resolver.getVar(R.string.Mob_Yell), name, str);
 	}
 
 	public interface AiState {
@@ -470,7 +483,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public String status() {
-			return Utils.format(Game.getVar(R.string.Mob_StaSleepingStatus),
+			return Utils.format(resolver.getVar(R.string.Mob_StaSleepingStatus),
 					name);
 		}
 	}
@@ -510,7 +523,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public String status() {
-			return Utils.format(Game.getVar(R.string.Mob_StaWanderingStatus),
+			return Utils.format(resolver.getVar(R.string.Mob_StaWanderingStatus),
 					name);
 		}
 	}
@@ -550,7 +563,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public String status() {
-			return Utils.format(Game.getVar(R.string.Mob_StaHuntingStatus),
+			return Utils.format(resolver.getVar(R.string.Mob_StaHuntingStatus),
 					name);
 		}
 	}
@@ -586,7 +599,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public String status() {
-			return Utils.format(Game.getVar(R.string.Mob_StaFleeingStatus),
+			return Utils.format(resolver.getVar(R.string.Mob_StaFleeingStatus),
 					name);
 		}
 	}
@@ -604,7 +617,7 @@ public abstract class Mob extends Char {
 
 		@Override
 		public String status() {
-			return Utils.format(Game.getVar(R.string.Mob_StaPassiveStatus),
+			return Utils.format(resolver.getVar(R.string.Mob_StaPassiveStatus),
 					name);
 		}
 	}

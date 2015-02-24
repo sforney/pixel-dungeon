@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.actors.mobs;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
@@ -26,14 +25,13 @@ import com.watabou.utils.Random;
 
 public class Acidic extends Scorpio {
 
-	{
-		name = Game.getVar(R.string.Acidic_Name);
+	public Acidic() {
+		name = resolver.getVar(R.string.Acidic_Name);
 		spriteClass = AcidicSprite.class;
 	}
 	
 	@Override
 	public int defenseProc( Char enemy, int damage ) {
-		
 		int dmg = Random.IntRange( 0, damage );
 		if (dmg > 0) {
 			enemy.damage( dmg, this );

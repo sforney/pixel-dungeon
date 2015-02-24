@@ -20,7 +20,6 @@ package com.watabou.pixeldungeon.actors;
 import java.util.HashSet;
 
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -56,6 +55,7 @@ import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.levels.features.Door;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
@@ -63,25 +63,36 @@ import com.watabou.utils.GameMath;
 import com.watabou.utils.Random;
 
 public abstract class Char extends Actor {
+	protected String TXT_HIT;
+	protected String TXT_KILL;
+	protected String TXT_DEFEAT;
+	private String TXT_YOU_MISSED;
+	private String TXT_SMB_MISSED;
+	private String TXT_OUT_OF_PARALYSIS;
 
-	protected static final String TXT_HIT = Game.getVar(R.string.Char_Hit);
-	protected static final String TXT_KILL = Game.getVar(R.string.Char_Kill);
-	protected static final String TXT_DEFEAT = Game
-			.getVar(R.string.Char_Defeat);
+	public Char() {
+		init();
+	}
 
-	private static final String TXT_YOU_MISSED = Game
-			.getVar(R.string.Char_YouMissed);
-	private static final String TXT_SMB_MISSED = Game
-			.getVar(R.string.Char_SmbMissed);
+	public Char(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
 
-	private static final String TXT_OUT_OF_PARALYSIS = Game
-			.getVar(R.string.Char_OutParalysis);
+	private void init() {
+		TXT_HIT = resolver.getVar(R.string.Char_Hit);
+		TXT_KILL = resolver.getVar(R.string.Char_Kill);
+		TXT_DEFEAT = resolver.getVar(R.string.Char_Defeat);
+		TXT_YOU_MISSED = resolver.getVar(R.string.Char_YouMissed);
+		TXT_OUT_OF_PARALYSIS = resolver.getVar(R.string.Char_OutParalysis);
+		name = resolver.getVar(R.string.Char_Name);
+	}
 
 	public int pos = 0;
 
 	public CharSprite sprite;
 
-	public String name = Game.getVar(R.string.Char_Name);
+	public String name;
 
 	public int HT;
 	public int HP;
@@ -186,11 +197,11 @@ public abstract class Char extends Actor {
 
 					} else {
 						if (Bestiary.isBoss(this)) {
-							Dungeon.fail(Utils.format(Game
+							Dungeon.fail(Utils.format(resolver
 									.getVar(R.string.ResultDescriptions_Boss),
 									name, Dungeon.depth));
 						} else {
-							Dungeon.fail(Utils.format(Game
+							Dungeon.fail(Utils.format(resolver
 									.getVar(R.string.ResultDescriptions_Mob),
 									Utils.indefinite(name), Dungeon.depth));
 						}
@@ -247,7 +258,7 @@ public abstract class Char extends Actor {
 	}
 
 	public String defenseVerb() {
-		return Game.getVar(R.string.Char_StaDodged);
+		return resolver.getVar(R.string.Char_StaDodged);
 	}
 
 	public int dr() {
@@ -378,55 +389,55 @@ public abstract class Char extends Actor {
 
 				CellEmitter.center(pos).burst(PoisonParticle.SPLASH, 5);
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaPoisoned));
+						resolver.getVar(R.string.Char_StaPoisoned));
 
 			} else if (buff instanceof Amok) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaAmok));
+						resolver.getVar(R.string.Char_StaAmok));
 
 			} else if (buff instanceof Slow) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaSlowed));
+						resolver.getVar(R.string.Char_StaSlowed));
 
 			} else if (buff instanceof MindVision) {
 
 				sprite.showStatus(CharSprite.POSITIVE,
-						Game.getVar(R.string.Char_StaMind));
+						resolver.getVar(R.string.Char_StaMind));
 				sprite.showStatus(CharSprite.POSITIVE,
-						Game.getVar(R.string.Char_StaVision));
+						resolver.getVar(R.string.Char_StaVision));
 
 			} else if (buff instanceof Paralysis) {
 
 				sprite.add(CharSprite.State.PARALYSED);
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaParalysed));
+						resolver.getVar(R.string.Char_StaParalysed));
 
 			} else if (buff instanceof Terror) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaFrightened));
+						resolver.getVar(R.string.Char_StaFrightened));
 
 			} else if (buff instanceof Roots) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaRooted));
+						resolver.getVar(R.string.Char_StaRooted));
 
 			} else if (buff instanceof Cripple) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaCrippled));
+						resolver.getVar(R.string.Char_StaCrippled));
 
 			} else if (buff instanceof Bleeding) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaBleeding));
+						resolver.getVar(R.string.Char_StaBleeding));
 
 			} else if (buff instanceof Vertigo) {
 
 				sprite.showStatus(CharSprite.NEGATIVE,
-						Game.getVar(R.string.Char_StaDizzy));
+						resolver.getVar(R.string.Char_StaDizzy));
 
 			} else if (buff instanceof Sleep) {
 				sprite.idle();
@@ -441,7 +452,7 @@ public abstract class Char extends Actor {
 			} else if (buff instanceof Invisibility) {
 				if (!(buff instanceof Shadows)) {
 					sprite.showStatus(CharSprite.POSITIVE,
-							Game.getVar(R.string.Char_StaInvisible));
+							resolver.getVar(R.string.Char_StaInvisible));
 				}
 				sprite.add(CharSprite.State.INVISIBLE);
 			}

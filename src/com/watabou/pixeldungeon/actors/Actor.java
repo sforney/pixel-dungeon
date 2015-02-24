@@ -18,6 +18,8 @@
 package com.watabou.pixeldungeon.actors;
 
 import com.watabou.pixeldungeon.levels.LevelState;
+import com.watabou.pixeldungeon.utils.DefaultStringResolver;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Bundlable;
 import com.watabou.utils.Bundle;
 
@@ -25,12 +27,21 @@ public abstract class Actor implements Bundlable {
 	private static final String TIME = "time";
 	private static final String ID = "id";
 	public static final float TICK = LevelState.TICK;
+	protected StringResolver resolver;
 	
 	private float time;
 	private int id = 0;
 
 	public abstract boolean act();
 
+	public Actor() {
+		resolver = new DefaultStringResolver();
+	}
+	
+	public Actor(StringResolver resolver) {
+		this.setResolver(resolver);
+	}
+	
 	public void spend(float time) {
 		this.time += time;
 	}
@@ -113,5 +124,14 @@ public abstract class Actor implements Bundlable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+
+	public StringResolver getResolver() {
+		return resolver;
+	}
+
+	public void setResolver(StringResolver resolver) {
+		this.resolver = resolver;
 	}
 }

@@ -33,12 +33,22 @@ import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.sprites.ScorpioSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Scorpio extends Mob {
 	
-	{
-		name = Game.getVar(R.string.Scorpio_Name);
+	public Scorpio() {
+		init();
+	}
+	
+	public Scorpio(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.Scorpio_Name);
 		spriteClass = ScorpioSprite.class;
 		
 		HP = HT = 95;
@@ -48,7 +58,7 @@ public class Scorpio extends Mob {
 		EXP = 14;
 		maxLvl = 25;
 		
-		loot = new PotionOfHealing();
+		loot = new PotionOfHealing(resolver);
 		lootChance = 0.125f;
 	}
 	
