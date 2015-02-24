@@ -169,13 +169,12 @@ public class LevelState {
 		actors.add(actor);
 		actor.setTime(actor.getTime() + time);
 		actor.onAdd();
-		
-		if(actor instanceof Char) {
-			Char chararacter = (Char)actor;
-			add(chararacter, time);
-			chars[chararacter.pos] = chararacter;
-			for (Buff buff : chararacter.buffs()) {
-				add(chararacter);
+
+		if (actor instanceof Char) {
+			Char ch = (Char)actor;
+			chars[ch.pos] = ch;
+			for (Buff buff : ch.buffs()) {
+				actors.add( buff );
 				buff.onAdd();
 			}
 		}
