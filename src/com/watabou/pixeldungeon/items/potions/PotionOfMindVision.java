@@ -17,20 +17,28 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.MindVision;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfMindVision extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfMindVision_Name);
+	public PotionOfMindVision() {
+		
 	}
 	
+	public PotionOfMindVision(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfMindVision_Name);
+	}
+
 	@Override
 	protected void apply( Hero hero ) {
 		setKnown();
@@ -38,15 +46,15 @@ public class PotionOfMindVision extends Potion {
 		Dungeon.observe();
 		
 		if (Dungeon.level.mobs.size() > 0) {
-			GLog.i(Game.getVar(R.string.PotionOfMindVision_Apply1));
+			GLog.i(resolver.getVar(R.string.PotionOfMindVision_Apply1));
 		} else {
-			GLog.i(Game.getVar(R.string.PotionOfMindVision_Apply2));
+			GLog.i(resolver.getVar(R.string.PotionOfMindVision_Apply2));
 		}
 	}
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfMindVision_Info);
+		return resolver.getVar(R.string.PotionOfMindVision_Info);
 	}
 	
 	@Override

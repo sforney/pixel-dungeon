@@ -26,14 +26,24 @@ import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.actors.blobs.Freezing;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.utils.BArray;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.PathFinder;
 
 public class PotionOfFrost extends Potion {
 	
 	private static final int DISTANCE	= 2;
 	
-	{
-		name = Game.getVar(R.string.PotionOfFrost_Name);
+	public PotionOfFrost() {
+		
+	}
+	
+	public PotionOfFrost(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfFrost_Name);
 	}
 	
 	@Override
@@ -60,7 +70,7 @@ public class PotionOfFrost extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfFrost_Info);
+		return resolver.getVar(R.string.PotionOfFrost_Info);
 	}
 	
 	@Override

@@ -32,7 +32,6 @@ public class Tempering extends Weapon.Enchantment {
 	
 	@Override
 	public boolean proc( Weapon weapon, Char attacker, Char defender, int damage ) {
-		weapon.polish();
 		return true;
 	}
 	

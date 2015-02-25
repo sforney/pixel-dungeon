@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -25,16 +24,24 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
 import com.watabou.pixeldungeon.scenes.GameScene;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLiquidFlame extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfLiquidFlame_Name);
+	public PotionOfLiquidFlame() {
+		
 	}
 	
+	public PotionOfLiquidFlame(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfLiquidFlame_Name);
+	}
+
 	@Override
-	public void shatter( int cell ) {
-		
+	public void shatter( int cell ) {	
 		if (Dungeon.visible[cell]) {
 			setKnown();
 			
@@ -47,7 +54,7 @@ public class PotionOfLiquidFlame extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfLiquidFlame_Info);
+		return resolver.getVar(R.string.PotionOfLiquidFlame_Info);
 	}
 	
 	@Override

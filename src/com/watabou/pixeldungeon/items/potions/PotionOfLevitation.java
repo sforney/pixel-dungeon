@@ -17,16 +17,25 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Levitation;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLevitation extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfLevitation_Name);
+	
+	public PotionOfLevitation() {
+		
+	}
+	
+	public PotionOfLevitation(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfLevitation_Name);
 	}
 	
 	@Override
@@ -37,7 +46,7 @@ public class PotionOfLevitation extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfLevitation_Info);
+		return resolver.getVar(R.string.PotionOfLevitation_Info);
 	}
 	
 	@Override

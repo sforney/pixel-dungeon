@@ -85,10 +85,8 @@ public class Weightstone extends Item {
 	}
 	
 	private void apply( Weapon weapon, boolean forSpeed ) {
-		
 		detach( curUser.belongings.backpack );
 		
-		weapon.fix();
 		if (forSpeed) {
 			weapon.imbue = Weapon.Imbue.SPEED;
 			GLog.p( TXT_FAST, weapon.name() );

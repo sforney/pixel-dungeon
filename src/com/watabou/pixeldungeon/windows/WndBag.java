@@ -48,7 +48,6 @@ import com.watabou.pixeldungeon.ui.Icons;
 import com.watabou.pixeldungeon.ui.ItemSlot;
 import com.watabou.pixeldungeon.ui.QuickSlot;
 import com.watabou.pixeldungeon.utils.Utils;
-import com.watabou.utils.GameMath;
 
 public class WndBag extends WndTabbed {
 	
@@ -363,19 +362,6 @@ public class WndBag extends WndTabbed {
 				} else if (!item.isIdentified()) {
 					bg.ra = 0.1f;
 					bg.ba = 0.1f;
-				}
-				
-				if (lastBag.owner.isAlive() && item.isUpgradable() && item.levelKnown) {
-					durability = new ColorBlock[NBARS];
-					int nBars = (int)GameMath.gate( 0, Math.round( (float)NBARS * item.durability() / item.maxDurability() ), NBARS );
-					for (int i=0; i < nBars; i++) {
-						durability[i] = new ColorBlock( 2, 2, 0xFF00EE00 );
-						add( durability[i] );
-					}
-					for (int i=nBars; i < NBARS; i++) {
-						durability[i] = new ColorBlock( 2, 2, 0xFFCC0000 );
-						add( durability[i] );
-					}
 				}
 				
 				if (item.name() == null) {

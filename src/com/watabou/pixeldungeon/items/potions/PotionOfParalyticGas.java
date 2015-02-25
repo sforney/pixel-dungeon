@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -25,11 +24,20 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ParalyticGas;
 import com.watabou.pixeldungeon.scenes.GameScene;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfParalyticGas extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfParalyticGas_Name);
+	public PotionOfParalyticGas() {
+		
+	}
+	
+	public PotionOfParalyticGas(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfParalyticGas_Name);
 	}
 	
 	@Override
@@ -46,7 +54,7 @@ public class PotionOfParalyticGas extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfParalyticGas_Info);
+		return resolver.getVar(R.string.PotionOfParalyticGas_Info);
 	}
 	
 	@Override

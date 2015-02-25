@@ -17,14 +17,22 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfExperience extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfExperience_Name);
+	public PotionOfExperience() {
+		
+	}
+	
+	public PotionOfExperience(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfExperience_Name);
 	}
 	
 	@Override
@@ -35,7 +43,7 @@ public class PotionOfExperience extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfExperience_Info);
+		return resolver.getVar(R.string.PotionOfExperience_Info);
 	}
 	
 	@Override

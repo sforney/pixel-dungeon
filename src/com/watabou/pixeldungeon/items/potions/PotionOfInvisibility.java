@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Assets;
@@ -27,38 +26,48 @@ import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfInvisibility extends Potion {
 
-	private static final float ALPHA	= 0.4f;
-	
-	{
-		name = Game.getVar(R.string.PotionOfInvisibility_Name);
+	private static final float ALPHA = 0.4f;
+
+	public PotionOfInvisibility() {
+
 	}
-	
+
+	public PotionOfInvisibility(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfInvisibility_Name);
+	}
+
 	@Override
-	protected void apply( Hero hero ) {
+	protected void apply(Hero hero) {
 		setKnown();
-		Buff.affect( hero, Invisibility.class, Invisibility.DURATION );
-		GLog.i(Game.getVar(R.string.PotionOfInvisibility_Apply));
-		Sample.INSTANCE.play( Assets.SND_MELD );
+		Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
+		GLog.i(resolver.getVar(R.string.PotionOfInvisibility_Apply));
+		Sample.INSTANCE.play(Assets.SND_MELD);
 	}
-	
+
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfInvisibility_Info);
+		return resolver.getVar(R.string.PotionOfInvisibility_Info);
 	}
-	
+
 	@Override
 	public int price() {
 		return isKnown() ? 40 * quantity : super.price();
 	}
-	
-	public static void melt( Char ch ) {
+
+	public static void melt(Char ch) {
 		if (ch.sprite.parent != null) {
-			ch.sprite.parent.add( new AlphaTweener( ch.sprite, ALPHA, 0.4f ) );
+			ch.sprite.parent.add(new AlphaTweener(ch.sprite, ALPHA, 0.4f));
 		} else {
-			ch.sprite.alpha( ALPHA );
+			ch.sprite.alpha(ALPHA);
 		}
 	}
 }

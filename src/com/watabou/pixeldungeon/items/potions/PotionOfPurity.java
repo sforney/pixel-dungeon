@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -33,17 +32,29 @@ import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.PathFinder;
 
 public class PotionOfPurity extends Potion {
 
-	private static final String TXT_FRESHNESS = Game.getVar(R.string.PotionOfPurity_Freshness);
-	private static final String TXT_NO_SMELL  = Game.getVar(R.string.PotionOfPurity_NoSmell);
+	private static String TXT_FRESHNESS;
+	private static String TXT_NO_SMELL;
 	
 	private static final int DISTANCE	= 2;
+
+	public PotionOfPurity() {
+		
+	}
 	
-	{
-		name = Game.getVar(R.string.PotionOfPurity_Name);
+	public PotionOfPurity(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfPurity_Name);
+		TXT_NO_SMELL  = resolver.getVar(R.string.PotionOfPurity_NoSmell);
+		TXT_FRESHNESS = resolver.getVar(R.string.PotionOfPurity_Freshness);
 	}
 	
 	@Override
@@ -120,7 +131,7 @@ public class PotionOfPurity extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfPurity_Info);
+		return resolver.getVar(R.string.PotionOfPurity_Info);
 	}
 	
 	@Override

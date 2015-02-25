@@ -48,8 +48,12 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class Item implements Bundlable {
-	protected static StringResolver resolver = new DefaultStringResolver();
+	protected static StringResolver resolver;
 
+	{
+		resolver = new DefaultStringResolver();
+	}
+	
 	private static String TXT_PACK_FULL;
 	private static String TXT_DIR_THROW;
 
@@ -75,7 +79,6 @@ public class Item implements Bundlable {
 
 	public int level = 0;
 	public boolean levelKnown = false;
-	private int durability = maxDurability();
 
 	public boolean cursed;
 	public boolean cursedKnown;
@@ -262,12 +265,10 @@ public class Item implements Bundlable {
 	}
 
 	public Item upgrade() {
-
 		cursed = false;
 		cursedKnown = true;
 
 		level++;
-		fix();
 
 		return this;
 	}
@@ -283,7 +284,6 @@ public class Item implements Bundlable {
 	public Item degrade() {
 
 		this.level--;
-		fix();
 
 		return this;
 	}
@@ -297,36 +297,7 @@ public class Item implements Bundlable {
 	}
 
 	public void use() {
-		/*
-		 * if (level > 0) { int threshold = (int)(maxDurability() *
-		 * DURABILITY_WARNING_LEVEL); if (durability-- >= threshold && threshold
-		 * > durability) { GLog.w( TXT_GONNA_DEGRADE, name() ); } if (durability
-		 * <= 0) { degrade(); if (levelKnown) { GLog.n( TXT_DEGRADED, name() );
-		 * Dungeon.hero.interrupt();
-		 * 
-		 * CharSprite sprite = Dungeon.hero.sprite; PointF point =
-		 * sprite.center().offset( 0, -16 ); if (this instanceof Weapon) {
-		 * sprite.parent.add( Degradation.weapon( point ) ); } else if (this
-		 * instanceof Armor) { sprite.parent.add( Degradation.armor( point ) );
-		 * } else if (this instanceof Ring) { sprite.parent.add(
-		 * Degradation.ring( point ) ); } else if (this instanceof Wand) {
-		 * sprite.parent.add( Degradation.wand( point ) ); }
-		 * Sample.INSTANCE.play( Assets.SND_DEGRADE ); } } }
-		 */
-	}
 
-	public void fix() {
-		durability = maxDurability();
-	}
-
-	public void polish() {
-		if (durability < maxDurability()) {
-			durability++;
-		}
-	}
-
-	public int durability() {
-		return durability;
 	}
 
 	public int maxDurability(int lvl) {
@@ -462,7 +433,6 @@ public class Item implements Bundlable {
 	private static final String LEVEL_KNOWN = "levelKnown";
 	private static final String CURSED = "cursed";
 	private static final String CURSED_KNOWN = "cursedKnown";
-	private static final String DURABILITY = "durability";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -471,9 +441,6 @@ public class Item implements Bundlable {
 		bundle.put(LEVEL_KNOWN, levelKnown);
 		bundle.put(CURSED, cursed);
 		bundle.put(CURSED_KNOWN, cursedKnown);
-		if (isUpgradable()) {
-			bundle.put(DURABILITY, durability);
-		}
 		QuickSlot.save(bundle, this);
 	}
 
@@ -491,13 +458,6 @@ public class Item implements Bundlable {
 		}
 
 		cursed = bundle.getBoolean(CURSED);
-
-		if (isUpgradable()) {
-			durability = bundle.getInt(DURABILITY);
-		}
-		if (durability <= 0) {
-			durability = maxDurability(level);
-		}
 
 		QuickSlot.restore(bundle, this);
 	}

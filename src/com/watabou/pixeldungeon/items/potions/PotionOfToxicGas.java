@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -25,13 +24,22 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
 import com.watabou.pixeldungeon.scenes.GameScene;
+import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfToxicGas extends Potion {
-
-	{
-		name = Game.getVar(R.string.PotionOfToxicGas_Name);
+	public PotionOfToxicGas() {
+		
 	}
 	
+	public PotionOfToxicGas(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.PotionOfToxicGas_Name);
+	}
+
 	@Override
 	public void shatter( int cell ) {
 		if (Dungeon.visible[cell]) {
@@ -46,7 +54,7 @@ public class PotionOfToxicGas extends Potion {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.PotionOfToxicGas_Info);
+		return resolver.getVar(R.string.PotionOfToxicGas_Info);
 	}
 	
 	@Override
