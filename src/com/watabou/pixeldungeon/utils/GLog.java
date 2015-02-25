@@ -35,7 +35,9 @@ public class GLog {
 	public static void i( String text, Object... args ) {
 		
 		if (args.length > 0) {
-			text = Utils.format( text, args );
+			if(text != null) {
+				text = Utils.format( text, args );
+			}
 		}
 		
 		Log.i( TAG, text );

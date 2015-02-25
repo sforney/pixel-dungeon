@@ -84,6 +84,7 @@ public abstract class Char extends Actor {
 		TXT_KILL = resolver.getVar(R.string.Char_Kill);
 		TXT_DEFEAT = resolver.getVar(R.string.Char_Defeat);
 		TXT_YOU_MISSED = resolver.getVar(R.string.Char_YouMissed);
+		TXT_SMB_MISSED = resolver.getVar(R.string.Char_SmbMissed);
 		TXT_OUT_OF_PARALYSIS = resolver.getVar(R.string.Char_OutParalysis);
 		name = resolver.getVar(R.string.Char_Name);
 	}

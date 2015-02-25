@@ -39,6 +39,7 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.sprites.MissileSprite;
 import com.watabou.pixeldungeon.ui.QuickSlot;
+import com.watabou.pixeldungeon.utils.DefaultStringResolver;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -47,7 +48,7 @@ import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 
 public class Item implements Bundlable {
-	protected StringResolver resolver;
+	protected static StringResolver resolver = new DefaultStringResolver();
 
 	private static String TXT_PACK_FULL;
 	private static String TXT_DIR_THROW;

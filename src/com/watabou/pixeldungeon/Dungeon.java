@@ -36,7 +36,7 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.items.Ankh;
 import com.watabou.pixeldungeon.items.Item;
-import com.watabou.pixeldungeon.items.potions.Potion;
+import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
 import com.watabou.pixeldungeon.items.wands.Wand;
@@ -65,6 +65,8 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.StartScene;
 import com.watabou.pixeldungeon.ui.QuickSlot;
 import com.watabou.pixeldungeon.utils.BArray;
+import com.watabou.pixeldungeon.utils.DefaultStringResolver;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.pixeldungeon.windows.WndResurrect;
 import com.watabou.utils.Bundlable;
@@ -113,8 +115,9 @@ public class Dungeon {
 
 		PathFinder.setMapSize(Level.WIDTH, Level.HEIGHT);
 
+		StringResolver resolver = new DefaultStringResolver();
 		Scroll.initLabels();
-		Potion.initColors();
+		PotionInfo.initColors(resolver);
 		Wand.initWoods();
 		Ring.initGems();
 
@@ -419,7 +422,7 @@ public class Dungeon {
 			QuickSlot.save(bundle);
 
 			Scroll.save(bundle);
-			Potion.save(bundle);
+			PotionInfo.save(bundle);
 			Wand.save(bundle);
 			Ring.save(bundle);
 
@@ -484,9 +487,9 @@ public class Dungeon {
 		if (fullLoad) {
 			PathFinder.setMapSize(Level.WIDTH, Level.HEIGHT);
 		}
-
+		StringResolver resolver = new DefaultStringResolver();
 		Scroll.restore(bundle);
-		Potion.restore(bundle);
+		PotionInfo.restore(bundle, resolver);
 		Wand.restore(bundle);
 		Ring.restore(bundle);
 

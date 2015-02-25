@@ -18,26 +18,21 @@
 package com.watabou.pixeldungeon.items.potions;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
-import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.Splash;
 import com.watabou.pixeldungeon.items.Item;
-import com.watabou.pixeldungeon.items.ItemStatusHandler;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.windows.WndOptions;
-import com.watabou.utils.Bundle;
 
 public class Potion extends Item {
 
@@ -52,24 +47,6 @@ public class Potion extends Item {
 
 	private static final float TIME_TO_DRINK = 1f;
 
-	private static final Class<?>[] potions = { PotionOfHealing.class,
-			PotionOfExperience.class, PotionOfToxicGas.class,
-			PotionOfLiquidFlame.class, PotionOfStrength.class,
-			PotionOfParalyticGas.class, PotionOfLevitation.class,
-			PotionOfMindVision.class, PotionOfPurity.class,
-			PotionOfInvisibility.class, PotionOfMight.class,
-			PotionOfFrost.class };
-	private static String[] colors;
-	private static final Integer[] images = { ItemSpriteSheet.POTION_TURQUOISE,
-			ItemSpriteSheet.POTION_CRIMSON, ItemSpriteSheet.POTION_AZURE,
-			ItemSpriteSheet.POTION_JADE, ItemSpriteSheet.POTION_GOLDEN,
-			ItemSpriteSheet.POTION_MAGENTA, ItemSpriteSheet.POTION_CHARCOAL,
-			ItemSpriteSheet.POTION_IVORY, ItemSpriteSheet.POTION_AMBER,
-			ItemSpriteSheet.POTION_BISTRE, ItemSpriteSheet.POTION_INDIGO,
-			ItemSpriteSheet.POTION_SILVER };
-
-	private static ItemStatusHandler<Potion> handler;
-
 	private String color;
 
 	public Potion() {
@@ -82,8 +59,8 @@ public class Potion extends Item {
 	}
 
 	public void init() {
-		image = handler.image(this);
-		color = handler.label(this);
+		image = PotionInfo.getImage(this);
+		color = PotionInfo.getLabel(this);
 		stackable = true;
 		defaultAction = AC_DRINK;
 		AC_DRINK = resolver.getVar(R.string.Potion_ACDrink);
@@ -92,23 +69,6 @@ public class Potion extends Item {
 		TXT_NO = resolver.getVar(R.string.Potion_No);
 		TXT_R_U_SURE_DRINK = resolver.getVar(R.string.Potion_SureDrink);
 		TXT_R_U_SURE_THROW = resolver.getVar(R.string.Potion_SureThrow);
-		colors = resolver.getVars(R.array.Potion_Colors);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void initColors() {
-		handler = new ItemStatusHandler<Potion>(
-				(Class<? extends Potion>[]) potions, colors, images);
-	}
-
-	public static void save(Bundle bundle) {
-		handler.save(bundle);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void restore(Bundle bundle) {
-		handler = new ItemStatusHandler<Potion>(
-				(Class<? extends Potion>[]) potions, colors, images, bundle);
 	}
 
 	@Override
@@ -217,15 +177,13 @@ public class Potion extends Item {
 	}
 
 	public boolean isKnown() {
-		return handler.isKnown(this);
+		return PotionInfo.isKnown(this);
 	}
 
 	public void setKnown() {
-		if (!isKnown()) {
-			handler.know(this);
-		}
-
-		Badges.validateAllPotionsIdentified();
+		if (!PotionInfo.isKnown(this)) {
+			PotionInfo.know(this);
+		}	
 	}
 
 	@Override
@@ -258,18 +216,6 @@ public class Potion extends Item {
 	@Override
 	public boolean isUpgradable() {
 		return false;
-	}
-
-	public static HashSet<Class<? extends Potion>> getKnown() {
-		return handler.known();
-	}
-
-	public static HashSet<Class<? extends Potion>> getUnknown() {
-		return handler.unknown();
-	}
-
-	public static boolean allKnown() {
-		return handler.known().size() == potions.length;
 	}
 
 	protected void splash(int cell) {
