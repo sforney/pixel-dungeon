@@ -321,7 +321,7 @@ public abstract class Mob extends Char {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void takeDamage(int dmg, Object src) {
 
 		Terror.recover(this);
 
@@ -330,7 +330,7 @@ public abstract class Mob extends Char {
 		}
 		alerted = true;
 
-		super.damage(dmg, src);
+		super.takeDamage(dmg, src);
 	}
 
 	@Override

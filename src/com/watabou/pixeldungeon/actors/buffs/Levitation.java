@@ -21,41 +21,57 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Levitation extends FlavourBuff {
 
-	public static final float DURATION	= 20f;
-	
+	public static final float DURATION = 20f;
+
 	@Override
-	public boolean attachTo( Char target ) {
-		if (super.attachTo( target )) {
+	public boolean attachTo(Char target) {
+		if (super.attachTo(target)) {
 			target.flying = true;
-			BuffOps.detach( target, Roots.class );
+			BuffOps.detach(target, Roots.class);
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void detach() {
 		target.flying = false;
-		Dungeon.level.press( target.pos, target );
+		Dungeon.level.press(target.pos, target);
 		super.detach();
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.LEVITATION;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Levitation_Info);
 	}
-	
+
 	public String getText() {
 		return Game.getVar(R.string.PotionOfLevitation_Apply);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.add(CharSprite.State.LEVITATING);
+	}
+	
+	@Override
+	public void onDetach() {
+		target.sprite.remove(CharSprite.State.LEVITATING);
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.LEVITATING);
 	}
 }

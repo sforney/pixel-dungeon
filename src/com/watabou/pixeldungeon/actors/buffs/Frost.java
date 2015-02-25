@@ -26,6 +26,7 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.food.FrozenCarpaccio;
 import com.watabou.pixeldungeon.items.food.MysteryMeat;
 import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Frost extends FlavourBuff {
@@ -77,5 +78,20 @@ public class Frost extends FlavourBuff {
 	public static float duration( Char ch ) {
 		Resistance r = ch.getBuff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
+	}
+	
+	@Override
+	public void onAttach() {
+		target.sprite.add(CharSprite.State.FROZEN);
+	}
+	
+	@Override
+	public void onDetach() {
+		target.sprite.remove(CharSprite.State.FROZEN);
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.FROZEN);
 	}
 }

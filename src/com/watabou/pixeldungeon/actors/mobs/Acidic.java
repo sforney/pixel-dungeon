@@ -34,7 +34,7 @@ public class Acidic extends Scorpio {
 	public int defenseProc( Char enemy, int damage ) {
 		int dmg = Random.IntRange( 0, damage );
 		if (dmg > 0) {
-			enemy.damage( dmg, this );
+			enemy.takeDamage( dmg, this );
 		}
 		
 		return super.defenseProc( enemy, damage );

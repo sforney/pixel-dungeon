@@ -44,7 +44,7 @@ public class Ooze extends Buff {
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			target.damage(damage, this);
+			target.takeDamage(damage, this);
 			if (!target.isAlive() && target == Dungeon.hero) {
 				Dungeon.fail(Utils.format(
 						Game.getVar(R.string.ResultDescriptions_Ooze),

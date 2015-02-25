@@ -23,7 +23,10 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.hero.Hero;
+import com.watabou.pixeldungeon.effects.CellEmitter;
+import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
 import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -64,7 +67,7 @@ public class Poison extends Buff implements Hero.Doom {
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			target.damage((int) (left / 3) + 1, this);
+			target.takeDamage((int) (left / 3) + 1, this);
 			spend(TICK);
 
 			if ((left -= TICK) <= 0) {
@@ -89,9 +92,16 @@ public class Poison extends Buff implements Hero.Doom {
 				Game.getVar(R.string.ResultDescriptions_Poison), Dungeon.depth));
 		GLog.n(Game.getVar(R.string.Poison_Death));
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaPoison);
+	}
+
+	@Override
+	public void onAttach() {
+		CellEmitter.center(target.pos).burst(PoisonParticle.SPLASH, 5);
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaPoisoned));
 	}
 }

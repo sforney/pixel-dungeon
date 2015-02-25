@@ -442,7 +442,7 @@ public class Hero extends Char {
 		if (thorns != null) {
 			int dmg = Random.IntRange(0, damage);
 			if (dmg > 0) {
-				enemy.damage(dmg, thorns);
+				enemy.takeDamage(dmg, thorns);
 			}
 		}
 
@@ -459,9 +459,9 @@ public class Hero extends Char {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void takeDamage(int dmg, Object src) {
 		restoreHealth = false;
-		super.damage(dmg, src);
+		super.takeDamage(dmg, src);
 
 		if (subClass == HeroSubClass.BERSERKER && 0 < HP
 				&& HP <= HT * Fury.LEVEL) {

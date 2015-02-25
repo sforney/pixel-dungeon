@@ -52,4 +52,8 @@ public class Buff extends Actor {
 	public String getText() {
 		return "";
 	}
+	
+	public void onAttach() {}
+	public void onDetach() {}	
+	public void onUpdateSprite() {}
 }

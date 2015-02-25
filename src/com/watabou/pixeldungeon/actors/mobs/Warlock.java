@@ -106,7 +106,7 @@ public class Warlock extends Mob implements Callback {
 			}
 
 			int dmg = Random.Int(12, 18);
-			enemy.damage(dmg, this);
+			enemy.takeDamage(dmg, this);
 
 			if (!enemy.isAlive() && enemy == Dungeon.hero) {
 				Dungeon.fail(Utils.format(

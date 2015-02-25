@@ -23,6 +23,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
@@ -95,4 +96,8 @@ public class Shadows extends Invisibility {
 		return Game.getVar(R.string.Shadows_Info);
 	}
 	
+	@Override
+	public void onAttach() {
+		target.sprite.add(CharSprite.State.INVISIBLE);
+	}
 }

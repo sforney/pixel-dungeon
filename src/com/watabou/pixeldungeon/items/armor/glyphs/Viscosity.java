@@ -126,7 +126,7 @@ public class Viscosity extends Glyph {
 		public boolean act() {
 			if (target.isAlive()) {
 
-				target.damage(1, this);
+				target.takeDamage(1, this);
 				if (target == Dungeon.hero && !target.isAlive()) {
 					// FIXME
 					Dungeon.fail(Utils.format(

@@ -80,7 +80,7 @@ public class Yog extends Mob {
 	}
 
 	@Override
-	public void damage(int dmg, Object src) {
+	public void takeDamage(int dmg, Object src) {
 		if (fistsCount > 0) {
 
 			for (Mob mob : Dungeon.level.mobs) {
@@ -96,7 +96,7 @@ public class Yog extends Mob {
 			}
 		}
 
-		super.damage(dmg, src);
+		super.takeDamage(dmg, src);
 	}
 
 	@Override

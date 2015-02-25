@@ -35,6 +35,7 @@ import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.scenes.GameScene;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -43,118 +44,137 @@ import com.watabou.utils.Random;
 
 public class Burning extends Buff implements Hero.Doom {
 
-	private static final String TXT_BURNS_UP		= Game.getVar(R.string.Burning_Burns);
-	private static final String TXT_BURNED_TO_DEATH	= Game.getVar(R.string.Burning_Death);
-	
+	private static final String TXT_BURNS_UP = Game
+			.getVar(R.string.Burning_Burns);
+	private static final String TXT_BURNED_TO_DEATH = Game
+			.getVar(R.string.Burning_Death);
+
 	private static final float DURATION = 8f;
-	
+
 	private float left;
-	
-	private static final String LEFT	= "left";
-	
+
+	private static final String LEFT = "left";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEFT, left );
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(LEFT, left);
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
+	public void restoreFromBundle(Bundle bundle) {
 		super.restoreFromBundle(bundle);
-		left = bundle.getFloat( LEFT );
+		left = bundle.getFloat(LEFT);
 	}
-	
+
 	@Override
 	public boolean act() {
-		
+
 		if (target.isAlive()) {
-			
+
 			if (target instanceof Hero) {
-				BuffOps.prolong( target, Light.class, TICK * 1.01f );
+				BuffOps.prolong(target, Light.class, TICK * 1.01f);
 			}
 
-			target.damage( Random.Int( 1, 5 ), this );
-			
+			target.takeDamage(Random.Int(1, 5), this);
+
 			if (target instanceof Hero) {
-				
-				Item item = ((Hero)target).belongings.randomUnequipped();
+
+				Item item = ((Hero) target).belongings.randomUnequipped();
 				if (item instanceof Scroll) {
-					
-					item = item.detach( ((Hero)target).belongings.backpack );
-					GLog.w( TXT_BURNS_UP, item.toString() );
-					
-					Heap.burnFX( target.pos );
-					
+
+					item = item.detach(((Hero) target).belongings.backpack);
+					GLog.w(TXT_BURNS_UP, item.toString());
+
+					Heap.burnFX(target.pos);
+
 				} else if (item instanceof MysteryMeat) {
-					
-					item = item.detach( ((Hero)target).belongings.backpack );
-					ChargrilledMeat steak = new ChargrilledMeat(); 
-					if (!steak.collect( ((Hero)target).belongings.backpack )) {
-						Dungeon.level.drop( steak, target.pos ).sprite.drop();
+
+					item = item.detach(((Hero) target).belongings.backpack);
+					ChargrilledMeat steak = new ChargrilledMeat();
+					if (!steak.collect(((Hero) target).belongings.backpack)) {
+						Dungeon.level.drop(steak, target.pos).sprite.drop();
 					}
-					GLog.w( TXT_BURNS_UP, item.toString() );
-					
-					Heap.burnFX( target.pos );
-					
+					GLog.w(TXT_BURNS_UP, item.toString());
+
+					Heap.burnFX(target.pos);
+
 				}
-				
-			} else if (target instanceof Thief && ((Thief)target).item instanceof Scroll) {
-				
-				((Thief)target).item = null;
-				target.sprite.emitter().burst( ElmoParticle.FACTORY, 6 );
+
+			} else if (target instanceof Thief
+					&& ((Thief) target).item instanceof Scroll) {
+
+				((Thief) target).item = null;
+				target.sprite.emitter().burst(ElmoParticle.FACTORY, 6);
 			}
 
 		} else {
 			detach();
 		}
-		
+
 		if (Level.flamable[target.pos]) {
-			GameScene.add( Blob.seed( target.pos, 4, Fire.class ) );
+			GameScene.add(Blob.seed(target.pos, 4, Fire.class));
 		}
-		
-		spend( TICK );
+
+		spend(TICK);
 		left -= TICK;
-		
-		if (left <= 0 ||
-			Random.Float() > (2 + (float)target.HP / target.HT) / 3 ||
-			(Level.water[target.pos] && !target.flying)) {
-			
+
+		if (left <= 0
+				|| Random.Float() > (2 + (float) target.HP / target.HT) / 3
+				|| (Level.water[target.pos] && !target.flying)) {
+
 			detach();
 		}
 
 		return true;
 	}
-	
-	public void reignite( Char ch ) {
-		left = duration( ch );
+
+	public void reignite(Char ch) {
+		left = duration(ch);
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.FIRE;
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaBurning);
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Burning_Info);
 	}
 
-	public static float duration( Char ch ) {
-		Resistance r = ch.getBuff( Resistance.class );
+	public static float duration(Char ch) {
+		Resistance r = ch.getBuff(Resistance.class);
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
 
 	@Override
 	public void onDeath() {
-		
+
 		Badges.validateDeathFromFire();
-		
-		Dungeon.fail( Utils.format( Game.getVar(R.string.ResultDescriptions_Burning), Dungeon.depth ) );
-		GLog.n( TXT_BURNED_TO_DEATH );
+
+		Dungeon.fail(Utils.format(
+				Game.getVar(R.string.ResultDescriptions_Burning), Dungeon.depth));
+		GLog.n(TXT_BURNED_TO_DEATH);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.add(CharSprite.State.BURNING);
+	}
+	
+	@Override
+	public void onDetach() {
+		target.sprite.remove(CharSprite.State.BURNING);
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.BURNING);
 	}
 }

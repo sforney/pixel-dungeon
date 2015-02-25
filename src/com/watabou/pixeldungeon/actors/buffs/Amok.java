@@ -19,17 +19,24 @@ package com.watabou.pixeldungeon.actors.buffs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Amok extends FlavourBuff {
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.AMOK;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Amok_Info);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaAmok));
 	}
 }

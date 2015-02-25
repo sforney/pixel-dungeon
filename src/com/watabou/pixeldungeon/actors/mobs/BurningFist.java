@@ -78,7 +78,7 @@ public class BurningFist extends Mob {
 			if (hit(this, enemy, true)) {
 
 				int dmg = damageRoll();
-				enemy.damage(dmg, this);
+				enemy.takeDamage(dmg, this);
 
 				enemy.sprite.bloodBurstA(sprite.center(), dmg);
 				enemy.sprite.flash();

@@ -19,24 +19,31 @@ package com.watabou.pixeldungeon.actors.buffs;
 
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Cripple extends FlavourBuff {
 
-	public static final float DURATION	= 10f;
-	
+	public static final float DURATION = 10f;
+
 	@Override
 	public int icon() {
 		return BuffIndicator.CRIPPLE;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Cripple_Info);
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaCripple);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaCrippled));
 	}
 }

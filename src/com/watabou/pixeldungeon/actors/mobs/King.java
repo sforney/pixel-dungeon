@@ -282,8 +282,8 @@ public class King extends Mob {
 		}
 
 		@Override
-		public void damage(int dmg, Object src) {
-			super.damage(dmg, src);
+		public void takeDamage(int dmg, Object src) {
+			super.takeDamage(dmg, src);
 			if (src instanceof ToxicGas) {
 				((ToxicGas) src).clear(pos);
 			}

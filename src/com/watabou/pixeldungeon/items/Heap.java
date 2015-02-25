@@ -119,7 +119,7 @@ public class Heap implements Bundlable {
 				if (item.cursed) {
 					if (Wraith.spawnAt( pos ) == null) {
 						hero.sprite.emitter().burst( ShadowParticle.CURSE, 6 );
-						hero.damage( hero.HP / 2, this );
+						hero.takeDamage( hero.HP / 2, this );
 					}
 					Sample.INSTANCE.play( Assets.SND_CURSED );
 					break;

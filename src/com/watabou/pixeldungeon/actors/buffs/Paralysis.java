@@ -21,53 +21,71 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Paralysis extends FlavourBuff {
 
-	private static final float DURATION	= 10f;
-	
+	private static final float DURATION = 10f;
+
 	@Override
-	public boolean attachTo( Char target ) {
-		if (super.attachTo( target )) {
+	public boolean attachTo(Char target) {
+		if (super.attachTo(target)) {
 			target.paralysed = true;
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void detach() {
 		super.detach();
-		unfreeze( target );
+		unfreeze(target);
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.PARALYSIS;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Paralysis_Info);
 	}
-	
-	public static float duration( Char ch ) {
-		Resistance r = ch.getBuff( Resistance.class );
+
+	public static float duration(Char ch) {
+		Resistance r = ch.getBuff(Resistance.class);
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
-	
-	public static void unfreeze( Char ch ) {
-		if (ch.getBuff( Paralysis.class ) == null &&
-			ch.getBuff( Frost.class ) == null) {
-			
+
+	public static void unfreeze(Char ch) {
+		if (ch.getBuff(Paralysis.class) == null
+				&& ch.getBuff(Frost.class) == null) {
+
 			ch.paralysed = false;
 		}
 	}
 	
 	@Override
+	public void onDetach() {
+		target.sprite.remove(CharSprite.State.PARALYSED);
+	}
+
+	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaParalysis);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.add(CharSprite.State.PARALYSED);
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaParalysed));
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.PARALYSED);
 	}
 }

@@ -17,45 +17,53 @@
  */
 package com.watabou.pixeldungeon.actors.buffs;
 
+import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.utils.Bundle;
 
 public class Terror extends FlavourBuff {
 
 	public static final float DURATION = 10f;
-	
+
 	public int object = 0;
-	
-	private static final String OBJECT	= "object";
-	
+
+	private static final String OBJECT = "object";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( OBJECT, object );
-		
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(OBJECT, object);
+
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		object = bundle.getInt( OBJECT );
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		object = bundle.getInt(OBJECT);
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.TERROR;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Terror";
 	}
-	
-	public static void recover( Char target ) {
-		Terror terror = target.getBuff( Terror.class );
+
+	public static void recover(Char target) {
+		Terror terror = target.getBuff(Terror.class);
 		if (terror != null && terror.cooldown() < DURATION) {
-			target.remove( terror );
+			target.remove(terror);
 		}
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaFrightened));
 	}
 }

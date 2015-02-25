@@ -70,7 +70,7 @@ public class Hunger extends Buff implements Hero.Doom {
 						&& (target.HP > 1 || !target.paralysed)) {
 
 					GLog.n(TXT_STARVING);
-					hero.damage(1, this);
+					hero.takeDamage(1, this);
 
 					hero.interrupt();
 				}

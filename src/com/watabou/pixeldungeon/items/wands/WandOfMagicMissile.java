@@ -73,7 +73,7 @@ public class WandOfMagicMissile extends Wand {
 
 			int level = level();
 
-			ch.damage(Random.Int(1, 6 + level * 2), this);
+			ch.takeDamage(Random.Int(1, 6 + level * 2), this);
 			ch.sprite.burst(0xFF99CCFF, level / 2 + 2);
 
 			if (ch == curUser && !ch.isAlive()) {

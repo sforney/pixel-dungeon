@@ -99,7 +99,7 @@ public class Shaman extends Mob implements Callback {
 				if (Level.water[enemy.pos] && !enemy.flying) {
 					dmg *= 1.5f;
 				}
-				enemy.damage(dmg, LightningTrap.LIGHTNING);
+				enemy.takeDamage(dmg, LightningTrap.LIGHTNING);
 
 				enemy.sprite.centerEmitter().burst(SparkParticle.FACTORY, 3);
 				enemy.sprite.flash();

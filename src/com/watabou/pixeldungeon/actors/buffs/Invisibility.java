@@ -21,42 +21,62 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Invisibility extends FlavourBuff {
 
-	public static final float DURATION	= 15f;
-	
+	public static final float DURATION = 15f;
+
 	@Override
-	public boolean attachTo( Char target ) {
-		if (super.attachTo( target )) {
+	public boolean attachTo(Char target) {
+		if (super.attachTo(target)) {
 			target.invisible++;
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void detach() {
 		target.invisible--;
 		super.detach();
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.INVISIBLE;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Invisibility_Info);
 	}
-	
+
 	public static void dispel() {
-		Invisibility buff = Dungeon.hero.getBuff( Invisibility.class );
+		Invisibility buff = Dungeon.hero.getBuff(Invisibility.class);
 		if (buff != null && Dungeon.hero.visibleEnemies() > 0) {
 			buff.detach();
 		}
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.POSITIVE,
+				resolver.getVar(R.string.Char_StaInvisible));
+		target.sprite.add(CharSprite.State.INVISIBLE);
+	}
+
+	@Override
+	public void onDetach() {
+		if (target.invisible < 1) {
+			target.sprite.remove(CharSprite.State.INVISIBLE);
+		}
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.INVISIBLE);
 	}
 }

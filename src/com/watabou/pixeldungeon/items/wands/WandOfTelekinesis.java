@@ -73,7 +73,7 @@ public class WandOfTelekinesis extends Wand {
 
 				if (i == Ballistica.distance - 1) {
 
-					ch.damage(maxDistance - 1 - i, this);
+					ch.takeDamage(maxDistance - 1 - i, this);
 
 				} else {
 
@@ -94,7 +94,7 @@ public class WandOfTelekinesis extends Wand {
 
 					} else {
 
-						ch.damage(maxDistance - 1 - i, this);
+						ch.takeDamage(maxDistance - 1 - i, this);
 
 					}
 				}

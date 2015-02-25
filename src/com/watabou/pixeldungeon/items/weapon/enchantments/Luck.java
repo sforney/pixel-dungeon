@@ -40,7 +40,7 @@ public class Luck extends Weapon.Enchantment {
 		}
 		
 		if (dmg > damage) {
-			defender.damage( dmg - damage, this );
+			defender.takeDamage( dmg - damage, this );
 			return true;
 		} else {
 			return false;

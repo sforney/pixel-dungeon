@@ -46,7 +46,7 @@ public class Fire extends Weapon.Enchantment {
 			if (Random.Int( 2 ) == 0) {
 				BuffOps.affect( defender, Burning.class ).reignite( defender );
 			}
-			defender.damage( Random.Int( 1, level + 2 ), this );
+			defender.takeDamage( Random.Int( 1, level + 2 ), this );
 			
 			defender.sprite.emitter().burst( FlameParticle.FACTORY, level + 1 );
 			

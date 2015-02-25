@@ -21,29 +21,36 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Vertigo extends FlavourBuff {
-	
-	public static final float DURATION	= 10f;
-	
+
+	public static final float DURATION = 10f;
+
 	@Override
 	public int icon() {
 		return BuffIndicator.VERTIGO;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Vertigo_Info);
 	}
-	
-	public static float duration( Char ch ) {
-		Resistance r = ch.getBuff( Resistance.class );
+
+	public static float duration(Char ch) {
+		Resistance r = ch.getBuff(Resistance.class);
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaVertigo);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaDizzy));
 	}
 }

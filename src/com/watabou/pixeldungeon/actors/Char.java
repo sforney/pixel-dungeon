@@ -24,32 +24,18 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Amok;
-import com.watabou.pixeldungeon.actors.buffs.Bleeding;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.actors.buffs.BuffOps;
-import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Frost;
-import com.watabou.pixeldungeon.actors.buffs.Invisibility;
-import com.watabou.pixeldungeon.actors.buffs.Levitation;
-import com.watabou.pixeldungeon.actors.buffs.Light;
-import com.watabou.pixeldungeon.actors.buffs.MindVision;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
-import com.watabou.pixeldungeon.actors.buffs.Poison;
-import com.watabou.pixeldungeon.actors.buffs.Roots;
-import com.watabou.pixeldungeon.actors.buffs.Shadows;
-import com.watabou.pixeldungeon.actors.buffs.Sleep;
 import com.watabou.pixeldungeon.actors.buffs.Slow;
 import com.watabou.pixeldungeon.actors.buffs.Speed;
-import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.actors.mobs.Bestiary;
-import com.watabou.pixeldungeon.effects.CellEmitter;
-import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
@@ -169,7 +155,7 @@ public abstract class Char extends Actor {
 
 			effectiveDamage = attackProc(enemy, effectiveDamage);
 			effectiveDamage = enemy.defenseProc(this, effectiveDamage);
-			enemy.damage(effectiveDamage, this);
+			enemy.takeDamage(effectiveDamage, this);
 
 			if (visibleFight) {
 				Sample.INSTANCE.play(Assets.SND_HIT, 1, 1,
@@ -283,7 +269,7 @@ public abstract class Char extends Actor {
 		return getBuff(Cripple.class) == null ? baseSpeed : baseSpeed * 0.5f;
 	}
 
-	public void damage(int dmg, Object src) {
+	public void takeDamage(int dmg, Object src) {
 
 		if (HP <= 0) {
 			return;
@@ -382,101 +368,18 @@ public abstract class Char extends Actor {
 	}
 
 	public void add(Buff buff) {
-
 		buffs.add(buff);
 		LevelState.add(buff);
 
 		if (sprite != null) {
-			if (buff instanceof Poison) {
-
-				CellEmitter.center(pos).burst(PoisonParticle.SPLASH, 5);
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaPoisoned));
-
-			} else if (buff instanceof Amok) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaAmok));
-
-			} else if (buff instanceof Slow) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaSlowed));
-
-			} else if (buff instanceof MindVision) {
-
-				sprite.showStatus(CharSprite.POSITIVE,
-						resolver.getVar(R.string.Char_StaMind));
-				sprite.showStatus(CharSprite.POSITIVE,
-						resolver.getVar(R.string.Char_StaVision));
-
-			} else if (buff instanceof Paralysis) {
-
-				sprite.add(CharSprite.State.PARALYSED);
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaParalysed));
-
-			} else if (buff instanceof Terror) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaFrightened));
-
-			} else if (buff instanceof Roots) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaRooted));
-
-			} else if (buff instanceof Cripple) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaCrippled));
-
-			} else if (buff instanceof Bleeding) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaBleeding));
-
-			} else if (buff instanceof Vertigo) {
-
-				sprite.showStatus(CharSprite.NEGATIVE,
-						resolver.getVar(R.string.Char_StaDizzy));
-
-			} else if (buff instanceof Sleep) {
-				sprite.idle();
-			}
-
-			else if (buff instanceof Burning) {
-				sprite.add(CharSprite.State.BURNING);
-			} else if (buff instanceof Levitation) {
-				sprite.add(CharSprite.State.LEVITATING);
-			} else if (buff instanceof Frost) {
-				sprite.add(CharSprite.State.FROZEN);
-			} else if (buff instanceof Invisibility) {
-				if (!(buff instanceof Shadows)) {
-					sprite.showStatus(CharSprite.POSITIVE,
-							resolver.getVar(R.string.Char_StaInvisible));
-				}
-				sprite.add(CharSprite.State.INVISIBLE);
-			}
+			buff.onAttach();
 		}
 	}
 
 	public void remove(Buff buff) {
-
 		buffs.remove(buff);
 		buff.remove();
-
-		if (buff instanceof Burning) {
-			sprite.remove(CharSprite.State.BURNING);
-		} else if (buff instanceof Levitation) {
-			sprite.remove(CharSprite.State.LEVITATING);
-		} else if (buff instanceof Invisibility && invisible <= 0) {
-			sprite.remove(CharSprite.State.INVISIBLE);
-		} else if (buff instanceof Paralysis) {
-			sprite.remove(CharSprite.State.PARALYSED);
-		} else if (buff instanceof Frost) {
-			sprite.remove(CharSprite.State.FROZEN);
-		}
+		buff.onDetach();
 	}
 
 	public void remove(Class<? extends Buff> buffClass) {
@@ -494,19 +397,7 @@ public abstract class Char extends Actor {
 
 	public void updateSpriteState() {
 		for (Buff buff : buffs) {
-			if (buff instanceof Burning) {
-				sprite.add(CharSprite.State.BURNING);
-			} else if (buff instanceof Levitation) {
-				sprite.add(CharSprite.State.LEVITATING);
-			} else if (buff instanceof Invisibility) {
-				sprite.add(CharSprite.State.INVISIBLE);
-			} else if (buff instanceof Paralysis) {
-				sprite.add(CharSprite.State.PARALYSED);
-			} else if (buff instanceof Frost) {
-				sprite.add(CharSprite.State.FROZEN);
-			} else if (buff instanceof Light) {
-				sprite.add(CharSprite.State.ILLUMINATED);
-			}
+			buff.onUpdateSprite();
 		}
 	}
 

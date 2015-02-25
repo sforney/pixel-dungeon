@@ -20,38 +20,45 @@ package com.watabou.pixeldungeon.actors.buffs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Roots extends FlavourBuff {
-	
+
 	@Override
-	public boolean attachTo( Char target ) {
-		if (!target.flying && super.attachTo( target )) {
+	public boolean attachTo(Char target) {
+		if (!target.flying && super.attachTo(target)) {
 			target.rooted = true;
 			return true;
 		} else {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public void detach() {
 		target.rooted = false;
 		super.detach();
 	}
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.ROOTS;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Roots_Info);
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaRoots);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaRooted));
 	}
 }

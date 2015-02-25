@@ -21,6 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.rings.RingOfElements.Resistance;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Slow extends FlavourBuff {
@@ -40,5 +41,11 @@ public class Slow extends FlavourBuff {
 	public static float duration( Char ch ) {
 		Resistance r = ch.getBuff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
+	}
+	
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaSlowed));
 	}
 }

@@ -74,7 +74,7 @@ public class Bomb extends Item {
 						int dmg = Random.Int(1 + Dungeon.depth,
 								10 + Dungeon.depth * 2) - Random.Int(ch.dr());
 						if (dmg > 0) {
-							ch.damage(dmg, this);
+							ch.takeDamage(dmg, this);
 							if (ch.isAlive()) {
 								BuffOps.prolong(ch, Paralysis.class, 2);
 							}

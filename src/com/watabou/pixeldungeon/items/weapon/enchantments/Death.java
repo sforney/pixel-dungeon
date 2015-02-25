@@ -43,7 +43,7 @@ public class Death extends Weapon.Enchantment {
 		
 		if (Random.Int( level + 100 ) >= 92) {
 			
-			defender.damage( defender.HP, this );
+			defender.takeDamage( defender.HP, this );
 			defender.sprite.emitter().burst( ShadowParticle.UP, 5 );
 			
 			if (!defender.isAlive() && attacker instanceof Hero) {

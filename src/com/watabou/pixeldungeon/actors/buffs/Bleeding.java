@@ -21,6 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.effects.Splash;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.Utils;
@@ -29,71 +30,80 @@ import com.watabou.utils.PointF;
 import com.watabou.utils.Random;
 
 public class Bleeding extends Buff {
-	
+
 	protected int level;
-	
-	private static final String LEVEL	= "level";
-	
+
+	private static final String LEVEL = "level";
+
 	@Override
-	public void storeInBundle( Bundle bundle ) {
-		super.storeInBundle( bundle );
-		bundle.put( LEVEL, level );
-		
+	public void storeInBundle(Bundle bundle) {
+		super.storeInBundle(bundle);
+		bundle.put(LEVEL, level);
+
 	}
-	
+
 	@Override
-	public void restoreFromBundle( Bundle bundle ) {
-		super.restoreFromBundle( bundle );
-		level = bundle.getInt( LEVEL );
+	public void restoreFromBundle(Bundle bundle) {
+		super.restoreFromBundle(bundle);
+		level = bundle.getInt(LEVEL);
 	}
-	
-	public void set( int level ) {
+
+	public void set(int level) {
 		this.level = level;
 	};
-	
+
 	@Override
 	public int icon() {
 		return BuffIndicator.BLEEDING;
 	}
-	
+
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Bleeding_Info);
 	}
-	
+
 	@Override
 	public boolean act() {
 		if (target.isAlive()) {
-			
-			if ((level = Random.Int( level / 2, level )) > 0) {
-				
-				target.damage( level, this );
+
+			if ((level = Random.Int(level / 2, level)) > 0) {
+
+				target.takeDamage(level, this);
 				if (target.sprite.visible) {
-					Splash.at( target.sprite.center(), -PointF.PI / 2, PointF.PI / 6, 
-							target.sprite.blood(), Math.min( 10 * level / target.HT, 10 ) );
+					Splash.at(target.sprite.center(), -PointF.PI / 2,
+							PointF.PI / 6, target.sprite.blood(),
+							Math.min(10 * level / target.HT, 10));
 				}
-				
+
 				if (target == Dungeon.hero && !target.isAlive()) {
-					Dungeon.fail( Utils.format( Game.getVar(R.string.ResultDescriptions_Bleeding), Dungeon.depth ) );
+					Dungeon.fail(Utils.format(
+							Game.getVar(R.string.ResultDescriptions_Bleeding),
+							Dungeon.depth));
 					GLog.n(Game.getVar(R.string.Bleeding_Death));
 				}
-				
-				spend( TICK );
+
+				spend(TICK);
 			} else {
 				detach();
 			}
-			
+
 		} else {
-			
+
 			detach();
-			
+
 		}
-		
+
 		return true;
 	}
-	
+
 	@Override
 	public String getText() {
 		return Game.getVar(R.string.Hero_StaBleeding);
+	}
+
+	@Override
+	public void onAttach() {
+		target.sprite.showStatus(CharSprite.NEGATIVE,
+				resolver.getVar(R.string.Char_StaBleeding));
 	}
 }

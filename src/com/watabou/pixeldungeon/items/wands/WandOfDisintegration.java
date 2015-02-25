@@ -89,7 +89,7 @@ public class WandOfDisintegration extends Wand {
 		int dmgMin = lvl;
 		int dmgMax = 8 + lvl * lvl / 3;
 		for (Char ch : chars) {
-			ch.damage(Random.NormalIntRange(dmgMin, dmgMax), this);
+			ch.takeDamage(Random.NormalIntRange(dmgMin, dmgMax), this);
 			ch.sprite.centerEmitter().burst(PurpleParticle.BURST,
 					Random.IntRange(1, 2));
 			ch.sprite.flash();

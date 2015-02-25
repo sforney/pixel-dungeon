@@ -21,6 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.ui.BuffIndicator;
 
 public class Light extends FlavourBuff {
@@ -56,5 +57,10 @@ public class Light extends FlavourBuff {
 	@Override
 	public String toString() {
 		return Game.getVar(R.string.Light_Info);
+	}
+	
+	@Override
+	public void onUpdateSprite() {
+		target.sprite.add(CharSprite.State.ILLUMINATED);
 	}
 }
