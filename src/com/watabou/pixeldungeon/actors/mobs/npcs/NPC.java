@@ -21,11 +21,20 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.items.Heap;
 import com.watabou.pixeldungeon.levels.Level;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public abstract class NPC extends Mob {
+	public NPC() {
+		init();
+	}
 	
-	{
+	public NPC(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
 		HP = HT = 1;
 		EXP = 0;
 	
