@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.weapon.enchantments;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.sprites.ItemSprite.Glowing;
@@ -41,7 +41,7 @@ public class Poison extends Weapon.Enchantment {
 		
 		if (Random.Int( level + 3 ) >= 2) {
 			
-			Buff.affect( defender, com.watabou.pixeldungeon.actors.buffs.Poison.class ).
+			BuffOps.affect( defender, com.watabou.pixeldungeon.actors.buffs.Poison.class ).
 				set( com.watabou.pixeldungeon.actors.buffs.Poison.durationFactor( defender ) * (level + 1) );
 			
 			return true;

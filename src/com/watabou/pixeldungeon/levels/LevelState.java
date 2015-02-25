@@ -173,7 +173,7 @@ public class LevelState {
 		if (actor instanceof Char) {
 			Char ch = (Char)actor;
 			chars[ch.pos] = ch;
-			for (Buff buff : ch.buffs()) {
+			for (Buff buff : ch.getBuffs()) {
 				actors.add( buff );
 				buff.onAdd();
 			}

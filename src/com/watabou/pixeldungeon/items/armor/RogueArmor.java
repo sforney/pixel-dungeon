@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
@@ -94,7 +94,7 @@ public class RogueArmor extends ClassArmor {
 
 				for (Mob mob : Dungeon.level.mobs) {
 					if (Level.fieldOfView[mob.pos]) {
-						Buff.prolong(mob, Blindness.class, 2);
+						BuffOps.prolong(mob, Blindness.class, 2);
 						mob.state = mob.WANDERING;
 						mob.sprite.emitter().burst(Speck.factory(Speck.LIGHT),
 								4);

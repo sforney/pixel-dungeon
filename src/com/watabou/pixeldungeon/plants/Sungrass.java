@@ -21,7 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Health;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.ShaftParticle;
@@ -37,7 +37,7 @@ public class Sungrass extends Plant {
 		super.activate(ch);
 
 		if (ch != null) {
-			Buff.affect(ch, Health.class);
+			BuffOps.affect(ch, Health.class);
 		}
 
 		if (Dungeon.visible[pos]) {

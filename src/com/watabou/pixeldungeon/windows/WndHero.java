@@ -180,7 +180,7 @@ public class WndHero extends WndTabbed {
 		private float pos;
 		
 		public BuffsTab() {
-			for (Buff buff : Dungeon.hero.buffs()) {
+			for (Buff buff : Dungeon.hero.getBuffs()) {
 				buffSlot( buff );
 			}
 		}

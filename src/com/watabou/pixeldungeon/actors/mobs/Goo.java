@@ -26,7 +26,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Ooze;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.items.LloydsBeacon;
@@ -104,7 +104,7 @@ public class Goo extends Mob implements Bundlable {
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(3) == 0) {
-			Buff.affect(enemy, Ooze.class);
+			BuffOps.affect(enemy, Ooze.class);
 			enemy.sprite.burst(0x000000, 5);
 		}
 

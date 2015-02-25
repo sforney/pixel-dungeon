@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
 import com.watabou.pixeldungeon.levels.Level;
@@ -46,12 +46,12 @@ public class ScrollOfPsionicBlast extends Scroll {
 		
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.prolong( mob, Blindness.class, Random.Int( 3, 6 ) );
+				BuffOps.prolong( mob, Blindness.class, Random.Int( 3, 6 ) );
 				mob.damage( Random.IntRange( 1, mob.HT * 2 / 3 ), this );
 			}
 		}
 		
-		Buff.prolong( curUser, Blindness.class, Random.Int( 3, 6 ) );
+		BuffOps.prolong( curUser, Blindness.class, Random.Int( 3, 6 ) );
 		Dungeon.observe();
 		
 		setKnown();

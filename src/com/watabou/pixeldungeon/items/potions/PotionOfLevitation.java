@@ -18,7 +18,7 @@
 package com.watabou.pixeldungeon.items.potions;
 
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Levitation;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.StringResolver;
@@ -41,7 +41,7 @@ public class PotionOfLevitation extends Potion {
 	@Override
 	protected void apply( Hero hero ) {
 		setKnown();
-		Buff.affect( hero, Levitation.class, Levitation.DURATION );
+		BuffOps.affect( hero, Levitation.class, Levitation.DURATION );
 	}
 	
 	@Override

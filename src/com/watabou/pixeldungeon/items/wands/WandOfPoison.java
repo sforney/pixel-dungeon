@@ -22,7 +22,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.levels.LevelState;
@@ -38,7 +38,7 @@ public class WandOfPoison extends Wand {
 	protected void onZap( int cell ) {
 		Char ch = LevelState.findChar( cell );
 		if (ch != null) {
-			Buff.affect( ch, Poison.class ).set( Poison.durationFactor( ch ) * (5 + level()) );
+			BuffOps.affect( ch, Poison.class ).set( Poison.durationFactor( ch ) * (5 + level()) );
 		} else {
 			GLog.i(Game.getVar(R.string.WandOfPoison_Info1));
 		}

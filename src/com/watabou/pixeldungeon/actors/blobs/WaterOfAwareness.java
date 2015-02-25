@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Awareness;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.Identification;
@@ -66,7 +66,7 @@ public class WaterOfAwareness extends WellWater {
 			}
 		}
 
-		Buff.affect(hero, Awareness.class, Awareness.DURATION);
+		BuffOps.affect(hero, Awareness.class, Awareness.DURATION);
 		Dungeon.observe();
 
 		Dungeon.hero.interrupt();

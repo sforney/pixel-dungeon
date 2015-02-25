@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.armor.glyphs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.items.armor.Armor;
@@ -46,12 +46,12 @@ public class Affection extends Glyph {
 			
 			int duration = Random.IntRange( 3, 7 );
 			
-			Buff.affect( attacker, Charm.class, Charm.durationFactor( attacker ) * duration ).object = defender.id();
+			BuffOps.affect( attacker, Charm.class, Charm.durationFactor( attacker ) * duration ).object = defender.id();
 			attacker.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
 			
 			duration *= Random.Float( 0.5f, 1 );
 			
-			Buff.affect( defender, Charm.class, Charm.durationFactor( defender ) * duration ).object = attacker.id();
+			BuffOps.affect( defender, Charm.class, Charm.durationFactor( defender ) * duration ).object = attacker.id();
 			defender.sprite.centerEmitter().start( Speck.factory( Speck.HEART ), 0.2f, 5 );
 		}
 		

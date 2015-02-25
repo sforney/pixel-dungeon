@@ -70,7 +70,7 @@ public class Burning extends Buff implements Hero.Doom {
 		if (target.isAlive()) {
 			
 			if (target instanceof Hero) {
-				prolong( target, Light.class, TICK * 1.01f );
+				BuffOps.prolong( target, Light.class, TICK * 1.01f );
 			}
 
 			target.damage( Random.Int( 1, 5 ), this );
@@ -145,7 +145,7 @@ public class Burning extends Buff implements Hero.Doom {
 	}
 
 	public static float duration( Char ch ) {
-		Resistance r = ch.buff( Resistance.class );
+		Resistance r = ch.getBuff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
 

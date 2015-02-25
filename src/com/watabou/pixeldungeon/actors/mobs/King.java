@@ -29,7 +29,7 @@ import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.effects.Flare;
@@ -275,7 +275,7 @@ public class King extends Mob {
 		@Override
 		public int attackProc(Char enemy, int damage) {
 			if (Random.Int(MAX_ARMY_SIZE) == 0) {
-				Buff.prolong(enemy, Paralysis.class, 1);
+				BuffOps.prolong(enemy, Paralysis.class, 1);
 			}
 
 			return damage;

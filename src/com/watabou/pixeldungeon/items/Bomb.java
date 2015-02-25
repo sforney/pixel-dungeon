@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.BlastParticle;
@@ -76,7 +76,7 @@ public class Bomb extends Item {
 						if (dmg > 0) {
 							ch.damage(dmg, this);
 							if (ch.isAlive()) {
-								Buff.prolong(ch, Paralysis.class, 2);
+								BuffOps.prolong(ch, Paralysis.class, 2);
 							}
 						}
 					}

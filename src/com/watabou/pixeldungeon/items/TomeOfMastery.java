@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
@@ -64,7 +64,7 @@ public class TomeOfMastery extends Item {
 	public void execute( Hero hero, String action ) {
 		if (action.equals( AC_READ )) {
 			
-			if (hero.buff( Blindness.class ) != null) {
+			if (hero.getBuff( Blindness.class ) != null) {
 				GLog.w( TXT_BLINDED );
 				return;
 			}
@@ -138,7 +138,7 @@ public class TomeOfMastery extends Item {
 		GLog.w(Game.getVar(R.string.TomeOfMastery_Choose), Utils.capitalize( way.title() ) );
 		
 		if (way == HeroSubClass.BERSERKER && curUser.HP <= curUser.HT * Fury.LEVEL) {
-			Buff.affect( curUser, Fury.class );
+			BuffOps.affect( curUser, Fury.class );
 		}
 	}
 }

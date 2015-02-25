@@ -18,7 +18,7 @@
 package com.watabou.pixeldungeon.items.food;
 
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
@@ -57,19 +57,19 @@ public class MysteryMeat extends Food {
 			switch (Random.Int( 5 )) {
 			case 0:
 				GLog.w(resolver.getVar(R.string.MysteryMeat_Info1));
-				Buff.affect( hero, Burning.class ).reignite( hero );
+				BuffOps.affect( hero, Burning.class ).reignite( hero );
 				break;
 			case 1:
 				GLog.w(resolver.getVar(R.string.MysteryMeat_Info2));
-				Buff.prolong( hero, Roots.class, Paralysis.duration( hero ) );
+				BuffOps.prolong( hero, Roots.class, Paralysis.duration( hero ) );
 				break;
 			case 2:
 				GLog.w(resolver.getVar(R.string.MysteryMeat_Info3));
-				Buff.affect( hero, Poison.class ).set( Poison.durationFactor( hero ) * hero.HT / 5 );
+				BuffOps.affect( hero, Poison.class ).set( Poison.durationFactor( hero ) * hero.HT / 5 );
 				break;
 			case 3:
 				GLog.w(resolver.getVar(R.string.MysteryMeat_Info4));
-				Buff.prolong( hero, Slow.class, Slow.duration( hero ) );
+				BuffOps.prolong( hero, Slow.class, Slow.duration( hero ) );
 				break;
 			}
 		}

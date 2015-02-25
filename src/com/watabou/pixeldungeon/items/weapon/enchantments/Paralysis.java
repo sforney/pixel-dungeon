@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.weapon.enchantments;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.items.weapon.Weapon;
 import com.watabou.pixeldungeon.sprites.ItemSprite;
 import com.watabou.pixeldungeon.sprites.ItemSprite.Glowing;
@@ -41,7 +41,7 @@ public class Paralysis extends Weapon.Enchantment {
 		
 		if (Random.Int( level + 8 ) >= 7) {
 			
-			Buff.prolong( defender, com.watabou.pixeldungeon.actors.buffs.Paralysis.class, 
+			BuffOps.prolong( defender, com.watabou.pixeldungeon.actors.buffs.Paralysis.class, 
 				Random.Float( 1, 1.5f + level ) );
 			
 			return true;

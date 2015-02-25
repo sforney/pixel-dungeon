@@ -24,7 +24,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.buffs.Sleep;
@@ -68,7 +68,7 @@ public class Succubus extends Mob {
 	public int attackProc(Char enemy, int damage) {
 
 		if (Random.Int(3) == 0) {
-			Buff.affect(enemy, Charm.class, Charm.durationFactor(enemy)
+			BuffOps.affect(enemy, Charm.class, Charm.durationFactor(enemy)
 					* Random.IntRange(3, 7)).object = id();
 			enemy.sprite.centerEmitter().start(Speck.factory(Speck.HEART),
 					0.2f, 5);

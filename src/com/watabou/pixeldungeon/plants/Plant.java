@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.plants;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.CellEmitter;
@@ -44,7 +44,7 @@ public abstract class Plant extends Char implements Bundlable {
 	public void activate( Char ch ) {
 		
 		if (ch instanceof Hero && ((Hero)ch).subClass == HeroSubClass.WARDEN) {
-			Buff.affect( ch, Barkskin.class ).level( ch.HT / 3 );
+			BuffOps.affect( ch, Barkskin.class ).level( ch.HT / 3 );
 		}
 		
 		wither();

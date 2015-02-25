@@ -22,7 +22,7 @@ import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.GLog;
@@ -48,7 +48,7 @@ public class PotionOfInvisibility extends Potion {
 	@Override
 	protected void apply(Hero hero) {
 		setKnown();
-		Buff.affect(hero, Invisibility.class, Invisibility.DURATION);
+		BuffOps.affect(hero, Invisibility.class, Invisibility.DURATION);
 		GLog.i(resolver.getVar(R.string.PotionOfInvisibility_Apply));
 		Sample.INSTANCE.play(Assets.SND_MELD);
 	}

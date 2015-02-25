@@ -77,7 +77,7 @@ public class Hunger extends Buff implements Hero.Doom {
 			} else {
 
 				int bonus = 0;
-				for (Buff buff : target.buffs(RingOfSatiety.Satiety.class)) {
+				for (Buff buff : target.getBuffs(RingOfSatiety.Satiety.class)) {
 					bonus += ((RingOfSatiety.Satiety) buff).level;
 				}
 
@@ -106,7 +106,7 @@ public class Hunger extends Buff implements Hero.Doom {
 
 			float step = ((Hero) target).heroClass == HeroClass.ROGUE ? STEP * 1.2f
 					: STEP;
-			spend(target.buff(Shadows.class) == null ? step : step * 1.5f);
+			spend(target.getBuff(Shadows.class) == null ? step : step * 1.5f);
 
 		} else {
 

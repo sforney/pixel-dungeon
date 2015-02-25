@@ -22,7 +22,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Slow;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.levels.LevelState;
@@ -38,7 +38,7 @@ public class WandOfSlowness extends Wand {
 	protected void onZap( int cell ) {
 		Char ch = LevelState.findChar( cell );
 		if (ch != null) {
-			Buff.affect( ch, Slow.class, Slow.duration( ch ) / 3 + level() );
+			BuffOps.affect( ch, Slow.class, Slow.duration( ch ) / 3 + level() );
 		} else {
 			GLog.i(Game.getVar(R.string.WandOfSlowness_Info1));
 		}

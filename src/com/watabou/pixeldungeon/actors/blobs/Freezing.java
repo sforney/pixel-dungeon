@@ -19,7 +19,7 @@ package com.watabou.pixeldungeon.actors.blobs;
 
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Frost;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.SnowParticle;
@@ -33,7 +33,7 @@ public class Freezing {
 	public static boolean affect(int cell, Fire fire) {
 		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
-			Buff.prolong(ch, Frost.class,
+			BuffOps.prolong(ch, Frost.class,
 					Frost.duration(ch) * Random.Float(1.0f, 1.5f));
 		}
 

@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ParalyticGas;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.GasesImmunity;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.CellEmitter;
@@ -125,7 +125,7 @@ public class PotionOfPurity extends Potion {
 	@Override
 	protected void apply( Hero hero ) {
 		GLog.w( TXT_NO_SMELL );
-		Buff.prolong( hero, GasesImmunity.class, GasesImmunity.DURATION );
+		BuffOps.prolong( hero, GasesImmunity.class, GasesImmunity.DURATION );
 		setKnown();
 	}
 	

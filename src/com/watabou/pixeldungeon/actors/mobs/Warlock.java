@@ -23,7 +23,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Weakness;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Death;
@@ -102,7 +102,7 @@ public class Warlock extends Mob implements Callback {
 
 		if (hit(this, enemy, true)) {
 			if (enemy == Dungeon.hero && Random.Int(2) == 0) {
-				Buff.prolong(enemy, Weakness.class, Weakness.duration(enemy));
+				BuffOps.prolong(enemy, Weakness.class, Weakness.duration(enemy));
 			}
 
 			int dmg = Random.Int(12, 18);

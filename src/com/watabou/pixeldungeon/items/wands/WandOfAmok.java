@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.levels.LevelState;
@@ -41,9 +41,9 @@ public class WandOfAmok extends Wand {
 		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
 			if (ch == Dungeon.hero) {
-				Buff.affect(ch, Vertigo.class, Vertigo.duration(ch));
+				BuffOps.affect(ch, Vertigo.class, Vertigo.duration(ch));
 			} else {
-				Buff.affect(ch, Amok.class, 3f + level());
+				BuffOps.affect(ch, Amok.class, 3f + level());
 			}
 		} else {
 			GLog.i(Game.getVar(R.string.WandOfAmok_Info1));

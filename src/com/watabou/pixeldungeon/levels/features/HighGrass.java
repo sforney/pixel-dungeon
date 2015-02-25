@@ -21,7 +21,7 @@ import com.watabou.pixeldungeon.Challenges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.effects.CellEmitter;
@@ -44,7 +44,7 @@ public class HighGrass {
 		if (!Dungeon.isChallenged( Challenges.NO_HERBALISM )) {
 			int herbalismLevel = 0;
 			if (ch != null) {
-				Herbalism herbalism = ch.buff( Herbalism.class );
+				Herbalism herbalism = ch.getBuff( Herbalism.class );
 				if (herbalism != null) {
 					herbalismLevel = herbalism.level;
 				}
@@ -62,9 +62,9 @@ public class HighGrass {
 		
 		int leaves = 4;
 		
-		// Warlock's barkskin
+		// Warden's barkskin
 		if (ch instanceof Hero && ((Hero)ch).subClass == HeroSubClass.WARDEN) {
-			Buff.affect( ch, Barkskin.class ).level( ch.HT / 3 );
+			BuffOps.affect( ch, Barkskin.class ).level( ch.HT / 3 );
 			leaves = 8;
 		}
 		

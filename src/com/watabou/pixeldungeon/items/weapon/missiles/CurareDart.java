@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.weapon.missiles;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
@@ -51,7 +51,7 @@ public class CurareDart extends MissileWeapon {
 	
 	@Override
 	public void proc( Char attacker, Char defender, int damage ) {
-		Buff.prolong( defender, Paralysis.class, DURATION );
+		BuffOps.prolong( defender, Paralysis.class, DURATION );
 		super.proc( attacker, defender, damage );
 	}
 	

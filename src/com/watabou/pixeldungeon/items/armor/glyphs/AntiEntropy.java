@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.armor.glyphs;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Frost;
 import com.watabou.pixeldungeon.effects.CellEmitter;
@@ -46,10 +46,10 @@ public class AntiEntropy extends Glyph {
 		
 		if (Level.adjacent( attacker.pos, defender.pos ) && Random.Int( level + 6 ) >= 5) {
 			
-			Buff.prolong( attacker, Frost.class, Frost.duration( attacker ) * Random.Float( 1f, 1.5f ));
+			BuffOps.prolong( attacker, Frost.class, Frost.duration( attacker ) * Random.Float( 1f, 1.5f ));
 			CellEmitter.get( attacker.pos ).start( SnowParticle.FACTORY, 0.2f, 6 );
 			
-			Buff.affect( defender, Burning.class ).reignite( defender );
+			BuffOps.affect( defender, Burning.class ).reignite( defender );
 			defender.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
 
 		}

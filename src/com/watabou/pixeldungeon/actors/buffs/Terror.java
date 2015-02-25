@@ -53,7 +53,7 @@ public class Terror extends FlavourBuff {
 	}
 	
 	public static void recover( Char target ) {
-		Terror terror = target.buff( Terror.class );
+		Terror terror = target.getBuff( Terror.class );
 		if (terror != null && terror.cooldown() < DURATION) {
 			target.remove( terror );
 		}

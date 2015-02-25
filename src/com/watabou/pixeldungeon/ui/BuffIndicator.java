@@ -105,7 +105,7 @@ public class BuffIndicator extends Component {
 		
 		SparseArray<Image> newIcons = new SparseArray<Image>();
 		
-		for (Buff buff : ch.buffs()) {
+		for (Buff buff : ch.getBuffs()) {
 			int icon = buff.icon();
 			if (icon != NONE) {
 				Image img = new Image( texture );

@@ -22,7 +22,7 @@ import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.sprites.AlbinoSprite;
 import com.watabou.utils.Random;
 
@@ -44,7 +44,7 @@ public class Albino extends Rat {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		if (Random.Int( 2 ) == 0) {
-			Buff.affect( enemy, Bleeding.class ).set( damage );
+			BuffOps.affect( enemy, Bleeding.class ).set( damage );
 		}
 		
 		return damage;

@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Web;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
@@ -70,8 +70,8 @@ public class Spinner extends Mob {
 	public boolean act() {
 		boolean result = super.act();
 		
-		if (state == FLEEING && buff( Terror.class ) == null) {
-			if (enemy != null && enemySeen && enemy.buff( Poison.class ) == null) {
+		if (state == FLEEING && getBuff( Terror.class ) == null) {
+			if (enemy != null && enemySeen && enemy.getBuff( Poison.class ) == null) {
 				state = HUNTING;
 			}
 		}
@@ -81,7 +81,7 @@ public class Spinner extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		if (Random.Int( 2 ) == 0) {
-			Buff.affect( enemy, Poison.class ).set( Random.Int( 7, 9 ) * Poison.durationFactor( enemy ) );
+			BuffOps.affect( enemy, Poison.class ).set( Random.Int( 7, 9 ) * Poison.durationFactor( enemy ) );
 			state = FLEEING;
 		}
 		
@@ -124,7 +124,7 @@ public class Spinner extends Mob {
 	private class Fleeing extends Mob.Fleeing {
 		@Override
 		protected void nowhereToRun() {
-			if (buff( Terror.class ) == null) {
+			if (getBuff( Terror.class ) == null) {
 				state = HUNTING;
 			} else {
 				super.nowhereToRun();

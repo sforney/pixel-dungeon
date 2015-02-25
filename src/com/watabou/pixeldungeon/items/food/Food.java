@@ -72,7 +72,7 @@ public class Food extends Item {
 		if (action.equals( AC_EAT )) {
 			detach( hero.belongings.backpack );
 			
-			((Hunger)hero.buff( Hunger.class )).satisfy( energy );
+			((Hunger)hero.getBuff( Hunger.class )).satisfy( energy );
 			GLog.i( message );
 			
 			switch (hero.heroClass) {

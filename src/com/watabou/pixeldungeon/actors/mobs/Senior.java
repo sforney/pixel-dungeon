@@ -21,7 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.sprites.SeniorSprite;
 import com.watabou.utils.Random;
@@ -41,7 +41,7 @@ public class Senior extends Monk {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		if (Random.Int( 10 ) == 0) {
-			Buff.prolong( enemy, Paralysis.class, 1.1f );
+			BuffOps.prolong( enemy, Paralysis.class, 1.1f );
 		}
 		return super.attackProc( enemy, damage );
 	}

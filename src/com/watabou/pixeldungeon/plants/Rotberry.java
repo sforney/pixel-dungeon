@@ -6,7 +6,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.items.seeds.RotberrySeed;
 import com.watabou.pixeldungeon.scenes.GameScene;
@@ -29,7 +29,7 @@ public class Rotberry extends Plant {
 		Dungeon.level.drop(new RotberrySeed(), pos).sprite.drop();
 
 		if (ch != null) {
-			Buff.prolong(ch, Roots.class, TICK * 3);
+			BuffOps.prolong(ch, Roots.class, TICK * 3);
 		}
 	}
 

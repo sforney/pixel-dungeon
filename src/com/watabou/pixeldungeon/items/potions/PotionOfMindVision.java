@@ -19,7 +19,7 @@ package com.watabou.pixeldungeon.items.potions;
 
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.MindVision;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.GLog;
@@ -42,7 +42,7 @@ public class PotionOfMindVision extends Potion {
 	@Override
 	protected void apply( Hero hero ) {
 		setKnown();
-		Buff.affect( hero, MindVision.class, MindVision.DURATION );
+		BuffOps.affect( hero, MindVision.class, MindVision.DURATION );
 		Dungeon.observe();
 		
 		if (Dungeon.level.mobs.size() > 0) {

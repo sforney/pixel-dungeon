@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.MagicMissile;
@@ -61,7 +61,7 @@ public class WandOfAvalanche extends Wand {
 					ch.sprite.flash();
 					ch.damage(Random.Int(2, 6 + (size - d) * 2), this);
 					if (ch.isAlive() && Random.Int(2 + d) == 0) {
-						Buff.prolong(ch, Paralysis.class, Random.IntRange(2, 6));
+						BuffOps.prolong(ch, Paralysis.class, Random.IntRange(2, 6));
 					}
 				}
 				CellEmitter.get(i).start(Speck.factory(Speck.ROCK), 0.07f,

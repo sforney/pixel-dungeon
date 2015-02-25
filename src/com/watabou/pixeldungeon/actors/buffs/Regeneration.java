@@ -33,7 +33,7 @@ public class Regeneration extends Buff {
 			}
 			
 			int bonus = 0;
-			for (Buff buff : target.buffs( RingOfMending.Rejuvenation.class )) {
+			for (Buff buff : target.getBuffs( RingOfMending.Rejuvenation.class )) {
 				bonus += ((RingOfMending.Rejuvenation)buff).level;
 			}
 			

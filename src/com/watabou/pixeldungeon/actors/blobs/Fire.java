@@ -21,7 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.effects.BlobEmitter;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
@@ -89,7 +89,7 @@ public class Fire extends Blob {
 	private void burn(int pos) {
 		Char ch = LevelState.findChar(pos);
 		if (ch != null) {
-			Buff.affect(ch, Burning.class).reignite(ch);
+			BuffOps.affect(ch, Burning.class).reignite(ch);
 		}
 
 		Heap heap = Dungeon.level.heaps.get(pos);

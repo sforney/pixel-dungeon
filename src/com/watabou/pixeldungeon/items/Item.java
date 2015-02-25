@@ -478,7 +478,7 @@ public class Item implements Bundlable {
 		if (this instanceof MissileWeapon) {
 			delay *= ((MissileWeapon) this).speedFactor(user);
 			if (enemy != null) {
-				SnipersMark mark = user.buff(SnipersMark.class);
+				SnipersMark mark = user.getBuff(SnipersMark.class);
 				if (mark != null) {
 					if (mark.object == enemy.id()) {
 						delay *= 0.5f;

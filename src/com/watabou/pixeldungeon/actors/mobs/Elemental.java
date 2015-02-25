@@ -23,6 +23,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Frost;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -69,7 +70,7 @@ public class Elemental extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		if (Random.Int( 2 ) == 0) {
-			Buff.affect( enemy, Burning.class ).reignite( enemy );
+			BuffOps.affect( enemy, Burning.class ).reignite( enemy );
 		}
 		
 		return damage;

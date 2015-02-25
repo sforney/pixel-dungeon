@@ -25,7 +25,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
@@ -61,7 +61,7 @@ public class WandOfFirebolt extends Wand {
 		if (ch != null) {
 
 			ch.damage(Random.Int(1, 8 + level * level), this);
-			Buff.affect(ch, Burning.class).reignite(ch);
+			BuffOps.affect(ch, Burning.class).reignite(ch);
 
 			ch.sprite.emitter().burst(FlameParticle.FACTORY, 5);
 

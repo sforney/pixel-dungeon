@@ -21,12 +21,12 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.utils.Random;
 
-public class Tamahawk extends MissileWeapon {
+public class Tomahawk extends MissileWeapon {
 
 	{
 		name = Game.getVar(R.string.Tamahawk_Name);
@@ -38,11 +38,11 @@ public class Tamahawk extends MissileWeapon {
 		MAX = 20;
 	}
 	
-	public Tamahawk() {
+	public Tomahawk() {
 		this( 1 );
 	}
 	
-	public Tamahawk( int number ) {
+	public Tomahawk( int number ) {
 		super();
 		quantity = number;
 	}
@@ -50,7 +50,7 @@ public class Tamahawk extends MissileWeapon {
 	@Override
 	public void proc( Char attacker, Char defender, int damage ) {
 		super.proc( attacker, defender, damage );
-		Buff.affect( defender, Bleeding.class ).set( damage );
+		BuffOps.affect( defender, Bleeding.class ).set( damage );
 	}	
 	
 	@Override

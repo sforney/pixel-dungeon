@@ -23,7 +23,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.Pushing;
@@ -122,11 +122,11 @@ public class Swarm extends Mob {
 	private Swarm split() {
 		Swarm clone = new Swarm();
 		clone.generation = generation + 1;
-		if (buff(Burning.class) != null) {
-			Buff.affect(clone, Burning.class).reignite(clone);
+		if (getBuff(Burning.class) != null) {
+			BuffOps.affect(clone, Burning.class).reignite(clone);
 		}
-		if (buff(Poison.class) != null) {
-			Buff.affect(clone, Poison.class).set(2);
+		if (getBuff(Poison.class) != null) {
+			BuffOps.affect(clone, Poison.class).set(2);
 		}
 		return clone;
 	}

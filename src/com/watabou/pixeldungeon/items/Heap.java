@@ -27,7 +27,7 @@ import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.Statistics;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Frost;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -196,7 +196,7 @@ public class Heap implements Bundlable {
 		if (type == Type.MIMIC) {
 			Mimic m = Mimic.spawnAt( pos, items );
 			if (m != null) {
-				Buff.affect( m, Burning.class ).reignite( m );
+				BuffOps.affect( m, Burning.class ).reignite( m );
 				m.sprite.emitter().burst( FlameParticle.FACTORY, 5 );
 				destroy();
 			}
@@ -245,7 +245,7 @@ public class Heap implements Bundlable {
 		if (type == Type.MIMIC) {
 			Mimic m = Mimic.spawnAt( pos, items );
 			if (m != null) {
-				Buff.prolong( m, Frost.class, Frost.duration( m ) * Random.Float( 1.0f, 1.5f ) );
+				BuffOps.prolong( m, Frost.class, Frost.duration( m ) * Random.Float( 1.0f, 1.5f ) );
 				destroy();
 			}
 		}

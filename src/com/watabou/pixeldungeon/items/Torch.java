@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import com.watabou.noosa.Game;
 import com.watabou.noosa.particles.Emitter;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.effects.particles.FlameParticle;
@@ -61,7 +61,7 @@ public class Torch extends Item {
 			hero.sprite.operate( hero.pos );
 			
 			detach( hero.belongings.backpack );
-			Buff.affect( hero, Light.class, Light.DURATION );
+			BuffOps.affect( hero, Light.class, Light.DURATION );
 			
 			Emitter emitter = hero.sprite.centerEmitter();
 			emitter.start( FlameParticle.FACTORY, 0.2f, 3 );

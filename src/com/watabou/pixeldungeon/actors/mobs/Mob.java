@@ -169,7 +169,7 @@ public abstract class Mob extends Char {
 
 	protected Char chooseEnemy() {
 
-		if (buff(Amok.class) != null) {
+		if (getBuff(Amok.class) != null) {
 			if (enemy == Dungeon.hero || enemy == null) {
 
 				HashSet<Mob> enemies = new HashSet<Mob>();
@@ -185,7 +185,7 @@ public abstract class Mob extends Char {
 			}
 		}
 
-		Terror terror = (Terror) buff(Terror.class);
+		Terror terror = (Terror) getBuff(Terror.class);
 		if (terror != null) {
 			Char source = (Char) find(terror.object);
 			if (source != null) {
@@ -364,7 +364,7 @@ public abstract class Mob extends Char {
 					sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 				}
 
-				((Hunger) Dungeon.hero.buff(Hunger.class)).satisfy(10);
+				((Hunger) Dungeon.hero.getBuff(Hunger.class)).satisfy(10);
 			}
 
 			if (Dungeon.hero.lvl <= maxLvl && EXP > 0) {

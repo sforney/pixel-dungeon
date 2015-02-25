@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.items.potions;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Weakness;
@@ -54,10 +54,10 @@ public class PotionOfHealing extends Potion {
 	public static void heal( Hero hero ) {
 		
 		hero.HP = hero.HT;
-		Buff.detach( hero, Poison.class );
-		Buff.detach( hero, Cripple.class );
-		Buff.detach( hero, Weakness.class );
-		Buff.detach( hero, Bleeding.class );
+		BuffOps.detach( hero, Poison.class );
+		BuffOps.detach( hero, Cripple.class );
+		BuffOps.detach( hero, Weakness.class );
+		BuffOps.detach( hero, Bleeding.class );
 		
 		hero.sprite.emitter().start( Speck.factory( Speck.HEALING ), 0.4f, 4 );
 	}

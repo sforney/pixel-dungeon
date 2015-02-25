@@ -19,11 +19,10 @@ package com.watabou.pixeldungeon.actors.mobs;
 
 import java.util.HashSet;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
@@ -85,7 +84,7 @@ public class Scorpio extends Mob {
 	@Override
 	public int attackProc( Char enemy, int damage ) {
 		if (Random.Int( 2 ) == 0) {
-			Buff.prolong( enemy, Cripple.class, Cripple.DURATION );
+			BuffOps.prolong( enemy, Cripple.class, Cripple.DURATION );
 		}
 		
 		return damage;

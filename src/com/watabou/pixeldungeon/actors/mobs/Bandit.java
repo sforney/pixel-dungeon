@@ -22,7 +22,7 @@ import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Blindness;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.sprites.BanditSprite;
@@ -41,7 +41,7 @@ public class Bandit extends Thief {
 	protected boolean steal( Hero hero ) {
 		if (super.steal( hero )) {
 			
-			Buff.prolong( hero, Blindness.class, Random.Int( 5, 12 ) );
+			BuffOps.prolong( hero, Blindness.class, Random.Int( 5, 12 ) );
 			Dungeon.observe();
 			
 			return true;

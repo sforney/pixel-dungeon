@@ -148,7 +148,7 @@ public class Thief extends Mob {
 	private class Fleeing extends Mob.Fleeing {
 		@Override
 		protected void nowhereToRun() {
-			if (buff( Terror.class ) == null) {
+			if (getBuff( Terror.class ) == null) {
 				sprite.showStatus( CharSprite.NEGATIVE, TXT_RAGE );
 				state = HUNTING;
 			} else {

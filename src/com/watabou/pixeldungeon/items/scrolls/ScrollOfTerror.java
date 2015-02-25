@@ -22,7 +22,7 @@ import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
@@ -47,7 +47,7 @@ public class ScrollOfTerror extends Scroll {
 		Mob affected = null;
 		for (Mob mob : Dungeon.level.mobs.toArray( new Mob[0] )) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.affect( mob, Terror.class, Terror.DURATION ).object = curUser.id();
+				BuffOps.affect( mob, Terror.class, Terror.DURATION ).object = curUser.id();
 				
 				count++;
 				affected = mob;

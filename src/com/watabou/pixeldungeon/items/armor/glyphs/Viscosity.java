@@ -52,7 +52,7 @@ public class Viscosity extends Glyph {
 
 		if (Random.Int(level + 7) >= 6) {
 
-			DeferedDamage debuff = defender.buff(DeferedDamage.class);
+			DeferedDamage debuff = defender.getBuff(DeferedDamage.class);
 			if (debuff == null) {
 				debuff = new DeferedDamage();
 				debuff.attachTo(defender);

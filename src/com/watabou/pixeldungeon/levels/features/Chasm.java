@@ -24,7 +24,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.mobs.Mob;
@@ -88,7 +88,7 @@ public class Chasm {
 		hero.sprite.burst(hero.sprite.blood(), 10);
 		Camera.main.shake(4, 0.2f);
 
-		Buff.prolong(hero, Cripple.class, Cripple.DURATION);
+		BuffOps.prolong(hero, Cripple.class, Cripple.DURATION);
 		hero.damage(Random.IntRange(hero.HT / 3, hero.HT / 2), new Hero.Doom() {
 			@Override
 			public void onDeath() {

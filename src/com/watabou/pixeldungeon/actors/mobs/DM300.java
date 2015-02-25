@@ -30,7 +30,7 @@ import com.watabou.pixeldungeon.Statistics;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -120,7 +120,7 @@ public class DM300 extends Mob {
 
 		Char ch = LevelState.findChar(cell);
 		if (ch != null && ch != this) {
-			Buff.prolong(ch, Paralysis.class, 2);
+			BuffOps.prolong(ch, Paralysis.class, 2);
 		}
 	}
 

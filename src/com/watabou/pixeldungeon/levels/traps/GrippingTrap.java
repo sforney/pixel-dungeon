@@ -20,7 +20,7 @@ package com.watabou.pixeldungeon.levels.traps;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.effects.Wound;
 import com.watabou.utils.Random;
@@ -31,8 +31,8 @@ public class GrippingTrap {
 		
 		if (c != null) {
 			int damage = Math.max( 0,  (Dungeon.depth + 3) - Random.IntRange( 0, c.dr() / 2 ) );
-			Buff.affect( c, Bleeding.class ).set( damage );
-			Buff.prolong( c, Cripple.class, Cripple.DURATION );
+			BuffOps.affect( c, Bleeding.class ).set( damage );
+			BuffOps.prolong( c, Cripple.class, Cripple.DURATION );
 			Wound.hit( c );
 		} else {
 			Wound.hit( pos );

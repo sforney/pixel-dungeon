@@ -278,7 +278,7 @@ public class Dungeon {
 
 		hero.pos = pos != -1 ? pos : level.exit;
 
-		Light light = hero.buff(Light.class);
+		Light light = hero.getBuff(Light.class);
 		hero.viewDistance = light == null ? level.viewDistance : Math.max(
 				Light.DISTANCE, level.viewDistance);
 
@@ -641,7 +641,7 @@ public class Dungeon {
 					&& (pass[to] || Level.avoid[to]) ? to : -1;
 		}
 
-		if (ch.flying || ch.buff(Amok.class) != null) {
+		if (ch.flying || ch.getBuff(Amok.class) != null) {
 			BArray.or(pass, Level.avoid, passable);
 		} else {
 			System.arraycopy(pass, 0, passable, 0, Level.LENGTH);

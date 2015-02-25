@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.Blob;
 import com.watabou.pixeldungeon.actors.blobs.Fire;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.levels.Level;
@@ -71,7 +71,7 @@ public class IncendiaryDart extends MissileWeapon {
 	
 	@Override
 	public void proc( Char attacker, Char defender, int damage ) {
-		Buff.affect( defender, Burning.class ).reignite( defender );
+		BuffOps.affect( defender, Burning.class ).reignite( defender );
 		super.proc( attacker, defender, damage );
 	}
 	

@@ -22,7 +22,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Fury;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.buffs.Paralysis;
@@ -92,7 +92,7 @@ public class WarriorArmor extends ClassArmor {
 				
 				curUser.HP -= (curUser.HP / 3);
 				if (curUser.subClass == HeroSubClass.BERSERKER && curUser.HP <= curUser.HT * Fury.LEVEL) {
-					Buff.affect( curUser, Fury.class );
+					BuffOps.affect( curUser, Fury.class );
 				}
 				
 				Invisibility.dispel();
@@ -109,7 +109,7 @@ public class WarriorArmor extends ClassArmor {
 						for (int i=0; i < Level.NEIGHBOURS8.length; i++) {
 							Char mob = LevelState.findChar( curUser.pos + Level.NEIGHBOURS8[i] );
 							if (mob != null && mob != curUser) {
-								Buff.prolong( mob, Paralysis.class, SHOCK_TIME );
+								BuffOps.prolong( mob, Paralysis.class, SHOCK_TIME );
 							}
 						}
 						

@@ -21,7 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Hunger;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
@@ -51,18 +51,18 @@ public class FrozenCarpaccio extends Food {
 			switch (Random.Int( 5 )) {
 			case 0:
 				GLog.i(Game.getVar(R.string.FrozenCarpaccio_Info1));
-				Buff.affect( hero, Invisibility.class, Invisibility.DURATION );
+				BuffOps.affect( hero, Invisibility.class, Invisibility.DURATION );
 				break;
 			case 1:
 				GLog.i(Game.getVar(R.string.FrozenCarpaccio_Info2));
-				Buff.affect( hero, Barkskin.class ).level( hero.HT / 4 );
+				BuffOps.affect( hero, Barkskin.class ).level( hero.HT / 4 );
 				break;
 			case 2:
 				GLog.i(Game.getVar(R.string.FrozenCarpaccio_Info3));
-				Buff.detach( hero, Poison.class );
-				Buff.detach( hero, Cripple.class );
-				Buff.detach( hero, Weakness.class );
-				Buff.detach( hero, Bleeding.class );
+				BuffOps.detach( hero, Poison.class );
+				BuffOps.detach( hero, Cripple.class );
+				BuffOps.detach( hero, Weakness.class );
+				BuffOps.detach( hero, Bleeding.class );
 				break;
 			case 3:
 				GLog.i(Game.getVar(R.string.FrozenCarpaccio_Info4));

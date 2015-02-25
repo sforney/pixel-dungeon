@@ -7,7 +7,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.blobs.ToxicGas;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Ooze;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.actors.buffs.Sleep;
@@ -65,7 +65,7 @@ public class RottingFist extends Mob {
 	@Override
 	public int attackProc(Char enemy, int damage) {
 		if (Random.Int(3) == 0) {
-			Buff.affect(enemy, Ooze.class);
+			BuffOps.affect(enemy, Ooze.class);
 			enemy.sprite.burst(0xFF000000, 5);
 		}
 

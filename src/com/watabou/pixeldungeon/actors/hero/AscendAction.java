@@ -32,7 +32,7 @@ public class AscendAction extends BaseHeroAction {
 			} else {
 				hero.curAction = null;
 
-				Hunger hunger = hero.buff(Hunger.class);
+				Hunger hunger = hero.getBuff(Hunger.class);
 				if (hunger != null && !hunger.isStarving()) {
 					hunger.satisfy(-Hunger.STARVING / 10);
 				}

@@ -23,7 +23,7 @@ import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Roots;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -60,8 +60,8 @@ public class MageArmor extends ClassArmor {
 
 		for (Mob mob : Dungeon.level.mobs) {
 			if (Level.fieldOfView[mob.pos]) {
-				Buff.affect( mob, Burning.class ).reignite( mob );
-				Buff.prolong( mob, Roots.class, 3 );
+				BuffOps.affect( mob, Burning.class ).reignite( mob );
+				BuffOps.prolong( mob, Roots.class, 3 );
 			}
 		}
 		

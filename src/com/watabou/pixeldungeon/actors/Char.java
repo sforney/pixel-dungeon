@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.buffs.Amok;
 import com.watabou.pixeldungeon.actors.buffs.Bleeding;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Charm;
 import com.watabou.pixeldungeon.actors.buffs.Cripple;
@@ -279,7 +280,7 @@ public abstract class Char extends Actor {
 	}
 
 	public float speed() {
-		return buff(Cripple.class) == null ? baseSpeed : baseSpeed * 0.5f;
+		return getBuff(Cripple.class) == null ? baseSpeed : baseSpeed * 0.5f;
 	}
 
 	public void damage(int dmg, Object src) {
@@ -288,7 +289,7 @@ public abstract class Char extends Actor {
 			return;
 		}
 
-		Buff.detach(this, Frost.class);
+		BuffOps.detach(this, Frost.class);
 
 		Class<?> srcClass = src.getClass();
 		if (immunities().contains(srcClass)) {
@@ -297,9 +298,9 @@ public abstract class Char extends Actor {
 			dmg = Random.IntRange(0, dmg);
 		}
 
-		if (buff(Paralysis.class) != null) {
+		if (getBuff(Paralysis.class) != null) {
 			if (Random.Int(dmg) >= Random.Int(HP)) {
-				Buff.detach(this, Paralysis.class);
+				BuffOps.detach(this, Paralysis.class);
 				if (Dungeon.visible[pos]) {
 					GLog.i(TXT_OUT_OF_PARALYSIS, name);
 				}
@@ -335,22 +336,22 @@ public abstract class Char extends Actor {
 	public void spend(float time) {
 
 		float timeScale = 1f;
-		if (buff(Slow.class) != null) {
+		if (getBuff(Slow.class) != null) {
 			timeScale *= 0.5f;
 		}
-		if (buff(Speed.class) != null) {
+		if (getBuff(Speed.class) != null) {
 			timeScale *= 2.0f;
 		}
 
 		super.spend(time / timeScale);
 	}
 
-	public HashSet<Buff> buffs() {
+	public HashSet<Buff> getBuffs() {
 		return buffs;
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Buff> HashSet<T> buffs(Class<T> c) {
+	public <T extends Buff> HashSet<T> getBuffs(Class<T> c) {
 		HashSet<T> filtered = new HashSet<T>();
 		for (Buff b : buffs) {
 			if (c.isInstance(b)) {
@@ -361,7 +362,7 @@ public abstract class Char extends Actor {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends Buff> T buff(Class<T> c) {
+	public <T extends Buff> T getBuff(Class<T> c) {
 		for (Buff b : buffs) {
 			if (c.isInstance(b)) {
 				return (T) b;
@@ -479,7 +480,7 @@ public abstract class Char extends Actor {
 	}
 
 	public void remove(Class<? extends Buff> buffClass) {
-		for (Buff buff : buffs(buffClass)) {
+		for (Buff buff : getBuffs(buffClass)) {
 			remove(buff);
 		}
 	}
@@ -515,7 +516,7 @@ public abstract class Char extends Actor {
 
 	public void move(int step) {
 
-		if (Level.adjacent(step, pos) && buff(Vertigo.class) != null) {
+		if (Level.adjacent(step, pos) && getBuff(Vertigo.class) != null) {
 			step = pos + Level.NEIGHBOURS8[Random.Int(8)];
 			if (!(Level.passable[step] || Level.avoid[step])
 					|| LevelState.findChar(step) != null) {

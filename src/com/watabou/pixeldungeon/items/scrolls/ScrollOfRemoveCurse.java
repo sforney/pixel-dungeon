@@ -21,6 +21,7 @@ import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Invisibility;
 import com.watabou.pixeldungeon.actors.buffs.Weakness;
 import com.watabou.pixeldungeon.actors.hero.Hero;
@@ -52,7 +53,7 @@ public class ScrollOfRemoveCurse extends Scroll {
 			curUser.belongings.ring1, 
 			curUser.belongings.ring2 ) || procced;
 		
-		Weakness.detach( curUser, Weakness.class );
+		BuffOps.detach( curUser, Weakness.class );
 		
 		if (procced) {
 			GLog.p( TXT_PROCCED );			

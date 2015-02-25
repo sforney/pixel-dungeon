@@ -202,7 +202,7 @@ public abstract class Wand extends KindOfWeapon {
 
 	public int level() {
 		if (charger != null) {
-			Power power = charger.target.buff(Power.class);
+			Power power = charger.target.getBuff(Power.class);
 			return power == null ? level : Math.max(level + power.level, 0);
 		} else {
 			return level;

@@ -32,6 +32,7 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Barkskin;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Burning;
 import com.watabou.pixeldungeon.actors.buffs.Combo;
 import com.watabou.pixeldungeon.actors.buffs.EarthrootArmor;
@@ -196,8 +197,8 @@ public class Hero extends Char {
 	}
 
 	public void live() {
-		Buff.affect(this, Regeneration.class);
-		Buff.affect(this, Hunger.class);
+		BuffOps.affect(this, Regeneration.class);
+		BuffOps.affect(this, Hunger.class);
 	}
 
 	public int tier() {
@@ -217,7 +218,7 @@ public class Hero extends Char {
 	public int attackSkill(Char target) {
 
 		int bonus = 0;
-		for (Buff buff : buffs(RingOfAccuracy.Accuracy.class)) {
+		for (Buff buff : getBuffs(RingOfAccuracy.Accuracy.class)) {
 			bonus += ((RingOfAccuracy.Accuracy) buff).level;
 		}
 		float accuracy = (bonus == 0) ? 1 : (float) Math.pow(1.4, bonus);
@@ -238,7 +239,7 @@ public class Hero extends Char {
 	public int defenseSkill(Char enemy) {
 
 		int bonus = 0;
-		for (Buff buff : buffs(RingOfEvasion.Evasion.class)) {
+		for (Buff buff : getBuffs(RingOfEvasion.Evasion.class)) {
 			bonus += ((RingOfEvasion.Evasion) buff).level;
 		}
 		float evasion = bonus == 0 ? 1 : (float) Math.pow(1.2, bonus);
@@ -270,7 +271,7 @@ public class Hero extends Char {
 	public int dr() {
 		int dr = belongings.armor != null ? Math.max(belongings.armor.DR, 0)
 				: 0;
-		Barkskin barkskin = buff(Barkskin.class);
+		Barkskin barkskin = getBuff(Barkskin.class);
 		if (barkskin != null) {
 			dr += barkskin.level();
 		}
@@ -287,7 +288,7 @@ public class Hero extends Char {
 		} else {
 			dmg = STR() > 10 ? Random.IntRange(1, STR() - 9) : 1;
 		}
-		return buff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
+		return getBuff(Fury.class) != null ? (int) (dmg * 1.5f) : dmg;
 	}
 
 	@Override
@@ -316,7 +317,7 @@ public class Hero extends Char {
 	@Override
 	public void spend(float time) {
 		int hasteLevel = 0;
-		for (Buff buff : buffs(RingOfHaste.Haste.class)) {
+		for (Buff buff : getBuffs(RingOfHaste.Haste.class)) {
 			hasteLevel += ((RingOfHaste.Haste) buff).level;
 		}
 		super.spend(hasteLevel == 0 ? time : (float) (time * Math.pow(1.1,
@@ -402,7 +403,7 @@ public class Hero extends Char {
 			switch (subClass) {
 			case GLADIATOR:
 				if (wep instanceof MeleeWeapon) {
-					damage += Buff.affect(this, Combo.class).hit(enemy, damage);
+					damage += BuffOps.affect(this, Combo.class).hit(enemy, damage);
 				}
 				break;
 			case BATTLEMAGE:
@@ -423,7 +424,7 @@ public class Hero extends Char {
 				}
 			case SNIPER:
 				if (rangedWeapon != null) {
-					Buff.prolong(this, SnipersMark.class, attackDelay() * 1.1f).object = enemy
+					BuffOps.prolong(this, SnipersMark.class, attackDelay() * 1.1f).object = enemy
 							.id();
 				}
 				break;
@@ -437,7 +438,7 @@ public class Hero extends Char {
 	@Override
 	public int defenseProc(Char enemy, int damage) {
 
-		RingOfThorns.Thorns thorns = buff(RingOfThorns.Thorns.class);
+		RingOfThorns.Thorns thorns = getBuff(RingOfThorns.Thorns.class);
 		if (thorns != null) {
 			int dmg = Random.IntRange(0, damage);
 			if (dmg > 0) {
@@ -445,7 +446,7 @@ public class Hero extends Char {
 			}
 		}
 
-		EarthrootArmor armor = buff(EarthrootArmor.class);
+		EarthrootArmor armor = getBuff(EarthrootArmor.class);
 		if (armor != null) {
 			damage = armor.absorb(damage);
 		}
@@ -464,7 +465,7 @@ public class Hero extends Char {
 
 		if (subClass == HeroSubClass.BERSERKER && 0 < HP
 				&& HP <= HT * Fury.LEVEL) {
-			Buff.affect(this, Fury.class);
+			BuffOps.affect(this, Fury.class);
 		}
 	}
 
@@ -575,7 +576,7 @@ public class Hero extends Char {
 				sprite.emitter().burst(Speck.factory(Speck.HEALING), 1);
 			}
 
-			((Hunger) buff(Hunger.class)).satisfy(10);
+			((Hunger) getBuff(Hunger.class)).satisfy(10);
 		}
 	}
 
@@ -589,7 +590,7 @@ public class Hero extends Char {
 	}
 
 	public boolean isStarving() {
-		return ((Hunger) buff(Hunger.class)).isStarving();
+		return ((Hunger) getBuff(Hunger.class)).isStarving();
 	}
 
 	@Override
@@ -633,7 +634,7 @@ public class Hero extends Char {
 	@Override
 	public int stealth() {
 		int stealth = super.stealth();
-		for (Buff buff : buffs(RingOfShadows.Shadows.class)) {
+		for (Buff buff : getBuffs(RingOfShadows.Shadows.class)) {
 			stealth += ((RingOfShadows.Shadows) buff).level;
 		}
 		return stealth;
@@ -763,7 +764,7 @@ public class Hero extends Char {
 
 		int positive = 0;
 		int negative = 0;
-		for (Buff buff : buffs(RingOfDetection.Detection.class)) {
+		for (Buff buff : getBuffs(RingOfDetection.Detection.class)) {
 			int bonus = ((RingOfDetection.Detection) buff).level;
 			if (bonus > positive) {
 				positive = bonus;
@@ -861,13 +862,13 @@ public class Hero extends Char {
 
 	@Override
 	public HashSet<Class<?>> resistances() {
-		RingOfElements.Resistance r = buff(RingOfElements.Resistance.class);
+		RingOfElements.Resistance r = getBuff(RingOfElements.Resistance.class);
 		return r == null ? super.resistances() : r.resistances();
 	}
 
 	@Override
 	public HashSet<Class<?>> immunities() {
-		GasesImmunity buff = buff(GasesImmunity.class);
+		GasesImmunity buff = getBuff(GasesImmunity.class);
 		return buff == null ? super.immunities() : GasesImmunity.IMMUNITIES;
 	}
 

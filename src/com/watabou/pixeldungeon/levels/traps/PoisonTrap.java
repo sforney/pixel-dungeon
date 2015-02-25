@@ -19,7 +19,7 @@ package com.watabou.pixeldungeon.levels.traps;
 
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.PoisonParticle;
@@ -31,7 +31,7 @@ public class PoisonTrap {
 	public static void trigger( int pos, Char ch ) {
 		
 		if (ch != null) {
-			Buff.affect( ch, Poison.class ).set( Poison.durationFactor( ch ) * (4 + Dungeon.depth / 2) );
+			BuffOps.affect( ch, Poison.class ).set( Poison.durationFactor( ch ) * (4 + Dungeon.depth / 2) );
 		}
 		
 		CellEmitter.center( pos ).burst( PoisonParticle.SPLASH, 3 );

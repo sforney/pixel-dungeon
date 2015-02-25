@@ -22,8 +22,8 @@ import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.actors.buffs.BuffOps;
 import com.watabou.pixeldungeon.actors.buffs.EarthrootArmor;
-import com.watabou.pixeldungeon.actors.buffs.Buff;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.particles.EarthParticle;
 
@@ -38,7 +38,7 @@ public class Earthroot extends Plant {
 		super.activate(ch);
 
 		if (ch != null) {
-			Buff.affect(ch, EarthrootArmor.class).level = ch.HT;
+			BuffOps.affect(ch, EarthrootArmor.class).level = ch.HT;
 		}
 
 		if (Dungeon.visible[pos]) {

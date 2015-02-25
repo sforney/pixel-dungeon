@@ -37,7 +37,7 @@ public class Frost extends FlavourBuff {
 		if (super.attachTo( target )) {
 			
 			target.paralysed = true;
-			Burning.detach( target, Burning.class );
+			BuffOps.detach( target, Burning.class );
 			
 			if (target instanceof Hero) {
 				Hero hero = (Hero)target;
@@ -75,7 +75,7 @@ public class Frost extends FlavourBuff {
 	}
 	
 	public static float duration( Char ch ) {
-		Resistance r = ch.buff( Resistance.class );
+		Resistance r = ch.getBuff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
 }

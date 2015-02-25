@@ -54,13 +54,13 @@ public class Paralysis extends FlavourBuff {
 	}
 	
 	public static float duration( Char ch ) {
-		Resistance r = ch.buff( Resistance.class );
+		Resistance r = ch.getBuff( Resistance.class );
 		return r != null ? r.durationFactor() * DURATION : DURATION;
 	}
 	
 	public static void unfreeze( Char ch ) {
-		if (ch.buff( Paralysis.class ) == null &&
-			ch.buff( Frost.class ) == null) {
+		if (ch.getBuff( Paralysis.class ) == null &&
+			ch.getBuff( Frost.class ) == null) {
 			
 			ch.paralysed = false;
 		}
