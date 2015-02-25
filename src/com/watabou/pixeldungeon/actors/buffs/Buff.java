@@ -56,6 +56,7 @@ public class Buff extends Actor {
 			buff.attachTo( target );
 			return buff;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -77,7 +78,7 @@ public class Buff extends Actor {
 	
 	public static<T extends FlavourBuff> T affect( Char target, Class<T> buffClass, float duration ) {
 		T buff = affect( target, buffClass );
-		buff.spend( duration );
+		target.buff(buff.getClass()).spend(duration);
 		return buff;
 	}
 	

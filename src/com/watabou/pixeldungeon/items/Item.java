@@ -53,15 +53,10 @@ public class Item implements Bundlable {
 	private static String TXT_PACK_FULL;
 	private static String TXT_DIR_THROW;
 
-	private static String TXT_DEGRADED;
-	private static String TXT_GONNA_DEGRADE;
-
 	private static final String TXT_TO_STRING = "%s";
 	private static final String TXT_TO_STRING_X = "%s x%d";
 	private static final String TXT_TO_STRING_LVL = "%s%+d";
 	private static final String TXT_TO_STRING_LVL_X = "%s%+d x%d";
-
-	private static final float DURABILITY_WARNING_LEVEL = 1 / 6f;
 
 	protected static final float TIME_TO_THROW = 1.0f;
 	protected static final float TIME_TO_PICK_UP = 1.0f;
@@ -93,15 +88,13 @@ public class Item implements Bundlable {
 	}
 
 	public Item(StringResolver resolver) {
-		this.resolver = resolver;
+		Item.resolver = resolver;
 		init();
 	}
 
 	private void init() {
 		TXT_PACK_FULL = resolver.getVar(R.string.Item_PackFull);
 		TXT_DIR_THROW = resolver.getVar(R.string.Item_DirThrow);
-		TXT_DEGRADED = resolver.getVar(R.string.Item_Degraded);
-		TXT_GONNA_DEGRADE = resolver.getVar(R.string.Item_GonnaDegrade);
 		AC_DROP = resolver.getVar(R.string.Item_ACDrop);
 		AC_THROW = resolver.getVar(R.string.Item_ACThrow);
 		name = resolver.getVar(R.string.Item_Name);

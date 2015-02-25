@@ -186,6 +186,6 @@ public class LevelState {
 	
 
 	public static void add(Actor actor) {
-		addDelayed(actor, LevelState.getNow());
+		add(actor, LevelState.getNow());
 	}
 }
