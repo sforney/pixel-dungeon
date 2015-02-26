@@ -32,6 +32,7 @@ import com.watabou.pixeldungeon.items.food.Food;
 import com.watabou.pixeldungeon.items.food.MysteryMeat;
 import com.watabou.pixeldungeon.items.food.Pasty;
 import com.watabou.pixeldungeon.items.potions.Potion;
+import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.items.potions.PotionOfExperience;
 import com.watabou.pixeldungeon.items.potions.PotionOfFrost;
 import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
@@ -44,6 +45,7 @@ import com.watabou.pixeldungeon.items.potions.PotionOfParalyticGas;
 import com.watabou.pixeldungeon.items.potions.PotionOfPurity;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
+import com.watabou.pixeldungeon.items.potions.PotionType;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.rings.RingOfAccuracy;
 import com.watabou.pixeldungeon.items.rings.RingOfDetection;
@@ -112,6 +114,8 @@ import com.watabou.pixeldungeon.items.weapon.missiles.IncendiaryDart;
 import com.watabou.pixeldungeon.items.weapon.missiles.Javelin;
 import com.watabou.pixeldungeon.items.weapon.missiles.Shuriken;
 import com.watabou.pixeldungeon.items.weapon.missiles.Tomahawk;
+import com.watabou.pixeldungeon.utils.DefaultStringResolver;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Generator {
@@ -291,6 +295,8 @@ public class Generator {
 				return randomArmor();
 			case WEAPON:
 				return randomWeapon();
+			case POTION:
+				return randomPotion();
 			default:
 				return ((Item)cat.classes[Random.chances( cat.probs )].newInstance()).random();
 			}
@@ -342,5 +348,16 @@ public class Generator {
 		w2.random();
 		
 		return Math.abs( curStr - w1.STR ) < Math.abs( curStr - w2.STR ) ? w1 : w2;
+	}
+	
+	public static Potion randomPotion() throws Exception{
+		Category cat = Category.POTION;
+		Class clazz = cat.classes[Random.chances( cat.probs )];
+		for(PotionType type : PotionType.values()) {
+			if(type.getClazz() == clazz) {
+				return (Potion)clazz.getDeclaredConstructor(PotionInfo.class, StringResolver.class).newInstance(Dungeon.potionInfo, new DefaultStringResolver());
+			}
+		}
+		return null;
 	}
 }
