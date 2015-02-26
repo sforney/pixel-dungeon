@@ -22,12 +22,13 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfExperience extends Potion {
-	public PotionOfExperience() {
+	public PotionOfExperience(PotionInfo potionInfo) {
+		super(potionInfo);
 		init();
 	}
 	
-	public PotionOfExperience(StringResolver resolver) {
-		super(resolver);
+	public PotionOfExperience(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		init();
 	}
 	

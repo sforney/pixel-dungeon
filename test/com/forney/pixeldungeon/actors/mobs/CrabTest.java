@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import com.forney.test.utils.TestStringResolver;
 import com.watabou.pixeldungeon.actors.mobs.Crab;
-import com.watabou.pixeldungeon.utils.TestStringResolver;
 
 @RunWith(JUnit4.class)
 public class CrabTest {

@@ -27,6 +27,7 @@ import com.watabou.pixeldungeon.actors.buffs.Cripple;
 import com.watabou.pixeldungeon.actors.buffs.Light;
 import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.items.food.MysteryMeat;
+import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
 import com.watabou.pixeldungeon.levels.Level;
@@ -36,13 +37,16 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Scorpio extends Mob {
+	private PotionInfo potionInfo;
 	
-	public Scorpio() {
+	public Scorpio(PotionInfo potionInfo) {
+		this.potionInfo = potionInfo;
 		init();
 	}
 	
-	public Scorpio(StringResolver resolver) {
+	public Scorpio(PotionInfo potionInfo, StringResolver resolver) {
 		super(resolver);
+		this.potionInfo = potionInfo;
 		init();
 	}
 	
@@ -57,7 +61,7 @@ public class Scorpio extends Mob {
 		EXP = 14;
 		maxLvl = 25;
 		
-		loot = new PotionOfHealing(resolver);
+		loot = new PotionOfHealing(potionInfo, resolver);
 		lootChance = 0.125f;
 	}
 	
@@ -102,7 +106,7 @@ public class Scorpio extends Mob {
 	@Override
 	protected void dropLoot() {
 		if (Random.Int( 8 ) == 0) {
-			Dungeon.level.drop( new PotionOfHealing(), pos ).sprite.drop();
+			Dungeon.level.drop( new PotionOfHealing(Dungeon.potionInfo), pos ).sprite.drop();
 		} else if (Random.Int( 6 ) == 0) {
 			Dungeon.level.drop( new MysteryMeat(), pos ).sprite.drop();
 		}

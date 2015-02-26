@@ -27,12 +27,13 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfToxicGas extends Potion {
-	public PotionOfToxicGas() {
+	public PotionOfToxicGas(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfToxicGas_Name);
 	}
 	
-	public PotionOfToxicGas(StringResolver resolver) {
-		super(resolver);
+	public PotionOfToxicGas(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfToxicGas_Name);
 	}
 

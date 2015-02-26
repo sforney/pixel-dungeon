@@ -39,172 +39,176 @@ import com.watabou.pixeldungeon.ui.RedButton;
 import com.watabou.pixeldungeon.utils.Utils;
 
 public class WndHero extends WndTabbed {
-	
-	private static final String TXT_STATS	= Game.getVar(R.string.WndHero_Stats);
-	private static final String TXT_BUFFS	= Game.getVar(R.string.WndHero_Buffs);
-	
-	private static final String TXT_EXP		= Game.getVar(R.string.WndHero_Exp);
-	private static final String TXT_STR		= Game.getVar(R.string.WndHero_Str);
-	private static final String TXT_HEALTH	= Game.getVar(R.string.WndHero_Health);
-	private static final String TXT_GOLD	= Game.getVar(R.string.WndHero_Gold);
-	private static final String TXT_DEPTH	= Game.getVar(R.string.WndHero_Depth);
-	
-	private static final int WIDTH		= 100;
-	private static final int TAB_WIDTH	= 40;
-	
+
+	private static final String TXT_STATS = Game.getVar(R.string.WndHero_Stats);
+	private static final String TXT_BUFFS = Game.getVar(R.string.WndHero_Buffs);
+
+	private static final String TXT_EXP = Game.getVar(R.string.WndHero_Exp);
+	private static final String TXT_STR = Game.getVar(R.string.WndHero_Str);
+	private static final String TXT_HEALTH = Game
+			.getVar(R.string.WndHero_Health);
+	private static final String TXT_GOLD = Game.getVar(R.string.WndHero_Gold);
+	private static final String TXT_DEPTH = Game.getVar(R.string.WndHero_Depth);
+
+	private static final int WIDTH = 100;
+	private static final int TAB_WIDTH = 40;
+
 	private StatsTab stats;
 	private BuffsTab buffs;
-	
+
 	private SmartTexture icons;
 	private TextureFilm film;
-	
+
 	public WndHero() {
-		
+
 		super();
-		
-		icons = TextureCache.get( Assets.BUFFS_LARGE );
-		film = new TextureFilm( icons, 16, 16 );
-		
+
+		icons = TextureCache.get(Assets.BUFFS_LARGE);
+		film = new TextureFilm(icons, 16, 16);
+
 		stats = new StatsTab();
-		add( stats );
-		
+		add(stats);
+
 		buffs = new BuffsTab();
-		add( buffs );
-		
-		add( new LabeledTab( TXT_STATS ) {
-			protected void select( boolean value ) {
-				super.select( value );
+		add(buffs);
+
+		add(new LabeledTab(TXT_STATS) {
+			protected void select(boolean value) {
+				super.select(value);
 				stats.visible = stats.active = selected;
 			};
-		} );
-		add( new LabeledTab( TXT_BUFFS ) {
-			protected void select( boolean value ) {
-				super.select( value );
+		});
+		add(new LabeledTab(TXT_BUFFS) {
+			protected void select(boolean value) {
+				super.select(value);
 				buffs.visible = buffs.active = selected;
 			};
-		} );
+		});
 		for (Tab tab : tabs) {
-			tab.setSize( TAB_WIDTH, tabHeight() );
+			tab.setSize(TAB_WIDTH, tabHeight());
 		}
-		
-		resize( WIDTH, (int)Math.max( stats.height(), buffs.height() ) );
-		
-		select( 0 );
+
+		resize(WIDTH, (int) Math.max(stats.height(), buffs.height()));
+
+		select(0);
 	}
-	
-	private class StatsTab extends Group {
-		
-		//Removido o "Static" para poder definir valor a partir ds resouces
-		private final String TXT_TITLE     = Game.getVar(R.string.WndHero_StaTitle);
-		private final String TXT_CATALOGUS = Game.getVar(R.string.WndHero_StaCatalogus);
-		private final String TXT_JOURNAL   = Game.getVar(R.string.WndHero_StaJournal);
-		
-		private static final int GAP = 5;
-		
-		private float pos;
-		
-		public StatsTab() {
-			
-			Hero hero = Dungeon.hero; 
 
-			BitmapText title = PixelScene.createText( 
-				Utils.format( TXT_TITLE, hero.lvl, hero.className() ).toUpperCase( Locale.ENGLISH ), 9 );
-			title.hardlight( TITLE_COLOR );
+	private class StatsTab extends Group {
+
+		// Removido o "Static" para poder definir valor a partir ds resouces
+		private final String TXT_TITLE = Game.getVar(R.string.WndHero_StaTitle);
+		private final String TXT_CATALOGUS = Game
+				.getVar(R.string.WndHero_StaCatalogus);
+		private final String TXT_JOURNAL = Game
+				.getVar(R.string.WndHero_StaJournal);
+
+		private static final int GAP = 5;
+
+		private float pos;
+
+		public StatsTab() {
+
+			Hero hero = Dungeon.hero;
+
+			BitmapText title = PixelScene.createText(
+					Utils.format(TXT_TITLE, hero.lvl, hero.className())
+							.toUpperCase(Locale.ENGLISH), 9);
+			title.hardlight(TITLE_COLOR);
 			title.measure();
-			add( title );
-			
-			RedButton btnCatalogus = new RedButton( TXT_CATALOGUS ) {
+			add(title);
+
+			RedButton btnCatalogus = new RedButton(TXT_CATALOGUS) {
 				@Override
 				protected void onClick() {
 					hide();
-					GameScene.show( new WndCatalogus() );
+					GameScene.show(new WndCatalogus(Dungeon.potionInfo));
 				}
 			};
-			btnCatalogus.setRect( 0, title.y + title.height(), btnCatalogus.reqWidth() + 2, btnCatalogus.reqHeight() + 2 );
-			add( btnCatalogus );
-			
-			RedButton btnJournal = new RedButton( TXT_JOURNAL ) {
+			btnCatalogus.setRect(0, title.y + title.height(),
+					btnCatalogus.reqWidth() + 2, btnCatalogus.reqHeight() + 2);
+			add(btnCatalogus);
+
+			RedButton btnJournal = new RedButton(TXT_JOURNAL) {
 				@Override
 				protected void onClick() {
 					hide();
-					GameScene.show( new WndJournal() );
+					GameScene.show(new WndJournal());
 				}
 			};
-			btnJournal.setRect( 
-				btnCatalogus.right() + 1, btnCatalogus.top(), 
-				btnJournal.reqWidth() + 2, btnJournal.reqHeight() + 2 );
-			add( btnJournal );
-			
+			btnJournal.setRect(btnCatalogus.right() + 1, btnCatalogus.top(),
+					btnJournal.reqWidth() + 2, btnJournal.reqHeight() + 2);
+			add(btnJournal);
+
 			pos = btnCatalogus.bottom() + GAP;
-			
-			statSlot( TXT_STR, hero.STR() );
-			statSlot( TXT_HEALTH, hero.HP + "/" + hero.HT );
-			statSlot( TXT_EXP, hero.exp + "/" + hero.maxExp() );
+
+			statSlot(TXT_STR, hero.STR());
+			statSlot(TXT_HEALTH, hero.HP + "/" + hero.HT);
+			statSlot(TXT_EXP, hero.exp + "/" + hero.maxExp());
 
 			pos += GAP;
-			
-			statSlot( TXT_GOLD, Statistics.goldCollected );
-			statSlot( TXT_DEPTH, Statistics.deepestFloor );
-			
+
+			statSlot(TXT_GOLD, Statistics.goldCollected);
+			statSlot(TXT_DEPTH, Statistics.deepestFloor);
+
 			pos += GAP;
 		}
-		
-		private void statSlot( String label, String value ) {
-			
-			BitmapText txt = PixelScene.createText( label, 8 );
+
+		private void statSlot(String label, String value) {
+
+			BitmapText txt = PixelScene.createText(label, 8);
 			txt.y = pos;
-			add( txt );
-			
-			txt = PixelScene.createText( value, 8 );
+			add(txt);
+
+			txt = PixelScene.createText(value, 8);
 			txt.measure();
-			txt.x = PixelScene.align( WIDTH * 0.65f );
+			txt.x = PixelScene.align(WIDTH * 0.65f);
 			txt.y = pos;
-			add( txt );
-			
+			add(txt);
+
 			pos += GAP + txt.baseLine();
 		}
-		
-		private void statSlot( String label, int value ) {
-			statSlot( label, Integer.toString( value ) );
+
+		private void statSlot(String label, int value) {
+			statSlot(label, Integer.toString(value));
 		}
-		
+
 		public float height() {
 			return pos;
 		}
 	}
-	
+
 	private class BuffsTab extends Group {
-		
+
 		private static final int GAP = 2;
-		
+
 		private float pos;
-		
+
 		public BuffsTab() {
 			for (Buff buff : Dungeon.hero.getBuffs()) {
-				buffSlot( buff );
+				buffSlot(buff);
 			}
 		}
-		
-		private void buffSlot( Buff buff ) {
-			
+
+		private void buffSlot(Buff buff) {
+
 			int index = buff.icon();
-			
+
 			if (index != BuffIndicator.NONE) {
-				
-				Image icon = new Image( icons );
-				icon.frame( film.get( index ) );
+
+				Image icon = new Image(icons);
+				icon.frame(film.get(index));
 				icon.y = pos;
-				add( icon );
-				
-				BitmapText txt = PixelScene.createText( buff.toString(), 8 );
+				add(icon);
+
+				BitmapText txt = PixelScene.createText(buff.toString(), 8);
 				txt.x = icon.width + GAP;
-				txt.y = pos + (int)(icon.height - txt.baseLine()) / 2;
-				add( txt );
-				
+				txt.y = pos + (int) (icon.height - txt.baseLine()) / 2;
+				add(txt);
+
 				pos += GAP + icon.height;
 			}
 		}
-		
+
 		public float height() {
 			return pos;
 		}

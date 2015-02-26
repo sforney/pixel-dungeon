@@ -20,6 +20,7 @@ package com.watabou.pixeldungeon.actors.mobs;
 import java.util.HashSet;
 
 import com.watabou.noosa.Game;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -30,7 +31,7 @@ import com.watabou.utils.Random;
 
 public class Bat extends Mob {
 
-	{
+	public Bat() {
 		name = Game.getVar(R.string.Bat_Name);
 		spriteClass = BatSprite.class;
 		
@@ -43,7 +44,7 @@ public class Bat extends Mob {
 		
 		flying = true;
 		
-		loot = new PotionOfHealing();
+		loot = new PotionOfHealing(Dungeon.potionInfo);
 		lootChance = 0.125f;
 	}
 	

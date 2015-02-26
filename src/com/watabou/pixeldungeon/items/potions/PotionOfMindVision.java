@@ -26,12 +26,13 @@ import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfMindVision extends Potion {
-	public PotionOfMindVision() {
+	public PotionOfMindVision(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfMindVision_Name);
 	}
 	
-	public PotionOfMindVision(StringResolver resolver) {
-		super(resolver);
+	public PotionOfMindVision(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfMindVision_Name);
 	}
 

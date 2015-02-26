@@ -20,12 +20,14 @@ package com.watabou.pixeldungeon.actors.mobs;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
+import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.sprites.AcidicSprite;
 import com.watabou.utils.Random;
 
 public class Acidic extends Scorpio {
 
-	public Acidic() {
+	public Acidic(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.Acidic_Name);
 		spriteClass = AcidicSprite.class;
 	}

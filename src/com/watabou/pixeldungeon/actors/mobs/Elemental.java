@@ -20,6 +20,7 @@ package com.watabou.pixeldungeon.actors.mobs;
 import java.util.HashSet;
 
 import com.watabou.noosa.Game;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.actors.buffs.Buff;
@@ -36,7 +37,7 @@ import com.watabou.utils.Random;
 
 public class Elemental extends Mob {
 
-	{
+	public Elemental() {
 		name = Game.getVar(R.string.Elemental_Name);
 		spriteClass = ElementalSprite.class;
 		
@@ -48,7 +49,7 @@ public class Elemental extends Mob {
 		
 		flying = true;
 		
-		loot = new PotionOfLiquidFlame();
+		loot = new PotionOfLiquidFlame(Dungeon.potionInfo);
 		lootChance = 0.1f;
 	}
 	

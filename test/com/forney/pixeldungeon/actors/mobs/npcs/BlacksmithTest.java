@@ -2,9 +2,9 @@ package com.forney.pixeldungeon.actors.mobs.npcs;
 
 import org.junit.Test;
 
+import com.forney.test.utils.TestStringResolver;
 import com.watabou.pixeldungeon.actors.mobs.npcs.Blacksmith;
 import com.watabou.pixeldungeon.utils.StringResolver;
-import com.watabou.pixeldungeon.utils.TestStringResolver;
 
 public class BlacksmithTest {
 	@Test

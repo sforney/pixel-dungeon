@@ -25,12 +25,13 @@ import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfStrength extends Potion {
-	public PotionOfStrength() {
+	public PotionOfStrength(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfStrength_Name);
 	}
 	
-	public PotionOfStrength(StringResolver resolver) {
-		super(resolver);
+	public PotionOfStrength(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfStrength_Name);
 	}
 	

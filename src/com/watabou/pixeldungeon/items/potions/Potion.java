@@ -46,16 +46,20 @@ public class Potion extends Item {
 	private static String TXT_R_U_SURE_THROW;
 
 	private static final float TIME_TO_DRINK = 1f;
+	private PotionInfo potionInfo;
+	private PotionType type;
 
 	protected String color;
 
-	public Potion() {
+	public Potion(PotionInfo potionInfo) {
 		super();
+		this.potionInfo = potionInfo;
 		init();
 	}
 
-	public Potion(StringResolver resolver) {
+	public Potion(PotionInfo potionInfo, StringResolver resolver) {
 		super(resolver);
+		this.potionInfo = potionInfo;
 		init();
 	}
 
@@ -65,12 +69,13 @@ public class Potion extends Item {
 		TXT_NO = resolver.getVar(R.string.Potion_No);
 		TXT_R_U_SURE_DRINK = resolver.getVar(R.string.Potion_SureDrink);
 		TXT_R_U_SURE_THROW = resolver.getVar(R.string.Potion_SureThrow);
-		
-		image = PotionInfo.getImage(this);
-		color = PotionInfo.getLabel(this);
-		stackable = true;
 		AC_DRINK = resolver.getVar(R.string.Potion_ACDrink);
-		defaultAction = AC_DRINK;		
+
+		type = PotionType.getType(this);
+		image = potionInfo.getImage(type);
+		color = potionInfo.getLabel(type);
+		stackable = true;
+		defaultAction = AC_DRINK;	
 	}
 
 	@Override
@@ -179,12 +184,12 @@ public class Potion extends Item {
 	}
 
 	public boolean isKnown() {
-		return PotionInfo.isKnown(this);
+		return potionInfo.isKnown(type);
 	}
 
 	public void setKnown() {
-		if (!PotionInfo.isKnown(this)) {
-			PotionInfo.know(this);
+		if (potionInfo.isUnknown(type)) {
+			potionInfo.know(type);
 		}	
 	}
 

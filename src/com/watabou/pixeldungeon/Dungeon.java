@@ -99,6 +99,7 @@ public class Dungeon {
 	public static ImpQuest impQuest;
 	public static BlacksmithQuest blacksmithQuest;
 	public static Journal journal;
+	public static PotionInfo potionInfo;
 
 	// Hero's field of view
 	public static boolean[] visible = new boolean[Level.LENGTH];
@@ -115,9 +116,9 @@ public class Dungeon {
 
 		PathFinder.setMapSize(Level.WIDTH, Level.HEIGHT);
 
-		StringResolver resolver = new DefaultStringResolver();
 		Scroll.initLabels();
-		PotionInfo.initColors(resolver);
+		potionInfo = new PotionInfo();
+		potionInfo.randomize();
 		Wand.initWoods();
 		Ring.initGems();
 
@@ -422,7 +423,7 @@ public class Dungeon {
 			QuickSlot.save(bundle);
 
 			Scroll.save(bundle);
-			PotionInfo.save(bundle);
+			potionInfo.save(bundle);
 			Wand.save(bundle);
 			Ring.save(bundle);
 
@@ -489,7 +490,10 @@ public class Dungeon {
 		}
 		StringResolver resolver = new DefaultStringResolver();
 		Scroll.restore(bundle);
-		PotionInfo.restore(bundle, resolver);
+		if(potionInfo == null) {
+			potionInfo = new PotionInfo();
+		}
+		potionInfo.restore(bundle, resolver);
 		Wand.restore(bundle);
 		Ring.restore(bundle);
 

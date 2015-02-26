@@ -42,12 +42,13 @@ public class PotionOfPurity extends Potion {
 	
 	private static final int DISTANCE	= 2;
 
-	public PotionOfPurity() {
+	public PotionOfPurity(PotionInfo potionInfo) {
+		super(potionInfo);
 		init();
 	}
 	
-	public PotionOfPurity(StringResolver resolver) {
-		super(resolver);
+	public PotionOfPurity(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		init();
 	}
 	

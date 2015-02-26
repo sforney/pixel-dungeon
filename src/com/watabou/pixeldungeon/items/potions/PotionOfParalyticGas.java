@@ -27,12 +27,13 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfParalyticGas extends Potion {
-	public PotionOfParalyticGas() {
+	public PotionOfParalyticGas(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfParalyticGas_Name);
 	}
 	
-	public PotionOfParalyticGas(StringResolver resolver) {
-		super(resolver);
+	public PotionOfParalyticGas(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfParalyticGas_Name);
 	}
 	

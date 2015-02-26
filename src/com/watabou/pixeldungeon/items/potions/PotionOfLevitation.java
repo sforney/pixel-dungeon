@@ -25,12 +25,13 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLevitation extends Potion {
 	
-	public PotionOfLevitation() {
+	public PotionOfLevitation(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfLevitation_Name);
 	}
 	
-	public PotionOfLevitation(StringResolver resolver) {
-		super(resolver);
+	public PotionOfLevitation(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfLevitation_Name);
 	}
 

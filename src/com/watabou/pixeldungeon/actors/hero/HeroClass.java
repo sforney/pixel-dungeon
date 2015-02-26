@@ -20,6 +20,7 @@ package com.watabou.pixeldungeon.actors.hero;
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.items.TomeOfMastery;
 import com.watabou.pixeldungeon.items.armor.ClothArmor;
@@ -113,7 +114,7 @@ public enum HeroClass {
 		
 		QuickSlot.primaryValue = Dart.class;
 		
-		new PotionOfStrength().setKnown();
+		new PotionOfStrength(Dungeon.potionInfo).setKnown();
 	}
 	
 	private static void initMage( Hero hero ) {	

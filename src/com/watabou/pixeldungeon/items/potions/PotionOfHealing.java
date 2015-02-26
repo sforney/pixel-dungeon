@@ -31,13 +31,13 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfHealing extends Potion {
 
-	public PotionOfHealing() {
-		super();
+	public PotionOfHealing(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfHealing_Name);
 	}
 	
-	public PotionOfHealing(StringResolver resolver) {
-		super(resolver);
+	public PotionOfHealing(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfHealing_Name);
 	}
 	

@@ -17,6 +17,7 @@
  */
 package com.watabou.pixeldungeon.levels.painters;
 
+import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.actors.mobs.Piranha;
 import com.watabou.pixeldungeon.items.Generator;
 import com.watabou.pixeldungeon.items.Heap;
@@ -69,7 +70,7 @@ public class PoolPainter extends Painter {
 				: Heap.Type.HEAP;
 		set(level, pos, Terrain.PEDESTAL);
 
-		level.addItemToSpawn(new PotionOfInvisibility());
+		level.addItemToSpawn(new PotionOfInvisibility(Dungeon.potionInfo));
 
 		for (int i = 0; i < NPIRANHAS; i++) {
 			Piranha piranha = new Piranha();

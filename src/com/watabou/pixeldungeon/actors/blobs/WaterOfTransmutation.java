@@ -70,8 +70,8 @@ public class WaterOfTransmutation extends WellWater {
 		}
 
 		if (item != null) {
-			Dungeon.journal.remove(new Record(
-					Feature.WELL_OF_TRANSMUTATION, Dungeon.depth));
+			Dungeon.journal.remove(new Record(Feature.WELL_OF_TRANSMUTATION,
+					Dungeon.depth));
 		}
 
 		return item;
@@ -134,8 +134,8 @@ public class WaterOfTransmutation extends WellWater {
 			n.cursedKnown = w.cursedKnown;
 			n.cursed = w.cursed;
 
-			Dungeon.journal.remove(new Record(
-					Feature.WELL_OF_TRANSMUTATION, Dungeon.depth));
+			Dungeon.journal.remove(new Record(Feature.WELL_OF_TRANSMUTATION,
+					Dungeon.depth));
 
 			return n;
 		} else {
@@ -214,15 +214,10 @@ public class WaterOfTransmutation extends WellWater {
 
 	private Potion changePotion(Potion p) {
 		if (p instanceof PotionOfStrength) {
-
-			return new PotionOfMight();
-
+			return new PotionOfMight(Dungeon.potionInfo);
 		} else if (p instanceof PotionOfMight) {
-
-			return new PotionOfStrength();
-
+			return new PotionOfStrength(Dungeon.potionInfo);
 		} else {
-
 			Potion n;
 			do {
 				n = (Potion) Generator.random(Category.POTION);

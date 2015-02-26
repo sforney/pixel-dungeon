@@ -134,33 +134,30 @@ public class Blob extends Actor {
 	}
 	
 	protected void evolve() {
-		
-		boolean[] notBlocking = BArray.not( Level.solid, null );
-		
 		for (int i=1; i < HEIGHT-1; i++) {
 			
 			int from = i * WIDTH + 1;
 			int to = from + WIDTH - 2;
 			
 			for (int pos=from; pos < to; pos++) {
-				if (notBlocking[pos]) {
+				if (!Level.solid[pos]) {
 					
 					int count = 1;
 					int sum = cur[pos];
 					
-					if (notBlocking[pos-1]) {
+					if (!Level.solid[pos-1]) {
 						sum += cur[pos-1];
 						count++;
 					}
-					if (notBlocking[pos+1]) {
+					if (!Level.solid[pos+1]) {
 						sum += cur[pos+1];
 						count++;
 					}
-					if (notBlocking[pos-WIDTH]) {
+					if (!Level.solid[pos-WIDTH]) {
 						sum += cur[pos-WIDTH];
 						count++;
 					}
-					if (notBlocking[pos+WIDTH]) {
+					if (!Level.solid[pos+WIDTH]) {
 						sum += cur[pos+WIDTH];
 						count++;
 					}

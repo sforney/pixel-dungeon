@@ -27,12 +27,13 @@ import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLiquidFlame extends Potion {
-	public PotionOfLiquidFlame() {
+	public PotionOfLiquidFlame(PotionInfo potionInfo) {
+		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfLiquidFlame_Name);
 	}
 	
-	public PotionOfLiquidFlame(StringResolver resolver) {
-		super(resolver);
+	public PotionOfLiquidFlame(PotionInfo potionInfo, StringResolver resolver) {
+		super(potionInfo, resolver);
 		name = resolver.getVar(R.string.PotionOfLiquidFlame_Name);
 	}
 
