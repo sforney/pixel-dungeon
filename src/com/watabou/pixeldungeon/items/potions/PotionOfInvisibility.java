@@ -33,15 +33,11 @@ public class PotionOfInvisibility extends Potion {
 	private static final float ALPHA = 0.4f;
 
 	public PotionOfInvisibility() {
-
+		name = resolver.getVar(R.string.PotionOfInvisibility_Name);
 	}
 
 	public PotionOfInvisibility(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfInvisibility_Name);
 	}
 

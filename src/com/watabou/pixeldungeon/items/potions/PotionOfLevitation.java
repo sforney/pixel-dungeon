@@ -26,18 +26,14 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 public class PotionOfLevitation extends Potion {
 	
 	public PotionOfLevitation() {
-		
+		name = resolver.getVar(R.string.PotionOfLevitation_Name);
 	}
 	
 	public PotionOfLevitation(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfLevitation_Name);
 	}
-	
+
 	@Override
 	protected void apply( Hero hero ) {
 		setKnown();

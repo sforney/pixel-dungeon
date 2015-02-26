@@ -28,15 +28,11 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfMight extends PotionOfStrength {
 	public PotionOfMight() {
-		
+		name = resolver.getVar(R.string.PotionOfMight_Name);
 	}
 	
 	public PotionOfMight(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfMight_Name);
 	}
 	

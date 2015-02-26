@@ -47,9 +47,10 @@ public class Potion extends Item {
 
 	private static final float TIME_TO_DRINK = 1f;
 
-	private String color;
+	protected String color;
 
 	public Potion() {
+		super();
 		init();
 	}
 
@@ -58,17 +59,18 @@ public class Potion extends Item {
 		init();
 	}
 
-	public void init() {
-		image = PotionInfo.getImage(this);
-		color = PotionInfo.getLabel(this);
-		stackable = true;
-		defaultAction = AC_DRINK;
-		AC_DRINK = resolver.getVar(R.string.Potion_ACDrink);
+	private void init() {
 		TXT_HARMFUL = resolver.getVar(R.string.Potion_Harmfull);
 		TXT_YES = resolver.getVar(R.string.Potion_Yes);
 		TXT_NO = resolver.getVar(R.string.Potion_No);
 		TXT_R_U_SURE_DRINK = resolver.getVar(R.string.Potion_SureDrink);
 		TXT_R_U_SURE_THROW = resolver.getVar(R.string.Potion_SureThrow);
+		
+		image = PotionInfo.getImage(this);
+		color = PotionInfo.getLabel(this);
+		stackable = true;
+		AC_DRINK = resolver.getVar(R.string.Potion_ACDrink);
+		defaultAction = AC_DRINK;		
 	}
 
 	@Override
@@ -170,7 +172,7 @@ public class Potion extends Item {
 	public void shatter(int cell) {
 		if (Dungeon.visible[cell]) {
 			GLog.i(String.format(resolver.getVar(R.string.Potion_Shatter),
-					color()));
+					color));
 			Sample.INSTANCE.play(Assets.SND_SHATTER);
 			splash(cell);
 		}
@@ -192,9 +194,10 @@ public class Potion extends Item {
 		return this;
 	}
 
+	/*
 	protected String color() {
 		return color;
-	}
+	}*/
 
 	@Override
 	public String name() {

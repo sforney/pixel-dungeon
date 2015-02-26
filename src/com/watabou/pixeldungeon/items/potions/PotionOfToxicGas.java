@@ -28,15 +28,11 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfToxicGas extends Potion {
 	public PotionOfToxicGas() {
-		
+		name = resolver.getVar(R.string.PotionOfToxicGas_Name);
 	}
 	
 	public PotionOfToxicGas(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfToxicGas_Name);
 	}
 

@@ -32,15 +32,12 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 public class PotionOfHealing extends Potion {
 
 	public PotionOfHealing() {
-		
+		super();
+		name = resolver.getVar(R.string.PotionOfHealing_Name);
 	}
 	
 	public PotionOfHealing(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfHealing_Name);
 	}
 	
@@ -51,8 +48,7 @@ public class PotionOfHealing extends Potion {
 		GLog.p(resolver.getVar(R.string.PotionOfHealing_Apply));
 	}
 	
-	public static void heal( Hero hero ) {
-		
+	public static void heal( Hero hero ) {	
 		hero.HP = hero.HT;
 		BuffOps.detach( hero, Poison.class );
 		BuffOps.detach( hero, Cripple.class );

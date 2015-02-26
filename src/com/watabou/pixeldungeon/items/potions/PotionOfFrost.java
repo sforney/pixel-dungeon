@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.potions;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -34,15 +33,11 @@ public class PotionOfFrost extends Potion {
 	private static final int DISTANCE	= 2;
 	
 	public PotionOfFrost() {
-		
+		name = resolver.getVar(R.string.PotionOfFrost_Name);
 	}
 	
 	public PotionOfFrost(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfFrost_Name);
 	}
 	

@@ -28,15 +28,11 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLiquidFlame extends Potion {
 	public PotionOfLiquidFlame() {
-		
+		name = resolver.getVar(R.string.PotionOfLiquidFlame_Name);
 	}
 	
 	public PotionOfLiquidFlame(StringResolver resolver) {
 		super(resolver);
-		init();
-	}
-	
-	public void init() {
 		name = resolver.getVar(R.string.PotionOfLiquidFlame_Name);
 	}
 

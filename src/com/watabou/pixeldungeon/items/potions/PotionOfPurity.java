@@ -43,7 +43,7 @@ public class PotionOfPurity extends Potion {
 	private static final int DISTANCE	= 2;
 
 	public PotionOfPurity() {
-		
+		init();
 	}
 	
 	public PotionOfPurity(StringResolver resolver) {
@@ -51,7 +51,7 @@ public class PotionOfPurity extends Potion {
 		init();
 	}
 	
-	public void init() {
+	private void init() {
 		name = resolver.getVar(R.string.PotionOfPurity_Name);
 		TXT_NO_SMELL  = resolver.getVar(R.string.PotionOfPurity_NoSmell);
 		TXT_FRESHNESS = resolver.getVar(R.string.PotionOfPurity_Freshness);
