@@ -31,7 +31,10 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 public class PotionOfInvisibility extends Potion {
 
 	private static final float ALPHA = 0.4f;
-
+	public PotionOfInvisibility() {
+		name = resolver.getVar(R.string.PotionOfInvisibility_Name);
+	}
+	
 	public PotionOfInvisibility(PotionInfo potionInfo) {
 		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfInvisibility_Name);

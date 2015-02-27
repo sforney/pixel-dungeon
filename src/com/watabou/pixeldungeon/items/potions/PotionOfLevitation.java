@@ -24,6 +24,9 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfLevitation extends Potion {
+	public PotionOfLevitation() {
+		name = resolver.getVar(R.string.PotionOfLevitation_Name);		
+	}
 	
 	public PotionOfLevitation(PotionInfo potionInfo) {
 		super(potionInfo);

@@ -51,6 +51,16 @@ public class Potion extends Item {
 
 	protected String color;
 
+	/*
+	 * This constructor is still needed as loading uses reflection with a zero-arg
+	 * constructor to recreate potions (and everything else).  Remove once that
+	 * system has been replaced with something that doesn't use reflection
+	 */
+	public Potion() {
+		this.potionInfo = Dungeon.potionInfo;
+		init();
+	}
+	
 	public Potion(PotionInfo potionInfo) {
 		super();
 		this.potionInfo = potionInfo;

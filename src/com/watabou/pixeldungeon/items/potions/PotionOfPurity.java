@@ -41,6 +41,10 @@ public class PotionOfPurity extends Potion {
 	private static String TXT_NO_SMELL;
 	
 	private static final int DISTANCE	= 2;
+	
+	public PotionOfPurity() {
+		init();
+	}
 
 	public PotionOfPurity(PotionInfo potionInfo) {
 		super(potionInfo);

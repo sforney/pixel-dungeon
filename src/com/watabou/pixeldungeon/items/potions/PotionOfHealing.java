@@ -30,7 +30,10 @@ import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.pixeldungeon.utils.StringResolver;
 
 public class PotionOfHealing extends Potion {
-
+	public PotionOfHealing() {
+		name = resolver.getVar(R.string.PotionOfHealing_Name);		
+	}
+	
 	public PotionOfHealing(PotionInfo potionInfo) {
 		super(potionInfo);
 		name = resolver.getVar(R.string.PotionOfHealing_Name);
