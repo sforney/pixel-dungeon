@@ -32,7 +32,9 @@ public class PotionOfFrost extends Potion {
 	
 	private static final int DISTANCE	= 2;
 	
-	public PotionOfFrost() {}
+	public PotionOfFrost() {
+		name = resolver.getVar(R.string.PotionOfFrost_Name);
+	}
 	
 	public PotionOfFrost(PotionInfo potionInfo) {
 		super(potionInfo);
