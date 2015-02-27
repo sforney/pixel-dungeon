@@ -19,20 +19,33 @@ package com.watabou.pixeldungeon.actors.mobs;
 
 import java.util.HashSet;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.effects.Speck;
+import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.items.potions.PotionOfHealing;
 import com.watabou.pixeldungeon.items.weapon.enchantments.Leech;
 import com.watabou.pixeldungeon.sprites.BatSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Bat extends Mob {
-
+	private PotionInfo potionInfo;
+	
 	public Bat() {
-		name = Game.getVar(R.string.Bat_Name);
+		potionInfo = Dungeon.potionInfo;
+		init();
+	}
+	
+	public Bat(PotionInfo potionInfo, StringResolver resolver) {
+		super(resolver);
+		this.potionInfo = potionInfo;
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.Bat_Name);
 		spriteClass = BatSprite.class;
 		
 		HP = HT = 30;
@@ -44,7 +57,7 @@ public class Bat extends Mob {
 		
 		flying = true;
 		
-		loot = new PotionOfHealing(Dungeon.potionInfo);
+		loot = new PotionOfHealing(potionInfo, resolver);
 		lootChance = 0.125f;
 	}
 	
@@ -65,7 +78,7 @@ public class Bat extends Mob {
 	
 	@Override
 	public String defenseVerb() {
-		return Game.getVar(R.string.Bat_Defense);
+		return resolver.getVar(R.string.Bat_Defense);
 	}
 	
 	@Override
@@ -83,7 +96,7 @@ public class Bat extends Mob {
 	
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Bat_Desc);
+		return resolver.getVar(R.string.Bat_Desc);
 	}
 	
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();

@@ -182,7 +182,7 @@ public class WndCatalogus extends WndTabbed {
 
 			try {
 				item = cl.newInstance();
-				if (identified == item.isIdentified()) {
+				if (item.isIdentified()) {
 					sprite.view(item.image(), null);
 					label.text(item.name());
 				} else {
