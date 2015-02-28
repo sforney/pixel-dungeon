@@ -74,6 +74,7 @@ public class Potion extends Item {
 	}
 
 	private void init() {
+		TXT_BENEFICIAL = resolver.getVar(R.string.Potion_Beneficial);
 		TXT_HARMFUL = resolver.getVar(R.string.Potion_Harmfull);
 		TXT_YES = resolver.getVar(R.string.Potion_Yes);
 		TXT_NO = resolver.getVar(R.string.Potion_No);
