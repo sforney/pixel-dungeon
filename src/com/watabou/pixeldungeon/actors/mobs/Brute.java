@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.mobs;
 
 import java.util.HashSet;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
@@ -28,15 +27,25 @@ import com.watabou.pixeldungeon.items.Gold;
 import com.watabou.pixeldungeon.sprites.BruteSprite;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Random;
 
 public class Brute extends Mob {
-
-	private static final String TXT_ENRAGED = Game.getVar(R.string.Brute_Enraged);
+	private String TXT_ENRAGED;
 	
-	{
-		name = Game.getVar(R.string.Brute_Name);
+	public Brute() {
+		init();
+	}
+	
+	public Brute(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.Brute_Name);
+		TXT_ENRAGED = resolver.getVar(R.string.Brute_Enraged);
 		spriteClass = BruteSprite.class;
 		
 		HP = HT = 40;
@@ -46,7 +55,7 @@ public class Brute extends Mob {
 		maxLvl = 15;
 		
 		loot = Gold.class;
-		lootChance = 0.5f;
+		lootChance = 0.5f;		
 	}
 	
 	private boolean enraged = false;
@@ -83,14 +92,14 @@ public class Brute extends Mob {
 			spend( TICK );
 			if (Dungeon.visible[pos]) {
 				GLog.w( TXT_ENRAGED, name );
-				sprite.showStatus( CharSprite.NEGATIVE, Game.getVar(R.string.Brute_StaEnraged));
+				sprite.showStatus( CharSprite.NEGATIVE, resolver.getVar(R.string.Brute_StaEnraged));
 			}
 		}
 	}
 	
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Brute_Desc);
+		return resolver.getVar(R.string.Brute_Desc);
 	}
 	
 	private static final HashSet<Class<?>> IMMUNITIES = new HashSet<Class<?>>();
@@ -101,5 +110,13 @@ public class Brute extends Mob {
 	@Override
 	public HashSet<Class<?>> immunities() {
 		return IMMUNITIES;
+	}
+
+	public boolean isEnraged() {
+		return enraged;
+	}
+
+	public void setEnraged(boolean enraged) {
+		this.enraged = enraged;
 	}
 }

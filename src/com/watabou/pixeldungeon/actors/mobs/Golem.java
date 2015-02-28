@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.actors.mobs;
 
 import java.util.HashSet;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
@@ -28,12 +27,21 @@ import com.watabou.pixeldungeon.actors.buffs.Sleep;
 import com.watabou.pixeldungeon.actors.buffs.Terror;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfPsionicBlast;
 import com.watabou.pixeldungeon.sprites.GolemSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Golem extends Mob {
+	public Golem() {
+		init();
+	}
 	
-	{
-		name = Game.getVar(R.string.Golem_Name);
+	public Golem(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.Golem_Name);
 		spriteClass = GolemSprite.class;
 		
 		HP = HT = 85;
@@ -65,7 +73,7 @@ public class Golem extends Mob {
 	
 	@Override
 	public String defenseVerb() {
-		return Game.getVar(R.string.Golem_Defense);
+		return resolver.getVar(R.string.Golem_Defense);
 	}
 	
 	@Override
@@ -77,7 +85,7 @@ public class Golem extends Mob {
 	
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Golem_Desc);
+		return resolver.getVar(R.string.Golem_Desc);
 	}
 	
 	private static final HashSet<Class<?>> RESISTANCES = new HashSet<Class<?>>();

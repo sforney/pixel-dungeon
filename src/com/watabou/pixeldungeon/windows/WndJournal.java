@@ -30,6 +30,7 @@ import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.Icons;
 import com.watabou.pixeldungeon.ui.ScrollPane;
 import com.watabou.pixeldungeon.ui.Window;
+import com.watabou.pixeldungeon.utils.DefaultStringResolver;
 
 public class WndJournal extends Window {
 	
@@ -84,7 +85,7 @@ public class WndJournal extends Window {
 		public ListItem( Feature f, int d ) {
 			super();
 			
-			feature.text( f.getDescription(f) );
+			feature.text( f.getDescription(new DefaultStringResolver()) );
 			feature.measure();
 			
 			depth.text( Integer.toString( d ) );
