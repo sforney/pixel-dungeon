@@ -52,7 +52,7 @@ public class Food extends Item {
 		init();
 	}
 	
-	public void init() {
+	private void init() {
 		stackable = true;
 		name = resolver.getVar(R.string.Food_Name);
 		image = ItemSpriteSheet.RATION;		
