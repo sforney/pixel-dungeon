@@ -17,6 +17,7 @@ import com.watabou.pixeldungeon.items.potions.PotionOfLiquidFlame;
 import com.watabou.pixeldungeon.items.potions.PotionOfMight;
 import com.watabou.pixeldungeon.items.potions.PotionOfMindVision;
 import com.watabou.pixeldungeon.items.potions.PotionOfParalyticGas;
+import com.watabou.pixeldungeon.items.potions.PotionOfPurity;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.potions.PotionOfToxicGas;
 import com.watabou.pixeldungeon.utils.StringResolver;
@@ -41,6 +42,6 @@ public class PotionTest {
 		pot = new PotionOfMindVision(potionInfo, resolver);
 		pot = new PotionOfParalyticGas(potionInfo, resolver);
 		pot = new PotionOfToxicGas(potionInfo, resolver);
+		pot = new PotionOfPurity(potionInfo, resolver);
 	}
-	
 }

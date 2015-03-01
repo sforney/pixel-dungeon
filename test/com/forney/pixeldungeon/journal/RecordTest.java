@@ -8,7 +8,6 @@ import org.junit.runners.JUnit4;
 
 import com.watabou.pixeldungeon.journal.Feature;
 import com.watabou.pixeldungeon.journal.Record;
-import com.watabou.utils.Bundle;
 
 @RunWith(JUnit4.class)
 public class RecordTest {

@@ -1,5 +1,7 @@
 package com.forney.pixeldungeon.actors.mobs;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,5 +24,23 @@ public class GolemTest {
 	public void createTest() {
 		@SuppressWarnings("unused")
 		Golem golem = new Golem(resolver);
+	}
+	
+	@Test
+	public void testDamageRoll() {
+		Golem golem = new Golem(resolver);
+		MobTestUtils.testDamageRoll(20, 40, golem);
+	}
+	
+	@Test
+	public void testDr() {
+		Golem golem = new Golem(resolver);
+		assertEquals(12, golem.dr());	
+	}
+	
+	@Test
+	public void testAttackSkill() {
+		Golem golem = new Golem(resolver);
+		assertEquals(28, golem.attackSkill(null));	
 	}
 }

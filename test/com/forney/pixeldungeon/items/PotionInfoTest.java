@@ -41,6 +41,7 @@ public class PotionInfoTest {
 		assertEquals("crimson", info.getLabel(PotionType.ParalyticGas));
 		assertEquals("silver", info.getLabel(PotionType.MindVision));
 		assertEquals("ivory", info.getLabel(PotionType.Strength));
+		assertEquals("indigo", info.getLabel(PotionType.Purity));
 	}
 
 	@Test
@@ -50,6 +51,17 @@ public class PotionInfoTest {
 		assertFalse(info.isKnown(PotionType.Experience));
 		info.know(PotionType.Experience);
 		assertTrue(info.isKnown(PotionType.Experience));
+		
+		info.getAllKnown().contains(PotionType.Experience);
+	}
+	
+	@Test
+	public void testAllKnown() {
+		PotionInfo info = new PotionInfo(
+				new TestStringResolver(), new TestRandom(2));
+		assertFalse(info.isKnown(PotionType.Experience));
+		info.know(PotionType.Experience);
+		assertTrue(info.getAllKnown().contains(PotionType.Experience));		
 	}
 
 	@Test
