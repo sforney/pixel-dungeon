@@ -42,11 +42,11 @@ public class MysteryMeat extends Food {
 		init();
 	}
 	
-	public void init() {
+	private void init() {
 		name = resolver.getVar(R.string.MysteryMeat_Name);
 		image = ItemSpriteSheet.MEAT;
 		energy = Hunger.STARVING - Hunger.HUNGRY;
-		message = resolver.getVar(R.string.MysteryMeat_Message);		
+		message = resolver.getVar(R.string.MysteryMeat_Message);	
 	}
 	
 	@Override

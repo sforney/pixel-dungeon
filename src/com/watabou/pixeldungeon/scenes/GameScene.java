@@ -569,8 +569,7 @@ public class GameScene extends PixelScene {
 	}
 
 	public static void gameOver() {
-		Banner gameOver = new Banner(
-				BannerSprites.get(BannerSprites.Type.GAME_OVER));
+		Banner gameOver = new Banner(BannerSprites.get(BannerSprites.GAME_OVER));
 		gameOver.show(0x000000, 1f);
 		scene.showBanner(gameOver);
 
@@ -580,7 +579,7 @@ public class GameScene extends PixelScene {
 	public static void bossSlain() {
 		if (Dungeon.hero.isAlive()) {
 			Banner bossSlain = new Banner(
-					BannerSprites.get(BannerSprites.Type.BOSS_SLAIN));
+					BannerSprites.get(BannerSprites.BOSS_SLAIN));
 			bossSlain.show(0xFFFFFF, 0.3f, 5f);
 			scene.showBanner(bossSlain);
 

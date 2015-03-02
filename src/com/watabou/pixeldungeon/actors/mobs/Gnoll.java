@@ -23,12 +23,21 @@ import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
 import com.watabou.pixeldungeon.items.Gold;
 import com.watabou.pixeldungeon.sprites.GnollSprite;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Random;
 
 public class Gnoll extends Mob {
-
-	{
-		name = Game.getVar(R.string.Gnoll_Name);
+	public Gnoll() {
+		init();
+	}
+	
+	public Gnoll(StringResolver resolver) {
+		super(resolver);
+		init();
+	}
+	
+	public void init() {
+		name = resolver.getVar(R.string.Gnoll_Name);
 		spriteClass = GnollSprite.class;
 
 		HP = HT = 12;
@@ -64,6 +73,6 @@ public class Gnoll extends Mob {
 
 	@Override
 	public String description() {
-		return Game.getVar(R.string.Gnoll_Desc);
+		return resolver.getVar(R.string.Gnoll_Desc);
 	}
 }
