@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.items.wands;
 
 import java.util.ArrayList;
 
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.DungeonTilemap;
 import com.watabou.pixeldungeon.R;
@@ -32,18 +31,32 @@ import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class WandOfDisintegration extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfDisintegration_Name);
-		hitChars = false;
+	public WandOfDisintegration() {
+		init();
 	}
 
+	public WandOfDisintegration(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfDisintegration(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfDisintegration_Name);
+		hitChars = false;
+	}
+	
 	@Override
 	protected void onZap(int cell) {
-
 		boolean terrainAffected = false;
 
 		int level = level();
@@ -110,6 +123,6 @@ public class WandOfDisintegration extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfDisintegration_Info);
+		return resolver.getVar(R.string.WandOfDisintegration_Info);
 	}
 }

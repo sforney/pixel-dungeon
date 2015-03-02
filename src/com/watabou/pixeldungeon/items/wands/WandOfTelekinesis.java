@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -33,28 +32,43 @@ import com.watabou.pixeldungeon.items.potions.Potion;
 import com.watabou.pixeldungeon.items.potions.PotionOfMight;
 import com.watabou.pixeldungeon.items.potions.PotionOfStrength;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
-import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfEnchantment;
+import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfTelekinesis extends Wand {
+	private static String TXT_YOU_NOW_HAVE;
 
-	private static final String TXT_YOU_NOW_HAVE = Game
-			.getVar(R.string.WandOfTelekinesis_YouNowHave);
-	{
-		name = Game.getVar(R.string.WandOfTelekinesis_Name);
+	public WandOfTelekinesis() {
+		init();
+	}
+
+	public WandOfTelekinesis(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+
+	public WandOfTelekinesis(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+
+	private void init() {
+		TXT_YOU_NOW_HAVE = resolver
+				.getVar(R.string.WandOfTelekinesis_YouNowHave);
+		name = resolver.getVar(R.string.WandOfTelekinesis_Name);
 		hitChars = false;
 	}
 
 	@Override
 	protected void onZap(int cell) {
-
 		boolean mapUpdated = false;
 
 		int maxDistance = level() + 4;
@@ -64,23 +78,17 @@ public class WandOfTelekinesis extends Wand {
 		Heap heap = null;
 
 		for (int i = 1; i < Ballistica.distance; i++) {
-
 			int c = Ballistica.trace[i];
-
 			int before = Dungeon.level.map[c];
 
 			if ((ch = LevelState.findChar(c)) != null) {
-
 				if (i == Ballistica.distance - 1) {
-
 					ch.takeDamage(maxDistance - 1 - i, this);
-
 				} else {
-
 					int next = Ballistica.trace[i + 1];
 					if ((Level.passable[next] || Level.avoid[next])
 							&& LevelState.findChar(next) == null) {
-						LevelState.add(new Pushing(ch, ch.pos, next) ,-1);
+						LevelState.add(new Pushing(ch, ch.pos, next), -1);
 
 						ch.pos = next;
 						ch.freeCell(next);
@@ -91,11 +99,8 @@ public class WandOfTelekinesis extends Wand {
 						} else {
 							Dungeon.level.press(ch.pos, ch);
 						}
-
 					} else {
-
 						ch.takeDamage(maxDistance - 1 - i, this);
-
 					}
 				}
 			}
@@ -115,16 +120,11 @@ public class WandOfTelekinesis extends Wand {
 
 			Dungeon.level.press(c, null);
 			if (before == Terrain.OPEN_DOOR && LevelState.findChar(c) == null) {
-
 				Level.set(c, Terrain.DOOR);
 				GameScene.updateMap(c);
-
 			} else if (Level.water[c]) {
-
 				GameScene.ripple(c);
-
 			}
-
 			if (!mapUpdated && Dungeon.level.map[c] != before) {
 				mapUpdated = true;
 			}
@@ -164,6 +164,6 @@ public class WandOfTelekinesis extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfTelekinesis_Info);
+		return resolver.getVar(R.string.WandOfTelekinesis_Info);
 	}
 }

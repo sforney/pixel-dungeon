@@ -39,7 +39,7 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.potions.PotionInfo;
 import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
-import com.watabou.pixeldungeon.items.wands.Wand;
+import com.watabou.pixeldungeon.items.wands.WandInfo;
 import com.watabou.pixeldungeon.journal.Journal;
 import com.watabou.pixeldungeon.levels.CavesBossLevel;
 import com.watabou.pixeldungeon.levels.CavesLevel;
@@ -100,6 +100,7 @@ public class Dungeon {
 	public static BlacksmithQuest blacksmithQuest;
 	public static Journal journal;
 	public static PotionInfo potionInfo;
+	public static WandInfo wandInfo;
 
 	// Hero's field of view
 	public static boolean[] visible = new boolean[Level.LENGTH];
@@ -118,8 +119,9 @@ public class Dungeon {
 
 		Scroll.initLabels();
 		potionInfo = new PotionInfo();
+		wandInfo = new WandInfo();
 		potionInfo.randomize();
-		Wand.initWoods();
+		wandInfo.randomize();
 		Ring.initGems();
 
 		Statistics.reset();
@@ -424,7 +426,7 @@ public class Dungeon {
 
 			Scroll.save(bundle);
 			potionInfo.save(bundle);
-			Wand.save(bundle);
+			wandInfo.save(bundle);
 			Ring.save(bundle);
 
 			Bundle badges = new Bundle();
@@ -494,7 +496,10 @@ public class Dungeon {
 			potionInfo = new PotionInfo();
 		}
 		potionInfo.restore(bundle, resolver);
-		Wand.restore(bundle);
+		if(wandInfo == null) {
+			wandInfo = new WandInfo();
+		}
+		wandInfo.restore(bundle, resolver);
 		Ring.restore(bundle);
 
 		potionOfStrength = bundle.getInt(POS);

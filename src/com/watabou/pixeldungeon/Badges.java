@@ -26,6 +26,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import android.content.Context;
+
 import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.actors.mobs.Acidic;
 import com.watabou.pixeldungeon.actors.mobs.Albino;
@@ -41,7 +43,6 @@ import com.watabou.pixeldungeon.items.rings.Ring;
 import com.watabou.pixeldungeon.items.rings.RingOfHaggler;
 import com.watabou.pixeldungeon.items.rings.RingOfThorns;
 import com.watabou.pixeldungeon.items.scrolls.Scroll;
-import com.watabou.pixeldungeon.items.wands.Wand;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.utils.GLog;
 import com.watabou.utils.Bundle;
@@ -235,7 +236,7 @@ public class Badges {
 			store( bundle, global );
 			
 			try {
-				OutputStream output = Game.instance.openFileOutput( BADGES_FILE, Game.MODE_PRIVATE );
+				OutputStream output = Game.instance.openFileOutput( BADGES_FILE, Context.MODE_PRIVATE );
 				Bundle.write( bundle, output );
 				output.close();
 				saveNeeded = false;
@@ -475,9 +476,9 @@ public class Badges {
 		}
 	}
 	
-	public static void validateAllWandsIdentified() {
+	public static void validateAllWandsIdentified(boolean allKnown) {
 		if (Dungeon.hero != null && Dungeon.hero.isAlive() && 
-			!local.contains( Badge.ALL_WANDS_IDENTIFIED ) && Wand.allKnown()) {
+			!local.contains( Badge.ALL_WANDS_IDENTIFIED ) && allKnown) {
 			
 			Badge badge = Badge.ALL_WANDS_IDENTIFIED;
 			local.add( badge );

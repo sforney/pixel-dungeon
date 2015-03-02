@@ -1,4 +1,4 @@
-package com.forney.pixeldungeon.items;
+package com.forney.pixeldungeon.items.potions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -30,16 +29,31 @@ import com.watabou.pixeldungeon.levels.Terrain;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfRegrowth extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfRegrowth_Name);
+	public WandOfRegrowth() {
+		init();
 	}
+
+	public WandOfRegrowth(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfRegrowth(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfRegrowth_Name);
+	}
+	
 	
 	@Override
 	protected void onZap( int cell ) {
-		
 		for (int i=1; i < Ballistica.distance-1; i++) {
 			int p = Ballistica.trace[i];
 			int c = Dungeon.level.map[p];
@@ -62,7 +76,7 @@ public class WandOfRegrowth extends Wand {
 			GameScene.add( Blob.seed( cell, (level() + 2) * 20, Regrowth.class ) );
 			
 		} else {
-			GLog.i(Game.getVar(R.string.WandOfRegrowth_Info1));
+			GLog.i(resolver.getVar(R.string.WandOfRegrowth_Info1));
 		}
 	}
 	
@@ -73,6 +87,6 @@ public class WandOfRegrowth extends Wand {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfRegrowth_Info);
+		return resolver.getVar(R.string.WandOfRegrowth_Info);
 	}
 }

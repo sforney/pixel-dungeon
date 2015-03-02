@@ -17,6 +17,12 @@ public class TestStringResolver implements StringResolver {
 					"golden", "magenta", "charcoal", "ivory", "amber",
 					"bistre", "indigo", "silver" };
 		}
+		if (id == R.array.Wand_Wood) {
+			return new String[] { "holly", "yew", "ebony", "cherry", "teak",
+					"rowan", "willow", "mahogany", "bamboo", "purpleheart",
+					"oak", "birch" };
+		}
+
 		return new String[] { "" };
 	}
 }

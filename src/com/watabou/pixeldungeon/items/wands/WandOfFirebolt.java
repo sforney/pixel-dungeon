@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -34,15 +33,30 @@ import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class WandOfFirebolt extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfFirebolt_Name);
+	public WandOfFirebolt() {
+		init();
 	}
 
+	public WandOfFirebolt(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfFirebolt(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfFirebolt_Name);
+	}
+	
 	@Override
 	protected void onZap(int cell) {
 
@@ -67,9 +81,9 @@ public class WandOfFirebolt extends Wand {
 
 			if (ch == curUser && !ch.isAlive()) {
 				Dungeon.fail(Utils.format(
-						Game.getVar(R.string.ResultDescriptions_Wand), name,
+						resolver.getVar(R.string.ResultDescriptions_Wand), name,
 						Dungeon.depth));
-				GLog.n(Game.getVar(R.string.WandOfFirebolt_Info1));
+				GLog.n(resolver.getVar(R.string.WandOfFirebolt_Info1));
 			}
 		}
 	}
@@ -81,6 +95,6 @@ public class WandOfFirebolt extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfFirebolt_Info);
+		return resolver.getVar(R.string.WandOfFirebolt_Info);
 	}
 }

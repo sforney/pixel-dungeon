@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.noosa.tweeners.AlphaTweener;
 import com.watabou.pixeldungeon.Assets;
@@ -28,11 +27,26 @@ import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.Speck;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfBlink extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfBlink_Name);
+	public WandOfBlink() {
+		init();
+	}
+
+	public WandOfBlink(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfBlink(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfBlink_Name);
 	}
 
 	@Override
@@ -77,6 +91,6 @@ public class WandOfBlink extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfBlink_Info);
+		return resolver.getVar(R.string.WandOfBlink_Info);
 	}
 }

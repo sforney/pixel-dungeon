@@ -18,7 +18,6 @@
 package com.watabou.pixeldungeon.items.wands;
 
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -34,17 +33,32 @@ import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.utils.BArray;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
 import com.watabou.utils.Random;
 
 public class WandOfAvalanche extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfAvalanche_Name);
-		hitChars = false;
+	public WandOfAvalanche() {
+		init();
 	}
 
+	public WandOfAvalanche(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfAvalanche(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfAvalanche_Name);
+		hitChars = false;
+	}
+	
 	@Override
 	protected void onZap(int cell) {
 		Sample.INSTANCE.play(Assets.SND_ROCKS);
@@ -72,9 +86,9 @@ public class WandOfAvalanche extends Wand {
 
 		if (!curUser.isAlive()) {
 			Dungeon.fail(Utils.format(
-					Game.getVar(R.string.ResultDescriptions_Wand), name,
+					resolver.getVar(R.string.ResultDescriptions_Wand), name,
 					Dungeon.depth));
-			GLog.n(Game.getVar(R.string.WandOfAvalanche_Info1));
+			GLog.n(resolver.getVar(R.string.WandOfAvalanche_Info1));
 		}
 	}
 
@@ -85,6 +99,6 @@ public class WandOfAvalanche extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfAvalanche_Info);
+		return resolver.getVar(R.string.WandOfAvalanche_Info);
 	}
 }

@@ -19,10 +19,8 @@ package com.watabou.pixeldungeon.items.wands;
 
 import java.util.ArrayList;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
-import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
@@ -32,7 +30,6 @@ import com.watabou.pixeldungeon.actors.hero.Hero;
 import com.watabou.pixeldungeon.actors.hero.HeroClass;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.items.Item;
-import com.watabou.pixeldungeon.items.ItemStatusHandler;
 import com.watabou.pixeldungeon.items.KindOfWeapon;
 import com.watabou.pixeldungeon.items.bags.Bag;
 import com.watabou.pixeldungeon.items.rings.RingOfPower.Power;
@@ -40,93 +37,79 @@ import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.CellSelector;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.ui.QuickSlot;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Bundle;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public abstract class Wand extends KindOfWeapon {
-
 	private static final int USAGES_TO_KNOW = 40;
-
-	public static final String AC_ZAP = Game.getVar(R.string.Wand_ACZap);
-
-	private static final String TXT_WOOD = Game.getVar(R.string.Wand_Wood);
-	private static final String TXT_DAMAGE = Game.getVar(R.string.Wand_Damage);
-	private static final String TXT_WEAPON = Game.getVar(R.string.Wand_Weapon);
-
-	private static final String TXT_FIZZLES = Game
-			.getVar(R.string.Wand_Fizzles);
-	private static final String TXT_SELF_TARGET = Game
-			.getVar(R.string.Wand_SelfTarget);
-
-	private static final String TXT_IDENTIFY = Game
-			.getVar(R.string.Wand_Identify);
+	public static String AC_ZAP;
+	private static String TXT_WOOD;
+	private static String TXT_DAMAGE;
+	private static String TXT_WEAPON;
+	private static String TXT_FIZZLES;
+	private static String TXT_SELF_TARGET;
+	private static String TXT_IDENTIFY;
 
 	private static final float TIME_TO_ZAP = 1f;
 
+	private static final String UNFAMILIRIARITY = "unfamiliarity";
+	private static final String MAX_CHARGES = "maxCharges";
+	private static final String CUR_CHARGES = "curCharges";
+	private static final String CUR_CHARGE_KNOWN = "curChargeKnown";
+	
+
 	public int maxCharges = initialCharges();
 	public int curCharges = maxCharges;
+	private WandInfo wandInfo;
+	private WandType type;
 
 	protected Charger charger;
-
 	private boolean curChargeKnown = false;
-
 	private int usagesToKnow = USAGES_TO_KNOW;
-
 	protected boolean hitChars = true;
-
-	private static final Class<?>[] wands = { WandOfTeleportation.class,
-			WandOfSlowness.class, WandOfFirebolt.class, WandOfPoison.class,
-			WandOfRegrowth.class, WandOfBlink.class, WandOfLightning.class,
-			WandOfAmok.class, WandOfTelekinesis.class, WandOfFlock.class,
-			WandOfDisintegration.class, WandOfAvalanche.class };
-	private static final String[] woods = Game.getVars(R.array.Wand_Wood);
-	private static final Integer[] images = { ItemSpriteSheet.WAND_HOLLY,
-			ItemSpriteSheet.WAND_YEW, ItemSpriteSheet.WAND_EBONY,
-			ItemSpriteSheet.WAND_CHERRY, ItemSpriteSheet.WAND_TEAK,
-			ItemSpriteSheet.WAND_ROWAN, ItemSpriteSheet.WAND_WILLOW,
-			ItemSpriteSheet.WAND_MAHOGANY, ItemSpriteSheet.WAND_BAMBOO,
-			ItemSpriteSheet.WAND_PURPLEHEART, ItemSpriteSheet.WAND_OAK,
-			ItemSpriteSheet.WAND_BIRCH };
-
-	private static ItemStatusHandler<Wand> handler;
-
 	private String wood;
 
-	{
-		defaultAction = AC_ZAP;
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void initWoods() {
-		handler = new ItemStatusHandler<Wand>((Class<? extends Wand>[]) wands,
-				woods, images);
-	}
-
-	public static void save(Bundle bundle) {
-		handler.save(bundle);
-	}
-
-	@SuppressWarnings("unchecked")
-	public static void restore(Bundle bundle) {
-		handler = new ItemStatusHandler<Wand>((Class<? extends Wand>[]) wands,
-				woods, images, bundle);
-	}
-
+	/*
+	 * This constructor is still needed as loading uses reflection with a
+	 * zero-arg constructor to recreate wand (and everything else). Remove once
+	 * that system has been replaced with something that doesn't use reflection
+	 */
 	public Wand() {
+		this.wandInfo = Dungeon.wandInfo;
+		init();
+	}
+
+	public Wand(WandInfo wandInfo) {
 		super();
+		this.wandInfo = wandInfo;
+		init();
+	}
 
+	public Wand(WandInfo wandInfo, StringResolver resolver) {
+		super(resolver);
+		this.wandInfo = wandInfo;
+		init();
+	}
+
+	private void init() {
+		defaultAction = AC_ZAP;
 		calculateDamage();
+		AC_ZAP = resolver.getVar(R.string.Wand_ACZap);
 
-		try {
-			image = handler.image(this);
-			wood = handler.label(this);
-		} catch (Exception e) {
-			// Wand of Magic Missile
-		}
+		TXT_WOOD = resolver.getVar(R.string.Wand_Wood);
+		TXT_DAMAGE = resolver.getVar(R.string.Wand_Damage);
+		TXT_WEAPON = resolver.getVar(R.string.Wand_Weapon);
+		TXT_FIZZLES = resolver.getVar(R.string.Wand_Fizzles);
+		TXT_SELF_TARGET = resolver.getVar(R.string.Wand_SelfTarget);
+		TXT_IDENTIFY = resolver.getVar(R.string.Wand_Identify);
+
+		type = WandType.getType(this);
+		image = wandInfo.getImage(type);
+		wood = wandInfo.getLabel(type);
 	}
 
 	@Override
@@ -156,15 +139,11 @@ public abstract class Wand extends KindOfWeapon {
 	@Override
 	public void execute(Hero hero, String action) {
 		if (action.equals(AC_ZAP)) {
-
 			curUser = hero;
 			curItem = this;
 			GameScene.selectCell(zapper);
-
 		} else {
-
 			super.execute(hero, action);
-
 		}
 	}
 
@@ -210,20 +189,17 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	protected boolean isKnown() {
-		return handler.isKnown(this);
+		return wandInfo.isKnown(WandType.getType(this));
 	}
 
 	public void setKnown() {
-		if (!isKnown()) {
-			handler.know(this);
+		if (wandInfo.isUnknown(type)) {
+			wandInfo.know(type);
 		}
-
-		Badges.validateAllWandsIdentified();
 	}
 
 	@Override
 	public Item identify() {
-
 		setKnown();
 		curChargeKnown = true;
 		super.identify();
@@ -235,7 +211,6 @@ public abstract class Wand extends KindOfWeapon {
 
 	@Override
 	public String toString() {
-
 		StringBuilder sb = new StringBuilder(super.toString());
 
 		String status = status();
@@ -249,7 +224,7 @@ public abstract class Wand extends KindOfWeapon {
 	@Override
 	public String name() {
 		return isKnown() ? name : String.format(
-				Game.getVar(R.string.Wand_Name), wood);
+				resolver.getVar(R.string.Wand_Name), wood);
 	}
 
 	@Override
@@ -283,7 +258,6 @@ public abstract class Wand extends KindOfWeapon {
 
 	@Override
 	public Item upgrade() {
-
 		super.upgrade();
 
 		updateLevel();
@@ -291,21 +265,6 @@ public abstract class Wand extends KindOfWeapon {
 		updateQuickslot();
 
 		return this;
-	}
-
-	@Override
-	public Item degrade() {
-		super.degrade();
-
-		updateLevel();
-		updateQuickslot();
-
-		return this;
-	}
-
-	@Override
-	public int maxDurability(int lvl) {
-		return 5 * (lvl < 16 ? 16 - lvl : 1);
 	}
 
 	protected void updateLevel() {
@@ -332,7 +291,6 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	protected void wandUsed() {
-
 		curCharges--;
 		if (!isIdentified() && --usagesToKnow <= 0) {
 			identify();
@@ -340,9 +298,7 @@ public abstract class Wand extends KindOfWeapon {
 		} else {
 			updateQuickslot();
 		}
-
 		use();
-
 		curUser.spendAndNext(TIME_TO_ZAP);
 	}
 
@@ -356,10 +312,6 @@ public abstract class Wand extends KindOfWeapon {
 		}
 
 		return this;
-	}
-
-	public static boolean allKnown() {
-		return handler.known().size() == wands.length;
 	}
 
 	@Override
@@ -380,11 +332,6 @@ public abstract class Wand extends KindOfWeapon {
 		}
 		return price;
 	}
-
-	private static final String UNFAMILIRIARITY = "unfamiliarity";
-	private static final String MAX_CHARGES = "maxCharges";
-	private static final String CUR_CHARGES = "curCharges";
-	private static final String CUR_CHARGE_KNOWN = "curChargeKnown";
 
 	@Override
 	public void storeInBundle(Bundle bundle) {
@@ -407,18 +354,15 @@ public abstract class Wand extends KindOfWeapon {
 	}
 
 	protected static CellSelector.Listener zapper = new CellSelector.Listener() {
-
 		@Override
 		public void onSelect(Integer target) {
-
 			if (target != null) {
-
 				if (target == curUser.pos) {
 					GLog.i(TXT_SELF_TARGET);
 					return;
 				}
 
-				final Wand curWand = (Wand) Wand.curItem;
+				final Wand curWand = (Wand) Item.curItem;
 
 				curWand.setKnown();
 
@@ -429,7 +373,6 @@ public abstract class Wand extends KindOfWeapon {
 				QuickSlot.target(curItem, LevelState.findChar(cell));
 
 				if (curWand.curCharges > 0) {
-
 					curUser.busy();
 
 					curWand.fx(cell, new Callback() {
@@ -441,27 +384,23 @@ public abstract class Wand extends KindOfWeapon {
 					});
 
 					Invisibility.dispel();
-
 				} else {
-
 					curUser.spendAndNext(TIME_TO_ZAP);
 					GLog.w(TXT_FIZZLES);
 					curWand.levelKnown = true;
 
 					curWand.updateQuickslot();
 				}
-
 			}
 		}
 
 		@Override
 		public String prompt() {
-			return Game.getVar(R.string.Wand_Prompt);
+			return resolver.getVar(R.string.Wand_Prompt);
 		}
 	};
 
 	protected class Charger extends Buff {
-
 		private static final float TIME_TO_CHARGE = 40f;
 
 		@Override
@@ -474,7 +413,6 @@ public abstract class Wand extends KindOfWeapon {
 
 		@Override
 		public boolean act() {
-
 			if (curCharges < maxCharges) {
 				curCharges++;
 				updateQuickslot();

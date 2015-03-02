@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import com.watabou.noosa.Camera;
-import com.watabou.noosa.Game;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Char;
@@ -32,28 +31,43 @@ import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.levels.traps.LightningTrap;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.utils.Callback;
 import com.watabou.utils.Random;
 
 public class WandOfLightning extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfLightning_Name);
-	}
-
 	private ArrayList<Char> affected = new ArrayList<Char>();
 
 	private int[] points = new int[20];
 	private int nPoints;
 
+	public WandOfLightning() {
+		init();
+	}
+
+	public WandOfLightning(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfLightning(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfLightning_Name);
+	}
+	
 	@Override
 	protected void onZap(int cell) {
 		// Everything is processed in fx() method
 		if (!curUser.isAlive()) {
 			Dungeon.fail(Utils.format(
-					Game.getVar(R.string.ResultDescriptions_Wand), name,
+					resolver.getVar(R.string.ResultDescriptions_Wand), name,
 					Dungeon.depth));
-			GLog.n(Game.getVar(R.string.WandOfLightning_Info1));
+			GLog.n(resolver.getVar(R.string.WandOfLightning_Info1));
 		}
 	}
 
@@ -91,7 +105,6 @@ public class WandOfLightning extends Wand {
 
 	@Override
 	protected void fx(int cell, Callback callback) {
-
 		nPoints = 0;
 		points[nPoints++] = Dungeon.hero.pos;
 
@@ -113,6 +126,6 @@ public class WandOfLightning extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfLightning_Info);
+		return resolver.getVar(R.string.WandOfLightning_Info);
 	}
 }

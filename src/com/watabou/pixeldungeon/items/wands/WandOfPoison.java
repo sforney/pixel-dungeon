@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.R;
@@ -27,30 +26,46 @@ import com.watabou.pixeldungeon.actors.buffs.Poison;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfPoison extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfPoison_Name);
+	public WandOfPoison() {
+		init();
 	}
-	
+
+	public WandOfPoison(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+
+	public WandOfPoison(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+
+	private void init() {
+		name = resolver.getVar(R.string.WandOfPoison_Name);
+	}
+
 	@Override
-	protected void onZap( int cell ) {
-		Char ch = LevelState.findChar( cell );
+	protected void onZap(int cell) {
+		Char ch = LevelState.findChar(cell);
 		if (ch != null) {
-			BuffOps.affect( ch, Poison.class ).set( Poison.durationFactor( ch ) * (5 + level()) );
+			BuffOps.affect(ch, Poison.class).set(
+					Poison.durationFactor(ch) * (5 + level()));
 		} else {
-			GLog.i(Game.getVar(R.string.WandOfPoison_Info1));
+			GLog.i(resolver.getVar(R.string.WandOfPoison_Info1));
 		}
 	}
-	
-	protected void fx( int cell, Callback callback ) {
-		MagicMissile.poison( curUser.sprite.parent, curUser.pos, cell, callback );
-		Sample.INSTANCE.play( Assets.SND_ZAP );
+
+	protected void fx(int cell, Callback callback) {
+		MagicMissile.poison(curUser.sprite.parent, curUser.pos, cell, callback);
+		Sample.INSTANCE.play(Assets.SND_ZAP);
 	}
-	
+
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfPoison_Info);
+		return resolver.getVar(R.string.WandOfPoison_Info);
 	}
 }

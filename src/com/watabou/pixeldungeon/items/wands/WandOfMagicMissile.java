@@ -19,7 +19,6 @@ package com.watabou.pixeldungeon.items.wands;
 
 import java.util.ArrayList;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
@@ -31,30 +30,41 @@ import com.watabou.pixeldungeon.items.Item;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfUpgrade;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.ItemSpriteSheet;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.utils.Utils;
 import com.watabou.pixeldungeon.windows.WndBag;
 import com.watabou.utils.Random;
 
 public class WandOfMagicMissile extends Wand {
-
-	public static final String AC_DISENCHANT = Game
-			.getVar(R.string.WandOfMagicMissile_ACDisenchant);
-
-	private static final String TXT_SELECT_WAND = Game
-			.getVar(R.string.WandOfMagicMissile_SelectWand);
-
-	private static final String TXT_DISENCHANTED = Game
-			.getVar(R.string.WandOfMagicMissile_Desinchanted);
-
+	public static String AC_DISENCHANT;
+	private static String TXT_SELECT_WAND;
+	private static String TXT_DISENCHANTED;
 	private static final float TIME_TO_DISENCHANT = 2f;
-
 	private boolean disenchantEquipped;
 
-	{
-		name = Game.getVar(R.string.WandOfMagicMissile_Name);
-		image = ItemSpriteSheet.WAND_MAGIC_MISSILE;
+	public WandOfMagicMissile() {
+		init();
+	}
+
+	public WandOfMagicMissile(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+
+	public WandOfMagicMissile(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+
+	private void init() {
+		name = resolver.getVar(R.string.WandOfMagicMissile_Name);
+		AC_DISENCHANT = resolver
+				.getVar(R.string.WandOfMagicMissile_ACDisenchant);
+		TXT_SELECT_WAND = resolver
+				.getVar(R.string.WandOfMagicMissile_SelectWand);
+		TXT_DISENCHANTED = resolver
+				.getVar(R.string.WandOfMagicMissile_Desinchanted);
 	}
 
 	@Override
@@ -78,9 +88,9 @@ public class WandOfMagicMissile extends Wand {
 
 			if (ch == curUser && !ch.isAlive()) {
 				Dungeon.fail(Utils.format(
-						Game.getVar(R.string.ResultDescriptions_Wand), name,
-						Dungeon.depth));
-				GLog.n(Game.getVar(R.string.WandOfMagicMissile_Info1));
+						resolver.getVar(R.string.ResultDescriptions_Wand),
+						name, Dungeon.depth));
+				GLog.n(resolver.getVar(R.string.WandOfMagicMissile_Info1));
 			}
 		}
 	}
@@ -124,7 +134,7 @@ public class WandOfMagicMissile extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfMagicMissile_Info);
+		return resolver.getVar(R.string.WandOfMagicMissile_Info);
 	}
 
 	private final WndBag.Listener itemSelector = new WndBag.Listener() {

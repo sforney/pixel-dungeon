@@ -35,9 +35,7 @@ import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.pixeldungeon.windows.WndOptions;
 
 public class Potion extends Item {
-
 	public static String AC_DRINK;
-
 	private static String TXT_HARMFUL;
 	private static String TXT_BENEFICIAL;
 	private static String TXT_YES;
@@ -52,15 +50,16 @@ public class Potion extends Item {
 	protected String color;
 
 	/*
-	 * This constructor is still needed as loading uses reflection with a zero-arg
-	 * constructor to recreate potions (and everything else).  Remove once that
-	 * system has been replaced with something that doesn't use reflection
+	 * This constructor is still needed as loading uses reflection with a
+	 * zero-arg constructor to recreate potions (and everything else). Remove
+	 * once that system has been replaced with something that doesn't use
+	 * reflection
 	 */
 	public Potion() {
 		this.potionInfo = Dungeon.potionInfo;
 		init();
 	}
-	
+
 	public Potion(PotionInfo potionInfo) {
 		super();
 		this.potionInfo = potionInfo;
@@ -86,7 +85,7 @@ public class Potion extends Item {
 		image = potionInfo.getImage(type);
 		color = potionInfo.getLabel(type);
 		stackable = true;
-		defaultAction = AC_DRINK;	
+		defaultAction = AC_DRINK;
 	}
 
 	@Override
@@ -99,11 +98,9 @@ public class Potion extends Item {
 	@Override
 	public void execute(final Hero hero, String action) {
 		if (action.equals(AC_DRINK)) {
-
 			if (isKnown()
 					&& (this instanceof PotionOfLiquidFlame
 							|| this instanceof PotionOfToxicGas || this instanceof PotionOfParalyticGas)) {
-
 				GameScene.show(new WndOptions(TXT_HARMFUL, TXT_R_U_SURE_DRINK,
 						TXT_YES, TXT_NO) {
 					@Override
@@ -117,17 +114,14 @@ public class Potion extends Item {
 			} else {
 				drink(hero);
 			}
-
 		} else {
 
 			super.execute(hero, action);
-
 		}
 	}
 
 	@Override
 	public void doThrow(final Hero hero) {
-
 		if (isKnown()
 				&& (this instanceof PotionOfExperience
 						|| this instanceof PotionOfHealing
@@ -201,7 +195,7 @@ public class Potion extends Item {
 	public void setKnown() {
 		if (potionInfo.isUnknown(type)) {
 			potionInfo.know(type);
-		}	
+		}
 	}
 
 	@Override
@@ -209,11 +203,6 @@ public class Potion extends Item {
 		setKnown();
 		return this;
 	}
-
-	/*
-	protected String color() {
-		return color;
-	}*/
 
 	@Override
 	public String name() {

@@ -17,14 +17,13 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
 import com.watabou.pixeldungeon.R;
 import com.watabou.pixeldungeon.actors.Actor;
 import com.watabou.pixeldungeon.actors.Char;
-import com.watabou.pixeldungeon.actors.mobs.npcs.NPC;
+import com.watabou.pixeldungeon.actors.mobs.npcs.Sheep;
 import com.watabou.pixeldungeon.effects.CellEmitter;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.effects.Speck;
@@ -32,15 +31,28 @@ import com.watabou.pixeldungeon.levels.Level;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.mechanics.Ballistica;
 import com.watabou.pixeldungeon.scenes.GameScene;
-import com.watabou.pixeldungeon.sprites.SheepSprite;
 import com.watabou.pixeldungeon.utils.BArray;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 import com.watabou.utils.PathFinder;
-import com.watabou.utils.Random;
 
 public class WandOfFlock extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfFlock_Name);
+	public WandOfFlock() {
+		init();
+	}
+
+	public WandOfFlock(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+
+	public WandOfFlock(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+
+	private void init() {
+		name = resolver.getVar(R.string.WandOfFlock_Name);
 	}
 
 	@Override
@@ -75,7 +87,7 @@ public class WandOfFlock extends Wand {
 				for (int j = 0; j < Level.LENGTH; j++) {
 					if (PathFinder.distance[j] == dist) {
 
-						Sheep sheep = new Sheep();
+						Sheep sheep = new Sheep(resolver);
 						sheep.lifespan = lifespan;
 						sheep.pos = j;
 						GameScene.add(sheep);
@@ -100,49 +112,6 @@ public class WandOfFlock extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfFlock_Info);
-	}
-
-	public static class Sheep extends NPC {
-		private static final String[] QUOTES = Game
-				.getVars(R.array.WandOfFlock_SheepBaa);
-
-		{
-			name = Game.getVar(R.string.WandOfFlock_SheepName);
-			spriteClass = SheepSprite.class;
-		}
-
-		public float lifespan;
-
-		private boolean initialized = false;
-
-		@Override
-		public boolean act() {
-			if (initialized) {
-				HP = 0;
-
-				destroy();
-				sprite.die();
-
-			} else {
-				initialized = true;
-				spend(lifespan + Random.Float(2));
-			}
-			return true;
-		}
-
-		@Override
-		public void takeDamage(int dmg, Object src) {
-		}
-
-		@Override
-		public String description() {
-			return Game.getVar(R.string.WandOfFlock_SheepInfo);
-		}
-
-		@Override
-		public void interact() {
-			yell(Random.element(QUOTES));
-		}
+		return resolver.getVar(R.string.WandOfFlock_Info);
 	}
 }

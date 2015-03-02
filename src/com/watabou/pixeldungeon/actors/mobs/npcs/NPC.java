@@ -34,7 +34,7 @@ public abstract class NPC extends Mob {
 		init();
 	}
 	
-	public void init() {
+	private void init() {
 		HP = HT = 1;
 		EXP = 0;
 	

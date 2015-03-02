@@ -12,7 +12,8 @@ public enum WandType {
 	Telekinesis(WandOfTelekinesis.class),
 	Flock(WandOfFlock.class),
 	Disintegration(WandOfDisintegration.class),
-	Avalanche(WandOfAvalanche.class);
+	Avalanche(WandOfAvalanche.class),
+	MagicMissile(WandOfMagicMissile.class);
 	
 	private final Class<? extends Wand> clazz;
 	

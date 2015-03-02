@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -29,11 +28,26 @@ import com.watabou.pixeldungeon.actors.buffs.Vertigo;
 import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfAmok extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfAmok_Name);
+	public WandOfAmok() {
+		init();
+	}
+
+	public WandOfAmok(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfAmok(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfAmok_Name);
 	}
 
 	@Override
@@ -46,7 +60,7 @@ public class WandOfAmok extends Wand {
 				BuffOps.affect(ch, Amok.class, 3f + level());
 			}
 		} else {
-			GLog.i(Game.getVar(R.string.WandOfAmok_Info1));
+			GLog.i(resolver.getVar(R.string.WandOfAmok_Info1));
 		}
 	}
 
@@ -58,6 +72,6 @@ public class WandOfAmok extends Wand {
 
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfAmok_Info);
+		return resolver.getVar(R.string.WandOfAmok_Info);
 	}
 }

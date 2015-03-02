@@ -61,5 +61,4 @@ public class PotionTest {
 		pot.identify();
 		assertTrue(pot.isIdentified());
 	}
-	
 }

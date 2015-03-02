@@ -17,7 +17,6 @@
  */
 package com.watabou.pixeldungeon.items.wands;
 
-import com.watabou.noosa.Game;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Dungeon;
@@ -27,25 +26,36 @@ import com.watabou.pixeldungeon.effects.MagicMissile;
 import com.watabou.pixeldungeon.items.scrolls.ScrollOfTeleportation;
 import com.watabou.pixeldungeon.levels.LevelState;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.utils.StringResolver;
 import com.watabou.utils.Callback;
 
 public class WandOfTeleportation extends Wand {
-	{
-		name = Game.getVar(R.string.WandOfTeleportation_Name);
+	public WandOfTeleportation() {
+		init();
+	}
+
+	public WandOfTeleportation(WandInfo wandInfo) {
+		super(wandInfo);
+		init();
+	}
+	
+	public WandOfTeleportation(WandInfo wandInfo, StringResolver resolver) {
+		super(wandInfo, resolver);
+		init();
+	}
+	
+	private void init() {
+		name = resolver.getVar(R.string.WandOfTeleportation_Name);
 	}
 
 	@Override
 	protected void onZap( int cell ) {
-		
 		Char ch = LevelState.findChar( cell );
 		
-		if (ch == curUser) {
-			
+		if (ch == curUser) {	
 			setKnown();
-			ScrollOfTeleportation.teleportHero( curUser );
-			
-		} else if (ch != null) {
-			
+			ScrollOfTeleportation.teleportHero( curUser );		
+		} else if (ch != null) {		
 			int count = 10;
 			int pos;
 			do {
@@ -61,10 +71,10 @@ public class WandOfTeleportation extends Wand {
 				ch.pos = pos;
 				ch.sprite.place( ch.pos );
 				ch.sprite.visible = Dungeon.visible[pos];
-				GLog.i(String.format(Game.getVar(R.string.WandOfTeleportation_Info1), curUser.name, ch.name));
+				GLog.i(String.format(resolver.getVar(R.string.WandOfTeleportation_Info1), curUser.name, ch.name));
 			}
 		} else {
-			GLog.i(Game.getVar(R.string.WandOfTeleportation_Info2));
+			GLog.i(resolver.getVar(R.string.WandOfTeleportation_Info2));
 		}
 	}
 	
@@ -75,6 +85,6 @@ public class WandOfTeleportation extends Wand {
 	
 	@Override
 	public String desc() {
-		return Game.getVar(R.string.WandOfTeleportation_Info);
+		return resolver.getVar(R.string.WandOfTeleportation_Info);
 	}
 }
