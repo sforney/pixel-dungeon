@@ -105,6 +105,8 @@ public class WandInfo {
 				if (bundle.getBoolean(itemName + PFX_KNOWN)) {
 					known.add(type);
 				}
+			} else if(type.equals(WandType.MagicMissile)) {
+				images.put(type, magicMissileImage);
 			} else {
 				// If a new wand was added since the last save
 				int index = random.nextInt(labelsLeft.size());
